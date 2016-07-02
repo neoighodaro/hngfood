@@ -1,0 +1,6 @@
+suites:
+    my_suite:
+        namespace: HNG
+        psr4_prefix: HNG
+        src_path: app
+        spec_prefix: spec
