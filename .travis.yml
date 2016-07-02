@@ -9,5 +9,5 @@ before_script:
   - php composer.phar install --dev
 
 script:
-  - phpunit
-  - phpspec run
+  - vendor/bin/phpunit
+  - vendor/bin/phpspec run
