@@ -13,6 +13,7 @@ class CreateLunchesTable extends Migration
     public function up()
     {
         Schema::create('lunches', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
             $table->string('photo')->default('/img/default-food.jpg');

@@ -13,6 +13,7 @@ class CreateLunchboxesTable extends Migration
     public function up()
     {
         Schema::create('lunchboxes', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('buka_id');

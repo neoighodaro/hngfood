@@ -13,6 +13,7 @@ class CreateBukasTable extends Migration
     public function up()
     {
         Schema::create('bukas', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
             $table->float('base_cost')->default(0.00);

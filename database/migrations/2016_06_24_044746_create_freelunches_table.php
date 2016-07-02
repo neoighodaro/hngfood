@@ -13,10 +13,11 @@ class CreateFreelunchesTable extends Migration
     public function up()
     {
         Schema::create('freelunches', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('reason');
-            $table->string('from_id');
-            $table->string('to_id');
+            $table->unsignedInteger('from_id');
+            $table->unsignedInteger('to_id');
             $table->boolean('redeemed')->default(false);
             $table->dateTime('expires_at');
             $table->timestamps();

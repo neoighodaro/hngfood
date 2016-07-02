@@ -13,9 +13,10 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('lunchbox_id');
-            $table->integer('name');
+            $table->unsignedInteger('lunchbox_id');
+            $table->string('name');
             $table->float('expected_cost');
             $table->float('actual_cost')->default(0.00);
             $table->string('note')->nullable();
