@@ -1,5 +1,5 @@
 # Food Order Management for Teams!
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
+[![Build Status](https://travis-ci.org/neoighodaro/hngfood.svg)](https://travis-ci.org/neoighodaro/hngfood)
 
 HNGFood is a food order management app for teams.
