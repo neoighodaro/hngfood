@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Bukas extends Migration
+class CreateBukasTable extends Migration
 {
     /**
      * Run the migrations.
