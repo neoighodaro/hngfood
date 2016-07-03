@@ -18,7 +18,7 @@ class VerifyLunchboxID
     public function handle($request, Closure $next)
     {
         try {
-            Lunchbox::findOrFail($request->route('id'));
+            Lunchbox::select('id')->findOrFail($request->route('id'));
         } catch (ModelNotFoundException $e) {
             abort(404);
         }
