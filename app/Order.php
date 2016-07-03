@@ -11,18 +11,21 @@ class Order extends Eloquent
     protected $fillable = [
         'note',
         'name',
-        'actual_cost',
+        'cost',
+        'lunch_id',
         'lunchbox_id',
-        'expected_cost',
+        'cost_variation',
     ];
 
     /**
      * @var array
      */
-    protected $casts = [
-        'expected_cost' => 'float',
-        'actual_cost'   => 'float',
-    ];
+    protected $casts = ['cost' => 'float', 'cost_variation' => 'float'];
+
+    /**
+     * @var array
+     */
+    protected $with = ['lunch'];
 
     /**
      * Create a new order from Lunch.
@@ -33,9 +36,25 @@ class Order extends Eloquent
     public function createFromLunch(Lunch $lunch)
     {
         return new static([
-            'name'          => $lunch->getAttribute('name'),
-            'expected_cost' => $lunch->getAttribute('cost'),
+            'lunch_id' => $lunch->id,
+            'name'     => $lunch->name,
         ]);
+    }
+
+    /**
+     * Get the cost of an order.
+     *
+     * @return mixed
+     */
+    public function getCostAttribute()
+    {
+        if ( ! $this->exists) {
+            return false;
+        }
+
+        $fixedCost = $this->lunch->attributes['cost'];
+
+        return $fixedCost > 0 ? $fixedCost : $this->attributes['cost'];
     }
 
     /**
@@ -46,5 +65,15 @@ class Order extends Eloquent
     public function lunchbox()
     {
         return $this->belongsTo(Lunchbox::class, 'lunchbox_id');
+    }
+
+    /**
+     * Lunch relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function lunch()
+    {
+        return $this->belongsTo(Lunch::class, 'lunch_id');
     }
 }

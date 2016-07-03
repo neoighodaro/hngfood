@@ -212,4 +212,9 @@ return [
 
     ],
 
+    'dancers' => [
+        'img/dancers/mrbean.gif',
+        'img/dancers/beyonce.gif',
+        'img/dancers/cartoon-twerk.gif',
+    ],
 ];

@@ -6,6 +6,10 @@ body {
     margin-right: 6px;
 }
 
+strong.dim {
+    color: #777;
+}
+
 .navbar-default {
     background-color: #fff;
     border: none;
@@ -99,6 +103,7 @@ footer .creators {
 
 .enjoy-it .garri-photo img {
     max-height: 300px;
+    max-width:100%;
 }
 
 .enjoy-it .garri-photo {
@@ -309,4 +314,33 @@ footer .creators {
 .table > tbody > tr:last-child > th,
 .table > tbody > tr:last-child > td {
     color: #05cd0c;
+}
+
+#tick {
+    max-width: 100px;
+    margin: 0 auto;
+    display: block;
+}
+.circ {
+    opacity: 0;
+    stroke-dasharray: 130;
+    stroke-dashoffset: 130;
+    -webkit-transition: all 1s;
+    -moz-transition: all 1s;
+    -ms-transition: all 1s;
+    -o-transition: all 1s;
+    transition: all 1s;
+}
+.tick {
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+    -webkit-transition: stroke-dashoffset 1s 0.5s ease-out;
+    -moz-transition: stroke-dashoffset 1s 0.5s ease-out;
+    -ms-transition: stroke-dashoffset 1s 0.5s ease-out;
+    -o-transition: stroke-dashoffset 1s 0.5s ease-out;
+    transition: stroke-dashoffset 1s 0.5s ease-out;
+}
+.drawn + svg .path{
+    opacity: 1;
+    stroke-dashoffset: 0;
 }

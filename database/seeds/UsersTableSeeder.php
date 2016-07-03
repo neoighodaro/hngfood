@@ -26,20 +26,20 @@ class UsersTableSeeder extends Seeder
             'wallet'   => 5000.00,
         ]);
 
-        User::create([
-            'slack_id' => str_random(),
-            'email'    => "dev@hng.tech",
-            'name'     => env('USER_SLACK_NAME'),
-            'avatar'   => env('USER_SLACK_AVATAR'),
-            'wallet'   => 1000.00,
-        ]);
-
-        User::create([
-            'slack_id' => str_random(),
-            'email'    => 'dev2@hng.tech',
-            'name'     => env('USER_SLACK_NAME'),
-            'avatar'   => env('USER_SLACK_AVATAR'),
-            'wallet'   => 1000.00,
-        ]);
+//        User::create([
+//            'slack_id' => str_random(),
+//            'email'    => "dev@hng.tech",
+//            'name'     => env('USER_SLACK_NAME'),
+//            'avatar'   => env('USER_SLACK_AVATAR'),
+//            'wallet'   => 1000.00,
+//        ]);
+//
+//        User::create([
+//            'slack_id' => str_random(),
+//            'email'    => 'dev2@hng.tech',
+//            'name'     => env('USER_SLACK_NAME'),
+//            'avatar'   => env('USER_SLACK_AVATAR'),
+//            'wallet'   => 1000.00,
+//        ]);
     }
 }

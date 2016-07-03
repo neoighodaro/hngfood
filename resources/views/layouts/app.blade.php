@@ -34,11 +34,13 @@
                         <li><a href="{{route('auth.slack')}}">Sign in with Slack</a></li>
                     @else
                         <li><a href="#">&#8358;{{ Auth::user()->wallet }}</a></li>
+                        <li><a href="{{route('home')}}">Make An Order</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ route('order.history') }}"><i class="fa fa-btn fa-calendar"></i> Order History</a></li>
                                 <li><a href="{{ route('logout') }}"><i class="fa fa-btn fa-sign-out"></i> Sign Out</a></li>
                             </ul>
                         </li>
@@ -48,12 +50,12 @@
         </div>
     </nav>
 
-    @if ( (isset($pageTitle) && $pageTitle) || (isset($pageSubTitle) && $pageSubTitle) )
+    @if ( (isset($inPageTitle) && $inPageTitle) || (isset($inPageSubTitle) && $inPageSubTitle) )
     <div class="page-title">
         <div class="container">
             <div class="col-12">
-                @if (isset($pageTitle) && $pageTitle) <h1>{{ $pageTitle }}</h1> @endif
-                @if (isset($pageSubTitle) && $pageSubTitle) <span>{{ $pageSubTitle }}</span> @endif
+                @if (isset($inPageTitle) && $inPageTitle) <h1>{{ $inPageTitle }}</h1> @endif
+                @if (isset($inPageSubTitle) && $inPageSubTitle) <span>{{ $inPageSubTitle }}</span> @endif
             </div>
         </div>
     </div>

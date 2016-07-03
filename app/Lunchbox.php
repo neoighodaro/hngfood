@@ -42,16 +42,26 @@ class Lunchbox extends Eloquent
 
         $orders = [];
 
-        foreach ($request->get('orders') as $order)
-        {
-            $lunch = Lunch::find($order['id']);
+        foreach ($request->get('orders') as $order) {
+            for ($i = 0; $i < $order['servings']; $i++) {
+                $lunch = Lunch::find($order['id']);
 
-            $orders[] = (new Order)->createFromLunch($lunch);
+                // Create a new order
+                $newOrder = (new Order)->createFromLunch($lunch);
+
+                // If the lunch does not have a fixed price, then enter the variable
+                // price which would be used to calculate the final cost.
+                if ($lunch->cost <= 0) {
+                    $newOrder->cost = $order['cost'];
+                }
+
+                $orders[] = $newOrder;
+            }
         }
 
         $lunchbox->orders()->saveMany($orders);
 
-        return $lunchbox->with('orders')->first();
+        return $lunchbox;
     }
 
     /**
@@ -61,24 +71,21 @@ class Lunchbox extends Eloquent
      */
     public function totalCost()
     {
-        if ($this->exists)
-        {
-            $totalCosts = 0.00;
-
-            foreach ($this->orders as $order) {
-                $totalCosts += (float) $order->expected_cost;
-            }
-
-            dd($this->buka->base_cost);
-
-            if ($this->buka->base_cost > 0) {
-                $totalCosts += (float) $this->buka->base_cost;
-            }
-
-            return $totalCosts;
+        if ( ! $this->exists) {
+            return false;
         }
 
-        return false;
+        $totalCost = 0.00;
+
+        foreach ($this->ordersGrouped as $order) {
+            $totalCost += (float) ($order->cost * $order->servings);
+        }
+
+        if ($this->buka->base_cost > 0) {
+            $totalCost += (float) $this->buka->base_cost;
+        }
+
+        return $totalCost;
     }
 
     /**
@@ -109,5 +116,17 @@ class Lunchbox extends Eloquent
     public function orders()
     {
         return $this->hasMany(Order::class, 'lunchbox_id');
+    }
+
+    /**
+     * Orders relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ordersGrouped()
+    {
+        return $this->hasMany(Order::class, 'lunchbox_id')
+            ->selectRaw('*, count(*) as servings')
+            ->groupBy('lunch_id');
     }
 }

@@ -38,11 +38,20 @@ $router->get('/home', [
     'uses' => 'HomeController@index',
 ]);
 
-$router->post('/complete-order', [
+$router->get('/order/completed/{id}', [
+    'as'   => 'order.completed',
+    'uses' => 'HomeController@orderCompleted'
+]);
+
+$router->get('/order/history', [
+    'as'   => 'order.history',
+    'uses' => 'HomeController@orderHistory'
+]);
+
+$router->post('/order/complete', [
     'as'   => 'order',
     'uses' => 'HomeController@order'
 ]);
-
 
 // ------------------------------------------------------------------------
 // HOME PAGE

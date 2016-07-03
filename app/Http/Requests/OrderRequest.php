@@ -55,6 +55,6 @@ class OrderRequest extends Request
             $totalCost += $lunch->cost;
         }
 
-        return $totalCost <= $availableCash;
+        return $availableCash > $totalCost;
     }
 }

@@ -17,6 +17,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('verifyOrderId')->only('orderCompleted');
     }
 
     /**
@@ -29,9 +30,9 @@ class HomeController extends Controller
     public function index(Timekeeper $timekeeper, Buka $buka)
     {
         return view('home', [
-            'pageTitle'  => 'Dashboard',
-            'timekeeper' => $timekeeper,
-            'bukas'      => $buka->all(),
+            'inPageTitle' => 'Dashboard',
+            'timekeeper'  => $timekeeper,
+            'bukas'       => $buka->all(),
         ]);
     }
 
@@ -48,6 +49,36 @@ class HomeController extends Controller
 
         event(new LunchWasOrdered($order));
 
-        return $order;
+        return Lunchbox::without('buka,lunches')->findOrFail($order->id);
+    }
+
+    /**
+     * Completed an order successfully.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function orderCompleted($id)
+    {
+        $order = Lunchbox::without('orders')
+            ->with('ordersGrouped')
+            ->find($id);
+
+        $dancers = config('app.dancers');
+        $dancer  = $dancers[array_rand($dancers)];
+
+        return view('order.completed', compact('order', 'dancer'));
+    }
+
+    public function orderHistory()
+    {
+        $orders = Lunchbox::get()->groupBy(function ($date) {
+            return \Carbon\Carbon::parse($date->created_at)->format('M, Y');
+        });
+
+        return view('order.history', [
+            'orders'      => $orders,
+            'inPageTitle' => 'Order History',
+        ]);
     }
 }

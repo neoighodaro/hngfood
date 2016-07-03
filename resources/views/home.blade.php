@@ -112,7 +112,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-url="{{route('order')}}" id="finalize-order" class="btn btn-success" data-loading-text="One Sec...">Yup, Looks Good!</button>
+                    <button type="button" data-redirect="{{route('order.completed', ['id' => ':id'])}}" data-url="{{route('order')}}" id="finalize-order" class="btn btn-success" data-loading-text="One Sec...">Place Order</button>
                 </div>
             </div>
         </div>

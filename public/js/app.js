@@ -33,6 +33,15 @@
 
     }
 
+
+    // --------------------------------------------------------------
+    // TICK COMPLETED IF AVAILABLE
+    // --------------------------------------------------------------
+
+    $(window).on('load', function () {
+        $(".trigger").toggleClass("drawn");
+    });
+
     // --------------------------------------------------------------
     // MAKE ORDER BUTTON
     // --------------------------------------------------------------
@@ -311,10 +320,11 @@
                 },
                 success: function (data) {
                     showHideOverviewAlerts('success');
-                    console.log(data);
 
-                    self.button('reset');
-                    overviewModal.modal('hide');
+                    window.setTimeout(function() {
+                        var url = self.data('redirect');
+                        window.location = url.replace(':id', data.id);
+                    }, 2000);
                 },
                 error: function () {
                     shakeElement('#order-overview');
