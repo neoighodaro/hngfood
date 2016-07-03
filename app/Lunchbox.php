@@ -1,5 +1,8 @@
 <?php namespace HNG;
 
+//use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
+use Carbon\Carbon;
 use HNG\Http\Requests\Request;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
@@ -128,5 +131,40 @@ class Lunchbox extends Eloquent
         return $this->hasMany(Order::class, 'lunchbox_id')
             ->selectRaw('*, count(*) as servings')
             ->groupBy('lunch_id');
+    }
+
+    /**
+     * Get orders by history.
+     *
+     * @param        $query
+     * @param Carbon $date
+     * @return mixed
+     */
+    public function scopeHistory($query, Carbon $date = null)
+    {
+        return $query->where('created_at', '>=', $date)
+            ->get()
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->created_at)->format('M, Y');
+            });
+    }
+
+    /**
+     * Get the history of orders and group by month.
+     *
+     * @param     $query
+     * @param int $perPage
+     * @return Paginator
+     */
+    public function scopeHistoryPaginate($query, $perPage = 10)
+    {
+        $results = $query->history(Carbon::create()->startOfYear());
+
+        // Get pagination information and slice the results.
+        $start = (Paginator::resolveCurrentPage() - 1) * $perPage;
+        $sliced = array_slice($results->toArray(), $start, $perPage);
+
+        // Create a paginator instance.
+        return new Paginator($sliced, $results->count(), $perPage);
     }
 }

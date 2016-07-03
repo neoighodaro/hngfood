@@ -12,12 +12,28 @@ class LunchboxesTableSeeder extends Seeder
      */
     public function run()
     {
-//        $boxes = [
-//            ['user_id' => 1, 'buka_id' => 1],
-//            ['user_id' => 2, 'buka_id' => 2, 'free_lunch' => true],
-//            ['user_id' => 3, 'buka_id' => 3],
-//        ];
-//
-//        foreach ($boxes as $box) Lunchbox::create($box);
+        $boxes = [
+            [
+                'user_id' => 1,
+                'buka_id' => 1,
+                'created_at' => Carbon\Carbon::create(2016, 06, 1),
+                'updated_at' => Carbon\Carbon::create(2016, 06, 1),
+            ],
+            [
+                'user_id' => 1,
+                'buka_id' => 1,
+                'free_lunch' => true,
+                'created_at' => Carbon\Carbon::create(2016, 05, 1),
+                'updated_at' => Carbon\Carbon::create(2016, 05, 1),
+            ],
+            [
+                'user_id' => 1,
+                'buka_id' => 1,
+                'created_at' => Carbon\Carbon::create(2016, 05, 2),
+                'updated_at' => Carbon\Carbon::create(2016, 05, 2),
+            ],
+        ];
+
+        foreach ($boxes as $box) Lunchbox::create($box);
     }
 }

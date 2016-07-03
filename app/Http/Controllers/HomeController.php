@@ -72,9 +72,7 @@ class HomeController extends Controller
 
     public function orderHistory()
     {
-        $orders = Lunchbox::get()->groupBy(function ($date) {
-            return \Carbon\Carbon::parse($date->created_at)->format('M, Y');
-        });
+        $orders = Lunchbox::historyPaginate();
 
         return view('order.history', [
             'orders'      => $orders,
