@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class Freelunch extends Eloquent 
 {
     /**
+     * Cash value for a free lunch.
+     */
+    const CASH_VALUE = 500;
+
+    /**
      * @var array
      */
     protected $fillable = [

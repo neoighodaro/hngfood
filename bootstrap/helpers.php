@@ -15,31 +15,32 @@ if ( ! function_exists('number_unformat')) {
 
 if ( ! function_exists('summarise_order'))
 {
+    /**
+     * Summarise orders.
+     *
+     * @param  array $orders
+     * @return \HNG\Lunch\OrderSummariser
+     */
     function summarise_order(array $orders)
     {
-        $summary = "";
+        return (new HNG\Lunch\OrderSummariser($orders))->summary();
+    }
+}
 
-        $count = count($orders);
+if ( ! function_exists('lunchbox_cost'))
+{
+    /**
+     * Get the lunchbox total cost.
+     *
+     * @param  int|HNG\Lunchbox $lunchbox
+     * @return mixed
+     */
+    function lunchbox_cost($lunchbox)
+    {
+        $lunchbox = $lunchbox instanceof HNG\Lunchbox
+            ? $lunchbox
+            : HNG\Lunchbox::find($lunchbox);
 
-        $maxExplicitlyWritten = 3;
-
-        for ($i = 0; $i < $count; $i++) {
-            $suffix = "";
-
-            if ($i < $maxExplicitlyWritten) {
-                // Add the suffix
-            } else {
-                if ($i === $count) {
-                    // add the suffix
-                    $suffix .= " and ";
-                } else {
-                    $suffix .= "";
-                }
-            }
-
-            $summary .= $suffix;
-        }
-
-        return $summary;
+        return $lunchbox->totalCost();
     }
 }

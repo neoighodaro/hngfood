@@ -50,5 +50,6 @@ class Kernel extends HttpKernel
         'guest' => \HNG\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verifyOrderId' => \HNG\Http\Middleware\VerifyLunchboxID::class,
+        'timekeeper' => \HNG\Http\Middleware\VerifyValidOrderTime::class,
     ];
 }

@@ -2,12 +2,14 @@
 
 namespace HNG\Http\Controllers;
 
+use Carbon\Carbon;
 use HNG\Buka;
-use HNG\Events\LunchWasOrdered;
+use HNG\Lunchbox;
 use HNG\Http\Requests;
 use HNG\Lunch\Timekeeper;
+use Illuminate\Http\Request;
+use HNG\Events\LunchWasOrdered;
 use HNG\Http\Requests\OrderRequest;
-use HNG\Lunchbox;
 
 class HomeController extends Controller
 {
@@ -17,6 +19,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('timekeeper')->only('order');
         $this->middleware('verifyOrderId')->only('orderCompleted');
     }
 
@@ -60,9 +63,7 @@ class HomeController extends Controller
      */
     public function orderCompleted($id)
     {
-        $order = Lunchbox::without('orders')
-            ->with('ordersGrouped')
-            ->find($id);
+        $order = Lunchbox::find($id);
 
         $dancers = config('app.dancers');
         $dancer  = $dancers[array_rand($dancers)];
@@ -70,13 +71,29 @@ class HomeController extends Controller
         return view('order.completed', compact('order', 'dancer'));
     }
 
-    public function orderHistory()
+
+    /**
+     * Get order history.
+     *
+     * @param  Request $request
+     * @return Response
+     * @todo   Create a filter system for the UI
+     */
+    public function orderHistory(Request $request)
     {
-        $orders = Lunchbox::historyPaginate();
+        $end   = $request->get('end');
+        $start = $request->get('start', Carbon::now()->startOfMonth());
+
+        $orders = Lunchbox::ordersBetween($start, $end)
+            ->without('orders')
+            ->with('buka')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
 
         return view('order.history', [
             'orders'      => $orders,
-            'inPageTitle' => 'Order History',
+            'inPageTitle' => 'Orders History',
         ]);
     }
+
 }

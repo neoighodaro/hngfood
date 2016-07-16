@@ -357,4 +357,72 @@
 
 
     });
+
+    // --------------------------------------------------------------
+    // ORDER OVERVIEW
+    // --------------------------------------------------------------
+
+    $('.order-history .open-overview').on('click', function (e) {
+        var lunchbox, orders, baseCost, totalCost, baseCostElem, totalCostElem;
+        e.preventDefault();
+
+        baseCostElem = $('#order-overview tr.baseCost');
+        totalCostElem = $('#order-overview .right.totalCost');
+
+        if ( ! HNGOrderHistory || ! (lunchbox = HNGOrderHistory[$(this).data('lunchbox-id')])) {
+            console.error("Invalid lunchbox ID. Weird.");
+            return;
+        }
+
+        // Calculate Orders...
+        orders = (function(){
+            var orders = {};
+
+            $.each(lunchbox, function (index, lunch) {
+                orders[index] = {
+                    name: lunch.name,
+                    cost: lunch.cost * lunch.servings
+                };
+            });
+
+            return orders;
+        }());
+
+        baseCost  = parseInt($(this).data('base-cost'));
+        totalCost = parseInt($(this).data('total-cost'));
+
+        showOrderOverview(orders, baseCost, totalCost);
+
+        // Remove on Close Event...
+
+        function showOrderOverview(orders, baseCost, totalCost) {
+            var tbody = $('#order-overview tbody.order-details');
+
+            // Show/Hide the base cost element
+            (baseCost > 0) ? baseCostElem.show() : baseCostElem.hide();
+            baseCostElem.find('.right').first().html("&#8358;"+baseCost);
+            totalCostElem.html("&#8358;"+totalCost);
+
+            tbody.children('.single-order').remove();
+
+            $.each(orders, function (index, lunch) {
+                var current,
+                    tr = $('<tr class="single-order"></tr>'),
+                    td = $('<td class="right"></td>'),
+                    th = $('<th class="row"></th>');
+
+                th.text(lunch.name);
+                td.html("&#8358;"+lunch.cost);
+
+                tr.append(th);
+                tr.append(td);
+
+                current = tbody.html();
+                tbody.html(tr);
+                tbody.append(current);
+            });
+        };
+
+        $('#order-overview').modal('show');
+    });
 }(jQuery));

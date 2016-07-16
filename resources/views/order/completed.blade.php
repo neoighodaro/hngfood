@@ -41,7 +41,7 @@
                         </p>
                         <table class="table order-overview-table">
                             <tbody>
-                                @foreach ($order->ordersGrouped as $food)
+                                @foreach ($order->ordersGrouped() as $food)
                                 <tr>
                                     <th scope="row">{{$food->name}}</th>
                                     <td class="right">&#8358;{{$food->cost * $food->servings}}</td>

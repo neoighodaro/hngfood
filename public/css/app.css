@@ -160,6 +160,10 @@ footer .creators {
     max-width: 900px;
 }
 
+.container.smaller {
+    max-width: 600px;
+}
+
 .container.foods {
 }
 
@@ -300,19 +304,19 @@ footer .creators {
     }
 }
 
-.table .right {
+.order.table .right {
     text-align: right;
 }
-.table > tbody > tr:first-child > th,
-.table > tbody > tr:first-child > td {
+.order.table > tbody > tr:first-child > th,
+.order.table > tbody > tr:first-child > td {
     border-top: 0;
 }
-.table > tbody > tr:nth-last-child(2) > th,
-.table > tbody > tr:nth-last-child(2) > td {
+.order.table > tbody > tr:nth-last-child(2) > th,
+.order.table > tbody > tr:nth-last-child(2) > td {
     border-bottom: 1px solid #d9d9d9;
 }
-.table > tbody > tr:last-child > th,
-.table > tbody > tr:last-child > td {
+.order.table > tbody > tr:last-child > th,
+.order.table > tbody > tr:last-child > td {
     color: #05cd0c;
 }
 
@@ -343,4 +347,13 @@ footer .creators {
 .drawn + svg .path{
     opacity: 1;
     stroke-dashoffset: 0;
+}
+
+.container.order-history {
+    margin-top: 50px;
+}
+span.days-ago {
+    color: #aaa;
+    display: inline-block;
+    margin-left: 10px;
 }

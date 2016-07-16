@@ -72,12 +72,12 @@ class AuthController extends Controller
         }
 
         $createdUser = User::create([
+            'slack_id' => $user->id,
             'name'     => $user->name,
             'email'    => $user->email,
-            'slack_id' => $user->id,
             'avatar'   => $user->avatar,
         ]);
-            
+
         event(new UserWasCreated($createdUser));
 
         return $createdUser;

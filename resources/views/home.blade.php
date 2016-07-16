@@ -3,12 +3,12 @@
 @section('title', 'Dashboard - '.env('APP_NAME'))
 @section('content')
 
-@if ($timekeeper->isWithinLunchOrderHours())
+@if ( ! $timekeeper->isWithinLunchOrderHours())
 <div class="enjoy-it">
     <div class="container">
         <div class="col-12">
             <div class="garri-photo">
-                <img src="/img/ijebu-garri.jpg" alt="Ijebu Garri" />
+                <img src="{{asset('/img/ijebu-garri.jpg')}}" alt="Ijebu Garri" />
             </div>
             <h2>Sorry, lunch order has closed for the day. You should probably soak garri. &#8220;Enjoy it!&#8221;</h2>
         </div>
@@ -107,7 +107,7 @@
                             </div>
                             <p>Heres a quick summary of your order. Your current balance is <strong>&#8358;{{ auth()->user()->wallet }}</strong></p>
                             <p>&nbsp;</p>
-                            <table class="table order-overview-table"></table>
+                            <table class="table order order-overview-table"></table>
                         </div>
                     </div>
                 </div>
