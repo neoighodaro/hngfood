@@ -32,6 +32,11 @@ class User extends Authenticatable
     ];
 
     /**
+     * {@inheritdoc}
+     */
+    protected $with = ['freelunches'];
+
+    /**
      * Get the user's first name.
      *
      * @param  string  $value

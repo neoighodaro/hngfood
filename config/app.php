@@ -216,5 +216,9 @@ return [
         'img/dancers/mrbean.gif',
         'img/dancers/beyonce.gif',
         'img/dancers/cartoon-twerk.gif',
+        'img/dancers/boy.gif',
+        'img/dancers/gangnam.gif',
+        'img/dancers/kenny.gif',
+        'img/dancers/jump.gif',
     ],
 ];

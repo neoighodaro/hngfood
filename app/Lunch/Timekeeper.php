@@ -70,7 +70,7 @@ class Timekeeper
      */
     public function isWithinLunchOrderHours()
     {
-        return $this->isWeekday() && $this->isHoursBetween(8, 9);
+        return $this->isDeveloping() OR ($this->isWeekday() && $this->isHoursBetween(8, 9));
     }
 
     /**
@@ -81,5 +81,15 @@ class Timekeeper
     public function carbon()
     {
         return $this->carbon;
+    }
+
+    /**
+     * Checks if the environment is local.
+     *
+     * @return boolean
+     */
+    private function isDeveloping()
+    {
+        return app()->environment() === 'local';
     }
 }

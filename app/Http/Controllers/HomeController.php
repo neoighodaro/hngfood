@@ -2,9 +2,10 @@
 
 namespace HNG\Http\Controllers;
 
-use Carbon\Carbon;
 use HNG\Buka;
 use HNG\Lunchbox;
+use HNG\Freelunch;
+use Carbon\Carbon;
 use HNG\Http\Requests;
 use HNG\Lunch\Timekeeper;
 use Illuminate\Http\Request;
@@ -28,14 +29,16 @@ class HomeController extends Controller
      *
      * @param  Timekeeper $timekeeper
      * @param  Buka       $buka
+     * @param  Freelunch  $freelunch
      * @return \Illuminate\Http\Response
      */
-    public function index(Timekeeper $timekeeper, Buka $buka)
+    public function index(Timekeeper $timekeeper, Buka $buka, Freelunch $freelunch)
     {
         return view('home', [
             'inPageTitle' => 'Dashboard',
             'timekeeper'  => $timekeeper,
             'bukas'       => $buka->all(),
+            'freelunch'   => $freelunch->active(),
         ]);
     }
 
@@ -50,7 +53,7 @@ class HomeController extends Controller
     {
         $order = $lunchbox->createWithOrders($request);
 
-        event(new LunchWasOrdered($order));
+        event(new LunchWasOrdered($order, $request));
 
         return Lunchbox::without('buka,lunches')->findOrFail($order->id);
     }

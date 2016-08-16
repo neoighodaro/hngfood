@@ -4,7 +4,7 @@ use Carbon\Carbon;
 use HNG\Http\Requests\Request;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class Lunchbox extends Eloquent 
+class Lunchbox extends Eloquent
 {
     /**
      * @var array
@@ -37,8 +37,9 @@ class Lunchbox extends Eloquent
     public function createWithOrders(Request $request)
     {
         $lunchbox = static::create([
-            'user_id' => $request->user()->id,
-            'buka_id' => $request->get('buka_id'),
+            'user_id'    => $request->user()->id,
+            'buka_id'    => $request->get('buka_id'),
+            'free_lunch' => $request->get('free_lunch'),
         ]);
 
         $orders = [];
@@ -49,6 +50,11 @@ class Lunchbox extends Eloquent
 
                 // Create a new order
                 $newOrder = (new Order)->createFromLunch($lunch);
+
+                // Add note
+                if ($additionalNote = array_get($order, 'note')) {
+                    $newOrder->note = $additionalNote;
+                }
 
                 // If the lunch does not have a fixed price, then enter the variable
                 // price which would be used to calculate the final cost.

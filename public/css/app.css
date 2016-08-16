@@ -357,3 +357,44 @@ span.days-ago {
     display: inline-block;
     margin-left: 10px;
 }
+
+.food-modal .additional-note {
+    margin-top: 20px;
+}
+
+
+
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-backdrop.in {
+    opacity: .85;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.free-lunch-alert {
+    display: none;
+    background-color: lightgoldenrodyellow;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+.free-lunch-alert .totally,
+.free-lunch-alert .partially {
+    display: none;
+}

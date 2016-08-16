@@ -1,6 +1,7 @@
 <?php namespace HNG\Http\Requests;
 
 use HNG\Lunch;
+use HNG\Freelunch;
 
 class OrderRequest extends Request
 {
@@ -21,40 +22,58 @@ class OrderRequest extends Request
      */
     public function rules()
     {
-        $rules = ['buka_id' => 'required|exists:bukas,id'];
+        $rules = [
+            'free_lunch' => 'required|in:0,1',
+            'buka_id'    => 'required|exists:bukas,id',
+        ];
 
         // Get the buka ID expected from this order
-        $buka_id = $this->request->get('buka_id');
+        $buka_id = $this->input('buka_id');
 
         // Get all orders (array)
-        $orders = (array) $this->request->get('orders');
+        $orders = (array) $this->get('orders');
 
         // Set validation rules for certain keys in each order in the array
         foreach ($orders as $key => $order) {
-            $rules["orders.{$key}.servings"] = 'required|numeric|between:1,5';
-            $rules["orders.{$key}.id"] = "required|exists:lunches,id,buka_id,{$buka_id}";
+            $rules["orders.{$key}.note"]     = "between:1,255";
+            $rules["orders.{$key}.servings"] = "required|numeric|between:1,5";
+            $rules["orders.{$key}.id"]       = "required|exists:lunches,id,buka_id,{$buka_id}";
         }
 
         return $rules;
     }
 
     /**
+     * Check if the request wants to redeem freelunches.
+     *
+     * @return boolean
+     */
+    public function wantsToRedeemFreelunch()
+    {
+        return $this->get('free_lunch') == 1;
+    }
+
+    /**
      * Checks if the user wallet cannot handle the order.
      *
-     * @return bool
+     * @return boolean
      */
     private function userWalletCanHandleOrder()
     {
         $totalCost     = 0;
         $availableCash = number_unformat(auth()->user()->wallet);
 
-        $orders = (array) $this->request->get('orders');
-
-        foreach ($orders as $order) {
-            $lunch = Lunch::find($order['id']);
-            $totalCost += $lunch->cost;
+        if ($this->wantsToRedeemFreelunch()) {
+            $availableCash += (new Freelunch)->currentUserWorth();
         }
 
-        return $availableCash > $totalCost;
+        $orders = (array) $this->get('orders');
+
+        foreach ($orders as $order) {
+            $lunch      = Lunch::find($order['id']);
+            $totalCost += ($lunch->cost > 0 ? $lunch->cost : $order['cost']) * $order['servings'];
+        }
+
+        return $availableCash >= $totalCost;
     }
 }

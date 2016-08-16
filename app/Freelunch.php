@@ -1,15 +1,11 @@
 <?php namespace HNG;
 
+use DB;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class Freelunch extends Eloquent 
+class Freelunch extends Eloquent
 {
-    /**
-     * Cash value for a free lunch.
-     */
-    const CASH_VALUE = 500;
-
     /**
      * @var array
      */
@@ -24,7 +20,7 @@ class Freelunch extends Eloquent
     /**
      * @var array
      */
-    protected $timestamps = ['expires_at'];
+    public $timestamps = ['expires_at'];
 
     /**
      * Get active free lunches.
@@ -32,9 +28,12 @@ class Freelunch extends Eloquent
      * @param  $query
      * @return \Illuminate\Database\Query\Builder
      */
-    public function scopeActive($query)
+    public function scopeActive($query, $user = null)
     {
+        $user = $user == null ? auth()->user()->id : $user;
+
         return $query->where('redeemed', 0)
+                     ->where('to_id', $user)
                      ->where('expires_at', '>', Carbon::now());
     }
 
@@ -44,9 +43,12 @@ class Freelunch extends Eloquent
      * @param  $query
      * @return \Illuminate\Database\Query\Builder
      */
-    public function scopeExpiring($query)
+    public function scopeExpiring($query, $user = null)
     {
+        $user = $user == null ? auth()->user()->id : $user;
+
         return $query->where('redeemed', 0)
+                     ->where('to_id', $user)
                      ->where('expires_at', '<=', Carbon::tomorrow());
     }
 
@@ -56,9 +58,12 @@ class Freelunch extends Eloquent
      * @param  $query
      * @return \Illuminate\Database\Query\Builder
      */
-    public function scopeExpired($query)
+    public function scopeExpired($query, $user = null)
     {
+        $user = $user == null ? auth()->user()->id : $user;
+
         return $query->where('redeemed', 0)
+                     ->where('to_id', $user)
                      ->where('expires_at', '<', Carbon::now());
     }
 
@@ -73,7 +78,7 @@ class Freelunch extends Eloquent
     }
 
     /**
-     * Redeem the free lunch.
+     * Redeem a free lunch.
      *
      * @return bool
      */
@@ -82,6 +87,66 @@ class Freelunch extends Eloquent
         $this->attributes['redeemed'] = true;
 
         return $this->save();
+    }
+
+    /**
+     * Redeem a number of free lunches.
+     *
+     * @param  integer $count
+     * @return void
+     */
+    public function redeemCount($count = 0)
+    {
+        $count = (int) $count;
+
+        $table = DB::table($this->getTable())
+            ->where('redeemed', 0)
+            ->where('to_id', auth()->user()->id);
+
+        if ($count > 0) {
+            $table = $table->take($count);
+        }
+
+        $table->update(['redeemed' => 1]);
+    }
+
+    /**
+     * Get the current users freelunch cash worth.
+     *
+     * @return integer
+     */
+    public function currentUserWorth()
+    {
+        return $this->active()->count() * $this->cashValue();
+    }
+
+    /**
+     * Redeem free lunches required to roll.
+     *
+     * @param  integer $orderCost
+     * @return void
+     */
+    public function deductRequiredToSettle($orderCost)
+    {
+        if (($value = $this->currentUserWorth()) == 0) {
+            return $orderCost;
+        }
+
+        if ($value >= $orderCost) {
+            $shouldRemain = floor(($value - $orderCost) / $this->cashValue());
+
+            $totalCount = $this->active()->count() - $shouldRemain;
+
+            $remainder = 0;
+        } else {
+            $totalCount = $this->active()->count();
+
+            $remainder = $orderCost - $value;
+        }
+
+        $this->redeemCount($totalCount);
+
+        return $remainder;
     }
 
     /**
@@ -103,6 +168,16 @@ class Freelunch extends Eloquent
         }
 
         return false;
+    }
+
+    /**
+     * Cash value for a free lunch.
+     *
+     * @return integer
+     */
+    public function cashValue()
+    {
+        return (int) config('food.freelunch_cost');
     }
 
     /**

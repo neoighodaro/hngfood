@@ -30,7 +30,6 @@
                 'margin-left': "+=" + ( l = -l ) + 'px',
                 'margin-right': "-=" + l + 'px'
             }, 50);
-
     }
 
 
@@ -49,16 +48,42 @@
     $('#make-order-btn').on('click', function (e) {
         e.preventDefault();
 
-        if ($(this).attr('disabled') == "disabled")
+        var btn = $(this);
+
+        if (btn.attr('disabled') == "disabled") {
             return;
+        }
 
         var buka = $('.container.foods > .whitehouse');
+        var bukaModal = $('.buka-select');
 
-        // show
-        buka.show();
+        // Buka Select Modal
+        bukaModal.modal({ backdrop: 'static' });
 
-        // scroll to
-        $('html, body').animate({ scrollTop: buka.offset().top }, 500);
+        // Buka Select Modal Link
+        $('.buka-select .bukas a').off().on('click', function (e) {
+            e.preventDefault();
+
+            var bukaName = $(this).data('display-buka');
+            var buka     = $('.buka.'+bukaName);
+
+            // Set the active buka ID
+            $('.container.foods').data('active-buka', $(this).data('buka-id'));
+
+            // show
+            buka.show();
+
+            // Buka modal close
+            bukaModal.modal('hide');
+
+            // Animate to the buka...
+            $('html, body').animate({ scrollTop: buka.offset().top }, 500);
+        });
+
+        // Reactivate button...
+        $('.buka-select .close').on('click', function () {
+            btn.removeAttr('disabled');
+        });
 
         // disable btn
         $(this).attr('disabled', "disabled");
@@ -80,7 +105,7 @@
         var addOrderBtn    = $('.food-modal .add-to-order');
         var removeOrderBtn = $('.food-modal .remove-order');
         var foodSelectionPalette = $('.food.lunch-'+lunch.id);
-        var foodModal      = $('.container.foods .food-modal');
+        var foodModal      = $('.food-modal');
         var bukaTitleElem  = $('.container.foods .order-resturant');
 
         // Check if the order exists...
@@ -113,6 +138,7 @@
         $('.food-modal').on('hidden.bs.modal', function(){
             $('#amount-input').val("");
             $('#amount-servings').val("1");
+            $('#add-note').val("");
             $('.modal-backdrop').remove();
             $('.food-modal .error').removeClass('active');
         });
@@ -132,9 +158,7 @@
         });
 
         // Show modal
-        $('.container.foods .food-modal').modal({
-            backdrop: 'static'
-        });
+        foodModal.modal({ backdrop: 'static' });
 
         // Disable conventional form submit
         $('#single-order').on('submit', function (e) {
@@ -156,6 +180,8 @@
             amountInput    = isNaN(amountInput) ? 0 : amountInput;
             amountServings = isNaN(amountServings) ? 0 : amountServings;
 
+            var additionalNotes = $('#add-note').val();
+
             modalInputError.removeClass('active');
 
             if (lunch.cost <= 0.0 && amountInput <= 0.0) {
@@ -176,8 +202,12 @@
                 id: lunch.id,
                 name: lunch.name,
                 servings: lunch.cost >= 0.1 ? amountServings : 1,
-                cost: lunch.cost >= 0.1 ? lunch.cost : amountInput
+                cost: lunch.cost >= 0.1 ? lunch.cost : amountInput,
             };
+
+            if (additionalNotes.length > 1 && additionalNotes != ' ') {
+                order.note = additionalNotes;
+            }
 
             order.totalCost = order.cost * order.servings;
 
@@ -293,6 +323,50 @@
             }
         }
 
+        // ------------------------------
+        // FREE LUNCH APPLY
+        // ------------------------------
+
+        $('#apply-freelunch').off().on('click', function () {
+            var btn = $(this);
+            var orderBtn = $('#finalize-order');
+            var isActivated = orderBtn.data('free-lunch') == true;
+
+            function toggleButtonText() {
+                var oldText = btn.text();
+                btn.text(btn.data('alt-text')).data('alt-text', oldText);
+            }
+
+            if (isActivated) {
+                toggleButtonText();
+                orderBtn.data('free-lunch', false);
+                $('.free-lunch-alert').fadeOut();
+            } else {
+                var singleCashValue = $(this).data('free-lunch-value');
+                var freeLunchCount  = $(this).data('free-lunch-count');
+
+                var actualCashValue = singleCashValue * freeLunchCount;
+                var totalFoodCost   = parseInt($('#complete-order .totalCost').text());
+                var showMessage     = actualCashValue > totalFoodCost ? '.totally' : '.partially';
+
+                if (showMessage == '.partially') {
+                    $('.free-lunch-alert .partially strong').html("&#8358;"+actualCashValue);
+                }
+
+                // Show message depending on the weight of the free lunches...
+                $('.free-lunch-alert '+showMessage).show();
+
+                // Add whether using free lunch to place order btn...
+                orderBtn.data('free-lunch', true);
+
+                toggleButtonText();
+
+                // Display the offset...
+                $('.free-lunch-alert').fadeIn();
+
+            }
+        });
+
         // -----------------------------
         // Complete Order
         // -----------------------------
@@ -302,6 +376,10 @@
             showHideOverviewAlerts();
             generateCostsTable(lunchBox, baseCost);
         });
+
+        // -----------------------------
+        // Send Order
+        // -----------------------------
 
         $('#finalize-order').off().on('click', function () {
             var self = $(this);
@@ -315,8 +393,9 @@
                 dataType: 'JSON',
                 url: self.data('url'),
                 data: {
-                    orders:  lunchBox,
-                    buka_id: bukaTitleElem.data('buka-id')
+                    orders:     lunchBox,
+                    buka_id:    $('.container.foods').data('active-buka'),
+                    free_lunch: self.data('free-lunch') == true ? 1 : 0
                 },
                 success: function (data) {
                     showHideOverviewAlerts('success');
@@ -351,11 +430,9 @@
 
             if (elem !== undefined) {
                 elem.show();
-                window.setTimeout(function () { elem.slideUp(); }, 5000);
+                window.setTimeout(function () { elem.slideUp(); }, 10000);
             }
         }
-
-
     });
 
     // --------------------------------------------------------------
@@ -425,4 +502,6 @@
 
         $('#order-overview').modal('show');
     });
+
+
 }(jQuery));

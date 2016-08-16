@@ -2,6 +2,7 @@
 
 namespace HNG\Listeners;
 
+use HNG\Freelunch;
 use HNG\Events\LunchWasOrdered;
 
 class OrderPaymentProcessor
@@ -18,6 +19,8 @@ class OrderPaymentProcessor
     public function __construct()
     {
         $this->user = auth()->user();
+
+        $this->freelunch = new Freelunch;
     }
 
     /**
@@ -27,8 +30,12 @@ class OrderPaymentProcessor
      */
     public function handle(LunchWasOrdered $event)
     {
-        $orderCost     = $event->order->totalCost();
+        $orderCost = $event->order->totalCost();
         $availableCash = number_unformat($this->user->wallet);
+
+        if ($event->request->wantsToRedeemFreelunch()) {
+            $orderCost = $this->freelunch->deductRequiredToSettle($orderCost);
+        }
 
         $this->user->wallet = $availableCash - $orderCost;
         $this->user->save();
