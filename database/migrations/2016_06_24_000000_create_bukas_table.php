@@ -16,6 +16,7 @@ class CreateBukasTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
+            $table->string('avatar')->default(asset('/img/buka.jpg'));
             $table->float('base_cost')->default(0.00);
             $table->timestamps();
         });

@@ -14,7 +14,7 @@ class BukasTableSeeder extends Seeder
     {
         $bukas = [
             ['name' => 'Whitehouse'],
-            ['name' => 'Commint Buka'],
+            ['name' => 'Commint'],
         ];
 
         foreach ($bukas as $buka) Buka::create($buka);

@@ -22,6 +22,8 @@ class HomeController extends Controller
         $this->middleware('auth');
         $this->middleware('timekeeper')->only('order');
         $this->middleware('verifyOrderId')->only('orderCompleted');
+
+        parent::__construct();
     }
 
     /**

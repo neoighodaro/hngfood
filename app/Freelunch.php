@@ -32,7 +32,7 @@ class Freelunch extends Eloquent
     {
         $user = $user == null ? auth()->user()->id : $user;
 
-        return $query->where('redeemed', 0)
+        return $query->whereRedeemed(0)
                      ->where('to_id', $user)
                      ->where('expires_at', '>', Carbon::now());
     }

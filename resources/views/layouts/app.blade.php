@@ -30,14 +30,21 @@
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    @if (Auth::guest())
+                    @if (auth()->guest())
                         <li><a href="{{route('auth.slack')}}">Sign in with Slack</a></li>
                     @else
-                        <li><a href="#">&#8358;{{ Auth::user()->wallet }}</a></li>
+                        <li>
+                            <a href="#" title="{{ $freelunches->count() > 0 ? 'You have '.$freelunches->count().' free lunches' : '' }}">
+                                &#8358;{{ auth()->user()->wallet }}
+                                <span class="label label-danger freelunch">{{$freelunches->count()}}</span>
+                            </a>
+                        </li>
+                        @if (Route::is('home') === false)
                         <li><a href="{{route('home')}}">Make An Order</a></li>
+                        @endif
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ auth()->user()->name }} <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ route('order.history') }}"><i class="fa fa-btn fa-calendar"></i> Order History</a></li>

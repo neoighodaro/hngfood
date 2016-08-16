@@ -3,6 +3,7 @@
 namespace HNG\Http\Controllers\Auth;
 
 use HNG\User;
+use Exception;
 use HNG\Events\UserWasCreated;
 use HNG\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
@@ -15,6 +16,8 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+
+        parent::__construct();
     }
 
     /**
@@ -36,6 +39,10 @@ class AuthController extends Controller
     {
         try {
             $user = Socialite::driver('slack')->user();
+
+            if (array_get($user->user, 'team.domain') !== config('services.slack.domain')) {
+                throw new Exception("Invalid slack team.");
+            }
         } catch (Exception $e) {
             return redirect(route('auth.slack'));
         }

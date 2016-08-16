@@ -52,15 +52,19 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Select Buka To Order From</h4>
+                <h4 class="modal-title">Whollup! Select Buka</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12">
+                        <p>Select the buka you would like to order from. Costs may vary depending on the buka you select.</p>
                         <ul class="bukas">
                             @foreach ($bukas as $buka)
                             <li>
-                                <a data-buka-id="{{ $buka->id }}" data-display-buka="{{ str_slug($buka->name) }}" href="#">{{ $buka->name }}</a>
+                                <a data-buka-id="{{ $buka->id }}" data-display-buka="{{ str_slug($buka->name) }}" href="#" style="background-image:url({{$buka->avatar}})">
+                                    <div class="overlay"></div>
+                                    <span>{{$buka->name}}</span>
+                                </a>
                             </li>
                             @endforeach
                         </ul>
