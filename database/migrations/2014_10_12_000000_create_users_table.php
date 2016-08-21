@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('slack_id')->unique();
             $table->string('email')->unique();
+            $table->string('password')->nullable();
             $table->string('name');
             $table->string('avatar')->nullable();
             $table->float("wallet")->default(0.00);

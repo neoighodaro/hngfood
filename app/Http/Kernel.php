@@ -52,5 +52,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verifyOrderId' => Middleware\VerifyLunchboxID::class,
         'timekeeper' => Middleware\VerifyValidOrderTime::class,
+        'verifyAdmin' => Middleware\VerifyAdminUser::class,
+        'verifyAdminSession' => Middleware\VerifyAdminSession::class,
     ];
 }
