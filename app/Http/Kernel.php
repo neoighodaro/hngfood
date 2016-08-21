@@ -2,6 +2,7 @@
 
 namespace HNG\Http;
 
+use HNG\Http\Middleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -24,11 +25,11 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \HNG\Http\Middleware\EncryptCookies::class,
+            Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \HNG\Http\Middleware\VerifyCsrfToken::class,
+            Middleware\VerifyCsrfToken::class,
         ],
 
         'api' => [
@@ -44,12 +45,12 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \HNG\Http\Middleware\Authenticate::class,
+        'auth' => Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
-        'guest' => \HNG\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest' => Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verifyOrderId' => \HNG\Http\Middleware\VerifyLunchboxID::class,
-        'timekeeper' => \HNG\Http\Middleware\VerifyValidOrderTime::class,
+        'verifyOrderId' => Middleware\VerifyLunchboxID::class,
+        'timekeeper' => Middleware\VerifyValidOrderTime::class,
     ];
 }
