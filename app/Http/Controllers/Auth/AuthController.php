@@ -75,6 +75,11 @@ class AuthController extends Controller
     private function findOrCreateUser($user)
     {
         if ($authUser = User::where('slack_id', $user->id)->first()) {
+            // Update the user stuff from slack...
+            $authUser->name   = $user->name;
+            $authUser->avatar = $user->avatar;
+            $authUser->save();
+
             return $authUser;
         }
 

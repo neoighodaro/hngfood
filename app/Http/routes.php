@@ -48,11 +48,5 @@ $router->post('/order/complete', ['as' => 'order', 'uses' => 'HomeController@ord
 // HOME PAGE
 // ------------------------------------------------------------------------
 
-$router->get('/', function () {
-    if (auth()->user()) {
-        return redirect(route('home'));
-    }
-
-    return view('welcome');
-});
+$router->get('/', ['as' => 'guest.home', 'uses' => 'GuestController@index']);
 

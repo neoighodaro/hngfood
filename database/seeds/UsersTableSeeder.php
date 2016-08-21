@@ -17,7 +17,8 @@ class UsersTableSeeder extends Seeder
             return;
         }
 
-        // Create a sample user
+        // Create sample users
+
         User::create([
             'slack_id' => env('USER_SLACK_ID'),
             'email'    => env('USER_SLACK_EMAIL'),
@@ -25,7 +26,7 @@ class UsersTableSeeder extends Seeder
             'role'     => (new User)->getRoleIdFromName('Super Admin'),
             'name'     => env('USER_SLACK_NAME'),
             'avatar'   => env('USER_SLACK_AVATAR'),
-            'wallet'   => 5000.00,
+            'wallet'   => 1000.00,
         ]);
 
        User::create([
@@ -33,7 +34,7 @@ class UsersTableSeeder extends Seeder
            'email'    => "dev@hng.tech",
            'name'     => "dev",
            'avatar'   => env('USER_SLACK_AVATAR'),
-           'wallet'   => 1000.00,
+           'wallet'   => 0.00,
        ]);
 
        User::create([
@@ -41,7 +42,7 @@ class UsersTableSeeder extends Seeder
            'email'    => 'dev2@hng.tech',
            'name'     => "dev2",
            'avatar'   => env('USER_SLACK_AVATAR'),
-           'wallet'   => 1000.00,
+           'wallet'   => 0.00,
        ]);
     }
 }
