@@ -25,12 +25,15 @@ class Freelunch extends Eloquent
     /**
      * Get active free lunches.
      *
-     * @param  $query
+     * @param      $query
+     * @param null $user
      * @return \Illuminate\Database\Query\Builder
      */
     public function scopeActive($query, $user = null)
     {
-        $user = $user == null ? auth()->user()->id : $user;
+        $user = $user == null
+            ? (auth()->user() ? auth()->user()->id : 0)
+            : $user;
 
         return $query->whereRedeemed(0)
                      ->where('to_id', $user)
