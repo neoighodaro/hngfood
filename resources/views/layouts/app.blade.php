@@ -36,7 +36,9 @@
                         <li>
                             <a href="#" title="{{ $freelunches->count() > 0 ? 'You have '.$freelunches->count().' free lunches' : '' }}">
                                 &#8358;{{ auth()->user()->wallet }}
+                                @if ($freelunches->count() > 0)
                                 <span class="label label-danger freelunch">{{$freelunches->count()}}</span>
+                                @endif
                             </a>
                         </li>
                         @if (Route::is('home') === false)
