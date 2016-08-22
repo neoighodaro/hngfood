@@ -12,6 +12,7 @@ class AuthController extends Controller {
     public function __construct()
     {
         parent::__construct();
+
         $this->middleware('verifyAdmin');
     }
 
@@ -37,6 +38,10 @@ class AuthController extends Controller {
             'email'    => auth()->user()->email,
             'password' => $request->get('password'),
         ]);
+
+        if ($validAdmin) {
+            session(['administrator' => true]);
+        }
 
         return $validAdmin ? redirect(route('admin.dashboard')) : back();
     }

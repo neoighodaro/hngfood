@@ -41,9 +41,15 @@
                                 @endif
                             </a>
                         </li>
+
+                        @if (auth()->user()->hasRole('admin'))
+                        <li><a href="{{route('admin.dashboard')}}">Admin</a></li>
+                        @endif
+
                         @if (Route::is('home') === false)
                         <li><a href="{{route('home')}}">Make An Order</a></li>
                         @endif
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ auth()->user()->name }} <span class="caret"></span>

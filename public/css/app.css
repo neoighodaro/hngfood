@@ -463,3 +463,19 @@ span.days-ago {
     position: relative;
     left: -5px;
 }
+
+.container.login {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.container.login .login-title {
+    font-family: "Lato";
+    font-weight: 300;
+    color: #666;
+}
+
+.container.login p {
+    color: #676767;
+    font-size: 16px;
+}
