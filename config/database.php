@@ -1,5 +1,13 @@
 <?php
 
+// Get postgres sql
+$postgresUrl = (array) @parse_url(getenv("DB_URL"));
+
+// Attempt to get "database" from postgres sql...
+$database = array_get($postgresUrl, 'database')
+    ? substr($postgresUrl["path"], 1)
+    : env('DB_DATABASE', 'forge');
+
 return [
 
     /*
@@ -49,7 +57,7 @@ return [
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
-            'prefix' => '',
+            'prefix' => env('DB_PREFIX', ''),
         ],
 
         'mysql' => [
@@ -61,21 +69,21 @@ return [
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'prefix' => '',
+            'prefix' => env('DB_PREFIX', ''),
             'strict' => false,
             'engine' => null,
         ],
 
         'pgsql' => [
-            'driver' => 'pgsql',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'schema' => 'public',
+            'driver'   => 'pgsql',
+            'host'     => array_get($postgresUrl, 'host', env('DB_HOST', 'localhost')),
+            'port'     => env('DB_PORT', '5432'),
+            'database' => $database,
+            'username' => array_get($postgresUrl, 'username', env('DB_USERNAME', 'forge')),
+            'password' => array_get($postgresUrl, 'password', env('DB_PASSWORD', '')),
+            'charset'  => 'utf8',
+            'prefix'   => env('DB_PREFIX', ''),
+            'schema'   => 'public',
         ],
 
     ],
