@@ -80,7 +80,7 @@ return [
             'port'     => env('DB_PORT', '5432'),
             'database' => $database,
             'username' => array_get($postgresUrl, 'username', env('DB_USERNAME', 'forge')),
-            'password' => array_get($postgresUrl, 'password', env('DB_PASSWORD', '')),
+            'password' => array_get($postgresUrl, 'pass', env('DB_PASSWORD', '')),
             'charset'  => 'utf8',
             'prefix'   => env('DB_PREFIX', ''),
             'schema'   => 'public',
