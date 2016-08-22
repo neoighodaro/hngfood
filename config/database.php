@@ -79,7 +79,7 @@ return [
             'host'     => array_get($postgresUrl, 'host', env('DB_HOST', 'localhost')),
             'port'     => env('DB_PORT', '5432'),
             'database' => $database,
-            'username' => array_get($postgresUrl, 'username', env('DB_USERNAME', 'forge')),
+            'username' => array_get($postgresUrl, 'user', env('DB_USERNAME', 'forge')),
             'password' => array_get($postgresUrl, 'pass', env('DB_PASSWORD', '')),
             'charset'  => 'utf8',
             'prefix'   => env('DB_PREFIX', ''),
