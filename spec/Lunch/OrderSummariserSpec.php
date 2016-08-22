@@ -2,9 +2,9 @@
 
 namespace spec\HNG\Lunch;
 
-use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use InvalidArgumentException;
 
 class OrderSummariserSpec extends ObjectBehavior
 {

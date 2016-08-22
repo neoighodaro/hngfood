@@ -2,7 +2,7 @@
 
 namespace HNG\Lunch;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 class OrderSummariser implements \Countable
 {
