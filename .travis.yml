@@ -18,8 +18,8 @@ notifications:
 deploy:
   app: hngfood
   provider: heroku
-  on:
-    all_branches: true
-    tags: true
   api_key:
     secure: nvQqeycsJWQ7D6+85kPY1h37OqNvYgcFEsX49Zwo7Kkj5NstDONWehzSa6NmQ9vxLAiafpQ82DWhUAhrfJPS6uBZLpoD+D/jKh+lOoeG8DjPu7b8Hg1jZNaOgIoBZj9y4/bcFojhES/kN6dgfD3jsG/Sta5NEOQYOa2eBlGzQZxOnb2hkO62ykbDoHMk6DK7Wqzw588JFvijyNiFX+NXyogcb96WpCXUEC8j+YDJEdxobL+OwlvxqFxLgfVfKAeMmDbvLPjM7TmZYE1aDcXTs+/JN6aNC6thmbP1So9wA5hZGG5LyGWHSf/lL/cUIjeYfqYZITbjmSB5vUBK4AZsh85uwMC1kq6SwD559SGWhiYkC0lTjsV01Dni1YnVa43bg5VhIZsPeLSGh8ofb4yBSFD56wVnpw/Ik5p03A132HbiHgdWZWbwaix38DXze5jN8EnLBO+QYIhj0EMtdUZybF18eA600OaGEheFQY7G4lRXfdM9h5CM2cLCe5LjPD3/ufw6jAoAWBfucBOC41BUPbk8LdWpZModSgqEgLv+ytZEq/RuyuMF7ng7Q+a0GKJZxm7a02NjbZbjIUKMwS4y6vFTtP0SBnC0A20hTZw9JNhEXpgfx8yTF+Z++bYiEthyunFfO5NqN7uz+CarOHJWSgncIc2dcZVrjPixgoVBOoY=
+  on:
+    tags: true
+    branch: master
