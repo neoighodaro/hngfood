@@ -4,7 +4,7 @@
 $postgresUrl = (array) @parse_url(getenv("DB_URL"));
 
 // Attempt to get "database" from postgres sql...
-$database = array_get($postgresUrl, 'database')
+$database = array_get($postgresUrl, 'host')
     ? substr($postgresUrl["path"], 1)
     : env('DB_DATABASE', 'forge');
 
