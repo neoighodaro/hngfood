@@ -26,3 +26,4 @@ deploy:
   on:
     tags: true
     branch: master
+    php: 5.5.9
