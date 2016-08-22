@@ -70,7 +70,7 @@ class Timekeeper
      */
     public function isWithinLunchOrderHours()
     {
-        return $this->isDeveloping() OR ($this->isWeekday() && $this->isHoursBetween(8, 9));
+        return $this->allowOrdersAtAnytime() OR ($this->isWeekday() && $this->isHoursBetween(8, 9));
     }
 
     /**
@@ -88,8 +88,8 @@ class Timekeeper
      *
      * @return boolean
      */
-    private function isDeveloping()
+    private function allowOrdersAtAnytime()
     {
-        return app()->environment() === 'local';
+        return env('ALLOW_ANYTIME_FOOD_ORDERS', false);
     }
 }
