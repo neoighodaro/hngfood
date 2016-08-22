@@ -1,13 +1,13 @@
 language: php
 php:
-- 5.5.9
-- 7.0
+  - 5.5.9
+  - 7.0
 before_script:
-- curl -s http://getcomposer.org/installer | php
-- php composer.phar install --dev
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --dev
 script:
-- vendor/bin/phpunit
-- vendor/bin/phpspec run
+  - vendor/bin/phpunit
+  - vendor/bin/phpspec run
 notifications:
   email:
     recipients:
