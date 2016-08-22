@@ -43,7 +43,8 @@ class Freelunch extends Eloquent
     /**
      * Get free lunches expiring tomorrow.
      *
-     * @param  $query
+     * @param      $query
+     * @param null $user
      * @return \Illuminate\Database\Query\Builder
      */
     public function scopeExpiring($query, $user = null)
@@ -58,7 +59,8 @@ class Freelunch extends Eloquent
     /**
      * Get expired free lunches.
      *
-     * @param  $query
+     * @param      $query
+     * @param null $user
      * @return \Illuminate\Database\Query\Builder
      */
     public function scopeExpired($query, $user = null)
