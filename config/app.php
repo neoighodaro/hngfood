@@ -159,6 +159,10 @@ return [
         HNG\Providers\RouteServiceProvider::class,
         HNG\Providers\SocialiteServiceProvider::class,
 
+        /*
+         * Third-Party stuff...
+         */
+        Fideloper\Proxy\TrustedProxyServiceProvider::class,
     ],
 
     /*
