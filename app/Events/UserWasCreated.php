@@ -2,19 +2,17 @@
 
 namespace HNG\Events;
 
-use HNG\Events\Event;
 use HNG\User;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UserWasCreated extends Event
-{
+class UserWasCreated extends Event {
+
     use SerializesModels;
 
     /**
      * @var User
      */
-    protected $user;
+    public $user;
 
     /**
      * Create a new event instance.
