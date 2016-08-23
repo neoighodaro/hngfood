@@ -63,6 +63,8 @@ class AuthController extends Controller
     {
         auth()->logout();
 
+        session()->forget('administrator');
+
         return redirect('/');
     }
 

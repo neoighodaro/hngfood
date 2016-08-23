@@ -43,7 +43,7 @@
                         </li>
 
                         @if (auth()->user()->hasRole('admin'))
-                        <li><a href="{{route('admin.dashboard')}}">Admin</a></li>
+                            <li><a href="{{route('admin.dashboard')}}">Admin</a></li>
                         @endif
 
                         @if (Route::is('home') === false)
