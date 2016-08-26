@@ -28,8 +28,13 @@ $router->group(['prefix' => 'auth/slack', 'namespace' => 'Auth'], function ($rou
 $router->group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router) {
     $router->get('/login', ['as' => 'admin.login', 'uses' => 'AuthController@authForm']);
     $router->post('/login', ['uses' => 'AuthController@authProcess']);
-    $router->get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'AdminController@index']);
-    $router->get('/', function () { return redirect(route('admin.dashboard')); });
+
+    $router->group(['prefix' => 'users'], function ($router) {
+        $router->get('/manage', ['as' => 'admin.users.manage', 'uses' => 'UserController@list']);
+    });
+
+    $router->get('/dashboard', ['as' => 'admin.dashboard.overview', 'uses' => 'AdminController@index']);
+    $router->get('/', ['as' => 'admin.dashboard', function () { return redirect()->route('admin.dashboard.overview'); }]);
 });
 
 

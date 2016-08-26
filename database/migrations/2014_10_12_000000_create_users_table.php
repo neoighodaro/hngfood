@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->float("wallet")->default(0.00);
             $table->unsignedInteger('role')->default(1);
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

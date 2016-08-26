@@ -157,6 +157,18 @@ class Lunchbox extends Eloquent
     }
 
     /**
+     * Get orders since a certain date.
+     *
+     * @param $query
+     * @param $since
+     * @return mixed
+     */
+    public function scopeOrdersSince($query, $since)
+    {
+        return $query->ordersBetween($since, Carbon::now());
+    }
+
+    /**
      * Get carbon instance from date.
      *
      * @param        $date

@@ -2,8 +2,10 @@
 
 namespace HNG\Providers;
 
+use HNG;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -17,6 +19,19 @@ class AuthServiceProvider extends ServiceProvider
     ];
 
     /**
+     * @const array Permissions
+     */
+    const PERMISSIONS = [
+        'inventory.manage'  => HNG\User::ADMIN,
+        'free_lunch.grant'  => HNG\User::SUPERUSER,
+        'free_lunch.view'   => HNG\User::ADMIN,
+        'free_lunch.manage' => HNG\User::SUPERADMIN,
+        'users.view'        => HNG\User::ADMIN,
+        'users.manage'      => HNG\User::SUPERADMIN,
+        '*'                 => HNG\User::SUPERADMIN,
+    ];
+
+    /**
      * Register any application authentication / authorization services.
      *
      * @param  \Illuminate\Contracts\Auth\Access\Gate  $gate
@@ -26,6 +41,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        //
+        foreach (static::PERMISSIONS as $permission => $role) {
+            Gate::define($permission, function (HNG\User $user) use ($role) {
+                return $user->hasRole($role);
+            });
+        }
     }
 }

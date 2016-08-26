@@ -3,33 +3,31 @@
 namespace HNG;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
+
+    /**
+     * User permissions in English.
+     */
+    const USER       = 'User';
+    const SUPERUSER  = 'Elevated User';
+    const MANAGER    = 'Manager';
+    const ADMIN      = 'Admin';
+    const SUPERADMIN = 'Super Admin';
 
     /**
      * @const array Roles
      */
     const ROLES = [
-        1      => 'User',
-        10     => 'Elevated User',
-        100    => 'Manager',
-        1000   => 'Admin',
-        10000  => 'Super Admin',
-    ];
-
-    /**
-     * @const array Permissions
-     */
-    const PERMISSIONS = [
-        'lunch.manage'      => 'Admin',
-        'buka.manage'       => 'Admin',
-        'free_lunch.grant'  => 'Elevated User',
-        'free_lunch.view'   => 'Admin',
-        'free_lunch.manage' => 'Super Admin',
-        '*'                 => 'Super Admin',
+        1      => self::USER,
+        10     => self::SUPERUSER,
+        100    => self::MANAGER,
+        1000   => self::ADMIN,
+        10000  => self::SUPERADMIN,
     ];
 
     /**
@@ -72,6 +70,20 @@ class User extends Authenticatable
     public function getWalletAttribute($value)
     {
         return number_format($value, 2);
+    }
+
+    /**
+     * Get wallet status.
+     *
+     * @return string
+     */
+    public function getWalletStatusAttribute()
+    {
+        $wallet = number_unformat($this->wallet);
+
+        return ($wallet < 500)
+            ? ($wallet <= 200 ? 'danger' : 'warning')
+            : 'success';
     }
 
     /**
@@ -143,6 +155,17 @@ class User extends Authenticatable
         }
 
         return (int) $roleId;
+    }
+
+    /**
+     * Get role name from ID.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getNameFromRoleId($id)
+    {
+        return array_get(static::ROLES, $id, 'N/A');
     }
 
     /**

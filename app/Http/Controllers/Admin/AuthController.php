@@ -43,6 +43,6 @@ class AuthController extends Controller {
             session(['administrator' => true]);
         }
 
-        return $validAdmin ? redirect(route('admin.dashboard')) : back();
+        return $validAdmin ? redirect()->route('admin.dashboard') : back();
     }
 }

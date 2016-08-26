@@ -1,7 +1,9 @@
 <?php
 namespace HNG\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use HNG\Http\Controllers\Controller;
+use HNG\Lunchbox;
 
 class AdminController extends Controller {
 
@@ -23,8 +25,18 @@ class AdminController extends Controller {
      */
     public function index()
     {
-        return view('admin.index', [
-            'inPageTitle' => 'Admin Dashboard',
+        $carbon = new Carbon;
+
+        $ordersOverview = [
+            'today'   => Lunchbox::ordersSince($carbon->startOfDay())->get(),
+            'month'   => Lunchbox::ordersSince($carbon->startOfMonth())->get(),
+            'year'    => Lunchbox::ordersSince($carbon->startOfYear())->get(),
+            'century' => Lunchbox::ordersSince($carbon->startOfCentury())->get()
+        ];
+
+        return view('admin.overview', [
+            'inPageTitle'    => 'Admin Dashboard',
+            'ordersOverview' => $ordersOverview,
         ]);
     }
 }

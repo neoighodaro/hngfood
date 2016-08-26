@@ -44,14 +44,14 @@ class AuthController extends Controller
                 throw new Exception("Invalid slack team.");
             }
         } catch (Exception $e) {
-            return redirect(route('auth.slack'));
+            return redirect()->route('auth.slack');
         }
 
         $authUser = $this->findOrCreateUser($user);
 
         auth()->login($authUser, true);
 
-        return redirect(route('home'));
+        return redirect()->home();
     }
 
     /**
@@ -65,7 +65,7 @@ class AuthController extends Controller
 
         session()->forget('administrator');
 
-        return redirect('/');
+        return redirect()->route('guest.home');
     }
 
     /**
