@@ -23,12 +23,12 @@
                                     <i class="glyphicon glyphicon-user"></i>
                                     User Management </a>
                             </li>
-                            @endcan
-                            {{--<li>--}}
-                                {{--<a href="#" target="_blank">--}}
-                                    {{--<i class="glyphicon glyphicon-ok"></i>--}}
-                                    {{--Tasks </a>--}}
-                            {{--</li>--}}
+                            @endif
+                            <li>
+                                <a href="#" target="_blank">
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                    Tasks </a>
+                            </li>
                             {{--<li>--}}
                                 {{--<a href="#">--}}
                                     {{--<i class="glyphicon glyphicon-flag"></i>--}}

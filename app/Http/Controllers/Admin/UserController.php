@@ -15,6 +15,9 @@ class UserController extends Controller {
      */
     public function list()
     {
-        return view('admin.users.list', ['users' => User::paginate(50)]);
+        return view('admin.users.list', [
+            'inPageTitle' => 'User Management',
+            'users' => User::orderBy('wallet', 'DESC')->paginate(50)
+        ]);
     }
 }
