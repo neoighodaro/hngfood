@@ -790,6 +790,7 @@ span.days-ago {
     line-height: 40px;
     border: none;
     outline: none;
+    width: 100%;
     font-weight: 300;
     font-family: 'Lato', 'Helvetica Neue', sans-serif;
 }

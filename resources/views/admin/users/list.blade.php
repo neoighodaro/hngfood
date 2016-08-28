@@ -22,8 +22,8 @@
                 <table class="table user-list">
                     <thead>
                     <tr>
-                        <th><span>Name</span></th>
-                        <th class="text-center"><span>Wallet</span></th>
+                        <th><span><a href="#">Name</a></span></th>
+                        <th class="text-center"><span><a href="#">Wallet</a></span></th>
                         <th class="text-center"><span>Free Lunch</span></th>
                         <th>&nbsp;</th>
                     </tr>
@@ -116,7 +116,7 @@
                             <div class="form-row">
                                 <label for="user-role">Change User Role</label>
                                 <p class="dim">Select the correct role for this user.</p>
-                                <select class="form-control" id="user-role" value="{{ $user->role }}">
+                                <select class="form-control" id="user-role" value="1">
                                     @foreach(HNG\User::ROLES as $id => $role)
                                     <option value="{{ $id }}" class="role-select role-{{ $id }}">{{ $role }}</option>
                                     @endforeach
