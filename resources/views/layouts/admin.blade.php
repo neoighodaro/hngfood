@@ -21,19 +21,20 @@
                             <li {!! Route::is('admin.users.manage') ? 'class="active"' : '' !!}>
                                 <a href="{{ route('admin.users.manage') }}">
                                     <i class="glyphicon glyphicon-user"></i>
-                                    User Management </a>
+                                    User Management
+                                </a>
                             </li>
                             @endif
                             <li>
                                 <a href="#" target="_blank">
                                     <i class="glyphicon glyphicon-ok"></i>
-                                    Tasks </a>
+                                    Free Lunch </a>
                             </li>
-                            {{--<li>--}}
-                                {{--<a href="#">--}}
-                                    {{--<i class="glyphicon glyphicon-flag"></i>--}}
-                                    {{--Help </a>--}}
-                            {{--</li>--}}
+                            <li>
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-flag"></i>
+                                    Inventory </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

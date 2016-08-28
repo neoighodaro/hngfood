@@ -75,9 +75,10 @@
                 <div class="row">
                     <div class="col-lg-12">
 
+                        @if (Gate::allows('free_lunch.manage'))
                         <div class="form-row">
                             <label for="freelunch">Free Lunch</label>
-                            <p class="dim">Increase or decrease the amount of free lunch this user has.</p>
+                            <p class="dim">Update the amount of free lunch this user has.</p>
                             <div class="input-group">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-number" data-type="minus" data-field="freelunch">
@@ -92,6 +93,8 @@
                             </span>
                             </div>
                         </div>
+                        @endif
+
                         @if (Gate::allows('roles.manage'))
                         <div class="form-row">
                             <label for="user-role">Change User Role</label>
@@ -101,6 +104,14 @@
                                 <option value="{{ $id }}" class="role-select role-{{ $id }}">{{ $role }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        @endif
+
+                        @if (Gate::allows('wallet.manage'))
+                        <div class="form-row">
+                            <label for="user-wallet">Update Wallet</label>
+                            <p class="dim">Update the users wallet with cash.</p>
+                            <input type="text" class="form-control" name="wallet" id="user-wallet" value="0.00" />
                         </div>
                         @endif
 

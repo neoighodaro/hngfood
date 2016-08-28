@@ -34,8 +34,19 @@ class UserController extends Controller {
 
         $oldUser = clone $user;
 
-        $user->setRole($request->get('role'));
-        $user->setFreelunch($request->get('freelunch'));
+        if (($wallet = $request->get('wallet', false)) !== false) {
+            $user->wallet = (float) $wallet;
+        }
+
+        if ($role = $request->get('role', false)) {
+            $user->role = (int) $role;
+        }
+
+        $user->save();
+
+        if ($request->get('freelunch')) {
+            $user->setFreelunch($request->get('freelunch'));
+        }
 
         event(new UserWasUpdated([
             'oldUser'       => $oldUser,

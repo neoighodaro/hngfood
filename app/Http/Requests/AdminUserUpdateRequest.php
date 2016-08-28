@@ -4,6 +4,7 @@ namespace HNG\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 class AdminUserUpdateRequest extends FormRequest
 {
@@ -27,6 +28,7 @@ class AdminUserUpdateRequest extends FormRequest
         return [
             'user_id'   => 'required|exists:users,id',
             'role'      => 'permission:roles.manage|roleExists',
+            'wallet'    => 'min:0|max:20000|permission:wallet.manage',
             'freelunch' => 'between:0,20|permission:free_lunch.manage',
         ];
     }

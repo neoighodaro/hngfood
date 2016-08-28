@@ -63,17 +63,6 @@ class User extends Authenticatable
     protected $with = ['freelunches'];
 
     /**
-     * Update the users role.
-     *
-     * @param $role
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-        $this->save();
-    }
-
-    /**
      * Update the freelunch of a user.
      *
      * @param $freelunch
@@ -133,6 +122,17 @@ class User extends Authenticatable
     public function getWalletAttribute($value)
     {
         return number_format($value, 2);
+    }
+
+    /**
+     * Get the user's first name.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getWalletRawAttribute($value)
+    {
+        return $value;
     }
 
     /**

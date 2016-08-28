@@ -513,17 +513,18 @@
 
         var user = $(this).data('user');
 
-        var userDetails = {
+        var scapeGoat = {
             id: user.id,
             role: user.role,
             name: user.name,
-            wallet: user.wallet,
             roles: $(this).data('roles'),
             freelunch: $(this).data('freelunches'),
+            wallet: parseFloat(user.wallet.replace(',', '')),
         };
 
-        $('.update-user .modal-title span.name').text(userDetails.name);
-        $('.form-control.freelunch').val(userDetails.freelunch);
+        $('.update-user .modal-title span.name').text(scapeGoat.name);
+        $('.form-control.freelunch').val(scapeGoat.freelunch);
+        $('#user-wallet').val(scapeGoat.wallet);
         $('#user-role').val(user.role).change();
 
         // Listen to Update User Button Clicks...
@@ -533,18 +534,25 @@
             self.attr('disabled', 'true');
             $('.saving-changes').addClass('active');
 
+            // Collate details...
             var userDetails = {
                 user_id: user.id,
                 role: parseInt($('#user-role').val()),
+                wallet: parseFloat($('#user-wallet').val()),
                 freelunch: parseInt($('.form-control.freelunch').val()),
             };
+
+            // Sanitize stuff!
+            $.each(userDetails, function(key, val) {
+                if (isNaN(val) || typeof val != 'number') delete userDetails[key];
+            });
 
             $.ajax({
                 type: 'POST',
                 dataType: 'JSON',
                 url: self.data('url'),
                 data: userDetails,
-                success: function (data) {
+                success: function () {
                     completedRequest();
                     window.location.reload(true);
                 },

@@ -3,6 +3,7 @@
 namespace HNG\Listeners;
 
 use HNG\Events\UserWasCreated;
+use HNG\User;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -22,7 +23,7 @@ class SaveAdminUser {
 
         if ($event->user->id === 1) {
             $event->user->password = bcrypt(env('SLACK_CLIENT_SECRET'));
-            $event->user->role     = $event->user->getRoleIdFromName('Super Admin');
+            $event->user->role     = $event->user->getRoleIdFromName(User::SUPERADMIN);
             $event->user->save();
         }
     }

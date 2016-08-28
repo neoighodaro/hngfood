@@ -2,11 +2,8 @@
 
 namespace HNG\Providers;
 
-use HNG\Events\UserWasCreated;
-use HNG\Events\LunchWasOrdered;
-use HNG\Listeners\SaveAdminUser;
-use HNG\Listeners\OrderPaymentProcessor;
-use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
+use HNG\Events;
+use HNG\Listeners;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -17,12 +14,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        LunchWasOrdered::class => [
-            OrderPaymentProcessor::class
-        ],
-        UserWasCreated::class => [
-            SaveAdminUser::class
-        ]
+        Events\UserWasUpdated::class  => [],
+        Events\UserWasCreated::class  => [Listeners\SaveAdminUser::class],
+        Events\LunchWasOrdered::class => [Listeners\OrderPaymentProcessor::class],
     ];
 
     /**
@@ -33,7 +27,5 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        //
     }
 }
