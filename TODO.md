@@ -8,6 +8,5 @@
 * Specified role can print orders for the day
 * Fix bug where "cancel" during slack login loops.
 * Specified role can set free lunch pool
-* [User list] filter by name
 * [User list] filter by role
 * User can Cancel orders
