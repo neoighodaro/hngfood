@@ -12,3 +12,5 @@
 * Add conditional key (icon) for changing admin passwords.
 * Add wallet to the list of user update fields.
 * Specified role can set free lunch pool
+* [User list] filter by name
+* [User list] filter by role
