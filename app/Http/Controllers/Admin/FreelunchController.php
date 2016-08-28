@@ -17,6 +17,7 @@ class FreelunchController extends Controller {
     public function overview()
     {
         return view('admin.freelunch-overview', [
+            'inPageTitle' => 'Free Lunch Overview',
             'freelunchOverview' => [
                 'unused'    => Freelunch::activeAll()->count(),
                 'remaining' => get_option('freelunch_quota', 0),
