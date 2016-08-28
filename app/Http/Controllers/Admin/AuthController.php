@@ -23,7 +23,8 @@ class AuthController extends Controller {
      */
     public function authForm()
     {
-        return view('admin.login');
+        return redirect()->route('admin.dashboard');
+        // return view('admin.login');
     }
 
     /**

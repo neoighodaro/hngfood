@@ -15,7 +15,7 @@ class AdminController extends Controller {
         parent::__construct();
 
         $this->middleware('verifyAdmin');
-        $this->middleware('verifyAdminSession');
+        //$this->middleware('verifyAdminSession');
     }
 
     /**
