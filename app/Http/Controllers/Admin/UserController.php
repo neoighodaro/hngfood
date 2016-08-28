@@ -16,16 +16,7 @@ class UserController extends Controller {
      */
     public function list()
     {
-        $users = new User;
-
-        $searchQuery = trim(request()->get('q'));
-
-        if ($searchQuery && ! empty($searchQuery)) {
-            $users = $users->where('username', 'LIKE', $searchQuery)
-                ->where('name', 'LIKE', $searchQuery);
-        }
-
-        $users = $users->paginate(50);
+        $users = (new User)->filteredList();
 
         return view('admin.users.list', [
             'searchQuery' => request()->get('q'),
@@ -46,19 +37,11 @@ class UserController extends Controller {
 
         $oldUser = clone $user;
 
-        if (($wallet = $request->get('wallet', false)) !== false) {
-            $user->wallet = (float) $wallet;
-        }
-
-        if ($user->id  > 1 && $role = $request->get('role', false)) {
-            $user->role = (int) $role;
-        }
-
-        $user->save();
-
-        if ($request->get('freelunch')) {
-            $user->setFreelunch($request->get('freelunch'));
-        }
+        $user->updateRoleWalletAndFreelunches($request->only([
+            'role',
+            'wallet',
+            'freelunch'
+        ]));
 
         event(new UserWasUpdated([
             'oldUser'       => $oldUser,

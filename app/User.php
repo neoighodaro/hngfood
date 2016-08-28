@@ -243,4 +243,54 @@ class User extends Authenticatable
 
         return $roleId;
     }
+
+    /**
+     * Get filtered list.
+     *
+     * @return static
+     */
+    public function filteredList()
+    {
+        $users = new static;
+
+        $searchQuery = trim(request()->get('q'));
+
+        if ($searchQuery && ! empty($searchQuery)) {
+            $users = $users->where('username', 'LIKE', "%{$searchQuery}%")->orWhere('name', 'LIKE', "%{$searchQuery}%");
+        }
+
+        $orderBy = trim(request()->get('order'));
+
+        if ($orderBy && in_array($orderBy, ['name', 'wallet', 'role'])) {
+            $direction = request()->get('direction');
+            $direction = strtolower($direction) == 'asc' ? 'ASC' : 'DESC';
+            $users = $users->orderBy($orderBy, $direction);
+        }
+
+        $users = $users->paginate(50);
+
+        return $users;
+    }
+
+    /**
+     * Update the users freelunch etc.
+     *
+     * @param array $params
+     */
+    public function updateRoleWalletAndFreelunches(array $params)
+    {
+        if (($wallet = array_get($params, 'wallet', false)) !== false) {
+            $this->wallet = (float) $wallet;
+        }
+
+        if ($this->id > 1 && $role = array_get($params, 'role', false)) {
+            $this->role = (int) $role;
+        }
+
+        $this->save();
+
+        if (array_get($params, 'freelunch')) {
+            $this->setFreelunch($params['freelunch']);
+        }
+    }
 }
