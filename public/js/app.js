@@ -528,7 +528,9 @@
 
         // Listen to Update User Button Clicks...
         $('.submit-user-change').off().on('click', function () {
-            $(this).attr('disabled', 'true');
+            var self = $(this);
+
+            self.attr('disabled', 'true');
             $('.saving-changes').addClass('active');
 
             var userDetails = {
@@ -537,7 +539,25 @@
                 freelunch: parseInt($('.form-control.freelunch').val()),
             };
 
-            // send data for processing...
+            $.ajax({
+                type: 'POST',
+                dataType: 'JSON',
+                url: self.data('url'),
+                data: userDetails,
+                success: function (data) {
+                    completedRequest();
+                    window.location.reload(true);
+                },
+                error: function () {
+                    shakeElement('#update-user.update-user');
+                    completedRequest();
+                }
+            });
+
+            function completedRequest() {
+                self.removeAttr('disabled').button('reset');
+                $('.saving-changes').removeClass('active');
+            }
         });
     });
 

@@ -4,8 +4,13 @@ use DB;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class Freelunch extends Eloquent
-{
+class Freelunch extends Eloquent {
+
+    /**
+     * Days free lunch is typically valid for.
+     */
+    const VALID_DAYS = 7;
+
     /**
      * @var array
      */
@@ -120,7 +125,7 @@ class Freelunch extends Eloquent
      *
      * @return integer
      */
-    public function currentUserWorth()
+    public function worth()
     {
         return $this->active()->count() * $this->cashValue();
     }
@@ -133,7 +138,7 @@ class Freelunch extends Eloquent
      */
     public function deductRequiredToSettle($orderCost)
     {
-        if (($value = $this->currentUserWorth()) == 0) {
+        if (($value = $this->worth()) == 0) {
             return $orderCost;
         }
 

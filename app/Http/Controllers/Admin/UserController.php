@@ -2,9 +2,9 @@
 
 namespace HNG\Http\Controllers\Admin;
 
-use HNG\Freelunch;
 use HNG\User;
 use HNG\Http\Requests;
+use HNG\Events\UserWasUpdated;
 use HNG\Http\Controllers\Controller;
 
 class UserController extends Controller {
@@ -22,14 +22,27 @@ class UserController extends Controller {
         ]);
     }
 
+    /**
+     * Update the user.
+     *
+     * @param  Requests\AdminUserUpdateRequest $request
+     * @return array
+     */
     public function update(Requests\AdminUserUpdateRequest $request)
     {
         $user = User::find($request->get('user_id'));
-        $user->updateRole($request->get('role'));
-        $user->updateFreelunch($request->get('freelunch'));
 
-        // event(new UserWasUpdated($request));
+        $oldUser = clone $user;
 
-        return ['status' => 'success', 'message' => 'user updated successfully.'];
+        $user->setRole($request->get('role'));
+        $user->setFreelunch($request->get('freelunch'));
+
+        event(new UserWasUpdated([
+            'oldUser'       => $oldUser,
+            'updateRequest' => $request,
+            'updatedUser'   => User::find($user->id),
+        ]));
+
+        return ['status' => 'success'];
     }
 }

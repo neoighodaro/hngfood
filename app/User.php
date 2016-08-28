@@ -67,15 +67,19 @@ class User extends Authenticatable
      *
      * @param $role
      */
-    public function updateRole($role)
+    public function setRole($role)
     {
-        if ($role = $this->getRoleIdFromNameOrId($role)) {
-            $this->role = $role;
-            $this->save();
-        }
+        $this->role = $role;
+        $this->save();
     }
 
-    public function updateFreelunch($freelunch)
+    /**
+     * Update the freelunch of a user.
+     *
+     * @param $freelunch
+     * @return bool
+     */
+    public function setFreelunch($freelunch)
     {
         if ($this->exists) {
             if ($freelunch <= 0) {
@@ -91,23 +95,33 @@ class User extends Authenticatable
 
                 foreach(range(1, ($freelunch - $currentCount)) as $key) {
                     $freeLunches[] = new Freelunch([
-                        'reason'     => 'N/A, Updated by Admin.',
-                        'from_id'    => auth()->user()->id,
                         'to_id'      => $this->id,
-                        'expires_at' => Carbon::now()->addDays(7),
+                        'from_id'    => auth()->user()->id,
+                        'reason'     => 'Updated by '.auth()->user()->name,
+                        'expires_at' => Carbon::now()->addDays(Freelunch::VALID_DAYS),
                     ]);
                 }
 
-                return $this->freelunches()->saveMany($freeLunches);
+                return (bool) $this->freelunches()->saveMany($freeLunches);
             }
 
             else if ($isIncremental === false) {
-                return Freelunch::active($this->id)
+                return (bool) Freelunch::active($this->id)
                     ->orderBy('expires_at', 'ASC')
                     ->take($currentCount - $freelunch)
                     ->delete();
             }
         }
+    }
+
+    /**
+     * Data mutator for role.
+     *
+     * @param $value
+     */
+    public function setRoleAttribute($value)
+    {
+        $this->attributes['role'] = $this->getRoleIdFromNameOrId($value);
     }
 
     /**
@@ -224,7 +238,7 @@ class User extends Authenticatable
     private function getRoleIdFromNameOrId($name)
     {
         $roleId = is_numeric($name)
-            ? (array_key_exists($name, static::ROLES) ? $name : 0)
+            ? (array_key_exists($name, static::ROLES) ? $name : static::USER)
             : $this->getRoleIdFromName($name);
 
         return $roleId;

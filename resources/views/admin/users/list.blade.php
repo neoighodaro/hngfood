@@ -108,7 +108,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary submit-user-change">Save Changes</button>
+                <button data-url="{{ route('admin.users.update') }}" class="btn btn-primary submit-user-change">Save Changes</button>
             </div>
         </div>
     </div>

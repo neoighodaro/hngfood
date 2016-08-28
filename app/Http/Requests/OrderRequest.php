@@ -64,7 +64,7 @@ class OrderRequest extends Request
         $availableCash = number_unformat(auth()->user()->wallet);
 
         if ($this->wantsToRedeemFreelunch()) {
-            $availableCash += (new Freelunch)->currentUserWorth();
+            $availableCash += (new Freelunch)->worth();
         }
 
         $orders = (array) $this->get('orders');
