@@ -50,7 +50,9 @@
         </div>
     </div>
 </div>
-{!! $users->render() !!}
+@if ($users->nextPageUrl() || $users->previousPageUrl())
+{{  $users->links() }}
+@endif
 
 <!-- Update User Modal -->
 <div class="update-user modal fade" tabindex="-1" role="dialog" aria-labelledby="update-user" id="update-user">
