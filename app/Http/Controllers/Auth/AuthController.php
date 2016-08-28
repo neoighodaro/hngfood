@@ -78,8 +78,9 @@ class AuthController extends Controller
     {
         if ($authUser = User::where('slack_id', $user->id)->first()) {
             // Update the user stuff from slack...
-            $authUser->name   = $user->name;
-            $authUser->avatar = $user->avatar;
+            $authUser->name     = $user->name;
+            $authUser->username = $user->username;
+            $authUser->avatar   = $user->avatar;
             $authUser->save();
 
             return $authUser;
@@ -87,6 +88,7 @@ class AuthController extends Controller
 
         $createdUser = User::create([
             'slack_id' => $user->id,
+            'username' => $user->username,
             'name'     => $user->name,
             'email'    => $user->email,
             'avatar'   => $user->avatar,

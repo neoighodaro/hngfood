@@ -772,3 +772,30 @@ span.days-ago {
         stroke: #ffa700;
     }
 }
+
+.filter-box {
+    margin-bottom: 20px;
+    background-color: #f6f6f6;
+    padding: 10px 20px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius: 5px;
+    color: #777;
+}
+
+.filter-box .sleek {
+    background: transparent;
+    height: 40px;
+    font-size:30px;
+    line-height: 40px;
+    border: none;
+    outline: none;
+    font-weight: 300;
+    font-family: 'Lato', 'Helvetica Neue', sans-serif;
+}
+
+.result-msg {
+    margin: 15px 0 0;
+    padding: 10px;
+    background-color: lightgoldenrodyellow;
+}

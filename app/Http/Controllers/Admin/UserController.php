@@ -16,9 +16,21 @@ class UserController extends Controller {
      */
     public function list()
     {
+        $users = new User;
+
+        $searchQuery = trim(request()->get('q'));
+
+        if ($searchQuery && ! empty($searchQuery)) {
+            $users = $users->where('username', 'LIKE', $searchQuery)
+                ->where('name', 'LIKE', $searchQuery);
+        }
+
+        $users = $users->paginate(50);
+
         return view('admin.users.list', [
+            'searchQuery' => request()->get('q'),
             'inPageTitle' => 'User Management',
-            'users' => User::paginate(50)
+            'users' => $users
         ]);
     }
 

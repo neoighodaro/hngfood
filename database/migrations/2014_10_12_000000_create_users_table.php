@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('slack_id')->unique();
+            $table->string('username');
             $table->string('email')->unique();
             $table->string('password')->nullable();
             $table->string('name');
