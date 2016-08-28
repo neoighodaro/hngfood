@@ -22,10 +22,10 @@ class AuthServiceProvider extends ServiceProvider
      * @const array Permissions
      */
     const PERMISSIONS = [
-        'inventory.manage'  => HNG\User::ADMIN,
         'free_lunch.grant'  => HNG\User::SUPERUSER,
+        'inventory.manage'  => HNG\User::ADMIN,
         'free_lunch.manage' => HNG\User::ADMIN,
-        'users.view'        => HNG\User::ADMIN,
+        'wallet.manage'     => HNG\User::SUPERADMIN,
         'users.manage'      => HNG\User::ADMIN,
         'roles.manage'      => HNG\User::SUPERADMIN,
         '*'                 => HNG\User::SUPERADMIN,
