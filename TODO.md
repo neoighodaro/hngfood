@@ -13,3 +13,5 @@
 * Admin can print orders for the day
 * Super admin can set free lunch pool
 * Super admin can manage users
+* Fix bug where "cancel" during slack login loops.
+* Add (key) for changing admin passwords.
