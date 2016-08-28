@@ -160,6 +160,7 @@ return [
         HNG\Providers\EventServiceProvider::class,
         HNG\Providers\RouteServiceProvider::class,
         HNG\Providers\SocialiteServiceProvider::class,
+        HNG\Providers\CustomValidationServiceProvider::class,
 
         /*
          * Third-Party stuff...
