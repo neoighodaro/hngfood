@@ -46,6 +46,17 @@ class Freelunch extends Eloquent {
     }
 
     /**
+     * Get all active free lunches.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeActiveAll($query)
+    {
+        return $query->whereRedeemed(0)->where('expires_at', '>', carbon::now());
+    }
+
+    /**
      * Get free lunches expiring tomorrow.
      *
      * @param      $query

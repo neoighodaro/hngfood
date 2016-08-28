@@ -44,3 +44,33 @@ if ( ! function_exists('lunchbox_cost'))
         return $lunchbox->totalCost();
     }
 }
+
+if ( ! function_exists('get_option'))
+{
+    /**
+     * Read an option from the database.
+     *
+     * @param      $name
+     * @param bool $default
+     * @return bool|mixed
+     */
+    function get_option($name, $default = false)
+    {
+        return (new HNG\Option)->name($name, HNG\Option::READONLY, $default);
+    }
+}
+
+if ( ! function_exists('add_option'))
+{
+    /**
+     * Write new option to the database.
+     *
+     * @param $name
+     * @param $value
+     * @return bool|mixed
+     */
+    function add_option($name, $value)
+    {
+        return (new HNG\Option)->name($name, $value);
+    }
+}

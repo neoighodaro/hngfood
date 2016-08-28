@@ -49,14 +49,14 @@
                                         <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                     </span>
                                 </a>
-                                @if ( ! $user->hasRole(HNG\User::SUPERADMIN))
-                                <a href="#" class="table-link danger">
-                                    <span class="fa-stack">
-                                        <i class="fa fa-square fa-stack-2x"></i>
-                                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                                @endif
+                                {{--@if ( ! $user->hasRole(HNG\User::SUPERADMIN))--}}
+                                {{--<a href="#" class="table-link danger">--}}
+                                    {{--<span class="fa-stack">--}}
+                                        {{--<i class="fa fa-square fa-stack-2x"></i>--}}
+                                        {{--<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>--}}
+                                    {{--</span>--}}
+                                {{--</a>--}}
+                                {{--@endif--}}
                             </td>
                         </tr>
                     @endforeach

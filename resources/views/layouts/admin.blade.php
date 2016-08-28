@@ -25,11 +25,15 @@
                                 </a>
                             </li>
                             @endif
-                            <li>
-                                <a href="#" target="_blank">
-                                    <i class="glyphicon glyphicon-ok"></i>
+
+                            @if (Gate::allows('free_lunch.view'))
+                            <li {!! Route::is('admin.freelunch.overview') ? 'class="active"' : '' !!}>
+                                <a href="{{ route('admin.freelunch.overview') }}">
+                                    <i class="glyphicon glyphicon-cutlery"></i>
                                     Free Lunch </a>
                             </li>
+                            @endif
+
                             <li>
                                 <a href="#">
                                     <i class="glyphicon glyphicon-flag"></i>

@@ -29,6 +29,11 @@ $router->group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router)
     $router->get('/login', ['as' => 'admin.login', 'uses' => 'AuthController@authForm']);
     $router->post('/login', ['uses' => 'AuthController@authProcess']);
 
+    $router->group(['prefix' => 'freelunch'], function ($router) {
+        $router->post('/update', ['as' => 'admin.freelunch.update', 'uses' => 'FreelunchController@update']);
+        $router->get('/overview', ['as' => 'admin.freelunch.overview', 'uses' => 'FreelunchController@overview']);
+    });
+
     $router->group(['prefix' => 'users'], function ($router) {
         $router->get('/manage', ['as' => 'admin.users.manage', 'uses' => 'UserController@list']);
         $router->post('/update', ['as' => 'admin.users.update', 'uses' => 'UserController@update']);

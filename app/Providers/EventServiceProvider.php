@@ -15,6 +15,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         Events\UserWasUpdated::class  => [],
+        Events\FreelunchQuotaUpdated::class => [],
         Events\UserWasCreated::class  => [Listeners\SaveAdminUser::class],
         Events\LunchWasOrdered::class => [Listeners\OrderPaymentProcessor::class],
     ];

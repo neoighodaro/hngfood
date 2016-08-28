@@ -505,6 +505,40 @@
 
 
     // --------------------------------------------------------------
+    // MANAGE FREE LUNCH QUOTA
+    // --------------------------------------------------------------
+
+    $('#update-freelunch .submit-change').off().on('click', function (e) {
+        var self = $(this);
+
+        self.attr('disabled', true);
+        $('#update-freelunch .saving-changes').addClass('active');
+
+        var freelunch = parseInt($('.freelunch.input-number').val());
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            url: self.data('url'),
+            data: {freelunch:freelunch},
+            success: function () {
+                completedRequest();
+                window.location.reload(true);
+            },
+            error: function () {
+                shakeElement('#update-freelunch');
+                completedRequest();
+            }
+        });
+
+        function completedRequest() {
+            self.removeAttr('disabled');
+            $('#update-freelunch .saving-changes').removeClass('active');
+        }
+    });
+
+
+    // --------------------------------------------------------------
     // CLICK EDIT USER LINK
     // --------------------------------------------------------------
 

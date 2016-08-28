@@ -24,9 +24,10 @@ class AuthServiceProvider extends ServiceProvider
     const PERMISSIONS = [
         'free_lunch.grant'  => HNG\User::SUPERUSER,
         'inventory.manage'  => HNG\User::ADMIN,
-        'free_lunch.manage' => HNG\User::ADMIN,
         'users.manage'      => HNG\User::ADMIN,
         'wallet.manage'     => HNG\User::ADMIN,
+        'free_lunch.view'   => HNG\User::ADMIN,
+        'free_lunch.manage' => HNG\User::SUPERADMIN,
         'roles.manage'      => HNG\User::SUPERADMIN,
         '*'                 => HNG\User::SUPERADMIN,
     ];

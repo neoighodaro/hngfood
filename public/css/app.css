@@ -634,6 +634,7 @@ span.days-ago {
     color: #999;
 }
 
+.update-freelunch .saving-changes,
 .update-user .saving-changes {
     position: absolute;
     width: 100%;
@@ -645,10 +646,12 @@ span.days-ago {
     display: none;
 }
 
+.update-freelunch .saving-changes.active,
 .update-user .saving-changes.active {
     display: block;
 }
 
+.update-freelunch .saving-changes .center,
 .update-user .saving-changes .center {
     position: relative;
     top: 50%;
