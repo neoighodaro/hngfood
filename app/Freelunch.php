@@ -11,10 +11,10 @@ class Freelunch extends Eloquent
      */
     protected $fillable = [
         'reason',
-        'giver_id',
+        'from_id',
         'redeemed',
         'expires_at',
-        'receiver_id',
+        'to_id',
     ];
 
     /**
@@ -36,7 +36,7 @@ class Freelunch extends Eloquent
             : $user;
 
         return $query->whereRedeemed(0)
-                     ->where('to_id', $user)
+                     ->whereToId($user)
                      ->where('expires_at', '>', Carbon::now());
     }
 
