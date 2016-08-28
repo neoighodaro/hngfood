@@ -265,11 +265,11 @@ class User extends Authenticatable
             $direction = request()->get('direction');
             $direction = strtolower($direction) == 'asc' ? 'ASC' : 'DESC';
             $users = $users->orderBy($orderBy, $direction);
+        } else {
+            $users = $users->orderBy('wallet', 'DESC');
         }
 
-        $users = $users->paginate(50);
-
-        return $users;
+        return $users->paginate(50);
     }
 
     /**
