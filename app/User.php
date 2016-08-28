@@ -2,6 +2,7 @@
 
 namespace HNG;
 
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -60,6 +61,54 @@ class User extends Authenticatable
      * {@inheritdoc}
      */
     protected $with = ['freelunches'];
+
+    /**
+     * Update the users role.
+     *
+     * @param $role
+     */
+    public function updateRole($role)
+    {
+        if ($role = $this->getRoleIdFromNameOrId($role)) {
+            $this->role = $role;
+            $this->save();
+        }
+    }
+
+    public function updateFreelunch($freelunch)
+    {
+        if ($this->exists) {
+            if ($freelunch <= 0) {
+                return (bool) $this->freelunches()->delete();
+            }
+
+            $currentCount = $this->freelunches()->count();
+
+            $isIncremental = $freelunch > $currentCount;
+
+            if ($isIncremental === true) {
+                $freeLunches = [];
+
+                foreach(range(1, ($freelunch - $currentCount)) as $key) {
+                    $freeLunches[] = new Freelunch([
+                        'reason'     => 'N/A, Updated by Admin.',
+                        'from_id'    => auth()->user()->id,
+                        'to_id'      => $this->id,
+                        'expires_at' => Carbon::now()->addDays(7),
+                    ]);
+                }
+
+                return $this->freelunches()->saveMany($freeLunches);
+            }
+
+            else if ($isIncremental === false) {
+                return Freelunch::active($this->id)
+                    ->orderBy('expires_at', 'ASC')
+                    ->take($currentCount - $freelunch)
+                    ->delete();
+            }
+        }
+    }
 
     /**
      * Get the user's first name.
