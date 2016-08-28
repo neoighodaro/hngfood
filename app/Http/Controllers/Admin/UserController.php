@@ -12,16 +12,15 @@ class UserController extends Controller {
     /**
      * Get the list of all the users.
      *
+     * @param User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function list()
+    public function list(User $user)
     {
-        $users = (new User)->filteredList();
-
         return view('admin.users.list', [
-            'searchQuery' => request()->get('q'),
             'inPageTitle' => 'User Management',
-            'users' => $users
+            'searchQuery' => request()->get('q'),
+            'users'       => $user->filteredList(),
         ]);
     }
 
@@ -37,11 +36,9 @@ class UserController extends Controller {
 
         $oldUser = clone $user;
 
-        $user->updateRoleWalletAndFreelunches($request->only([
-            'role',
-            'wallet',
-            'freelunch'
-        ]));
+        $user->updateRoleWalletAndFreelunches(
+            $request->only(['role', 'wallet', 'freelunch'])
+        );
 
         event(new UserWasUpdated([
             'oldUser'       => $oldUser,
