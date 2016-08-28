@@ -18,7 +18,7 @@ class UserController extends Controller {
     {
         return view('admin.users.list', [
             'inPageTitle' => 'User Management',
-            'users' => User::orderBy('wallet', 'DESC')->paginate(50)
+            'users' => User::paginate(50)
         ]);
     }
 
@@ -38,7 +38,7 @@ class UserController extends Controller {
             $user->wallet = (float) $wallet;
         }
 
-        if ($role = $request->get('role', false)) {
+        if ($user->id  > 1 && $role = $request->get('role', false)) {
             $user->role = (int) $role;
         }
 
