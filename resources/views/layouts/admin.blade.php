@@ -33,7 +33,7 @@
                             <li>
                                 <a href="#">
                                     <i class="glyphicon glyphicon-flag"></i>
-                                    Inventory </a>
+                                    Manage Inventory </a>
                             </li>
                         </ul>
                     </div>
