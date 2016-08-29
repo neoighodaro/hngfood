@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
 
         User::create([
             'slack_id' => env('USER_SLACK_ID'),
-            'username' => 'neo',
+            //'username' => 'neo',
             'email'    => env('USER_SLACK_EMAIL'),
             'password' => bcrypt('samplepassword'),
             'role'     => (new User)->getRoleIdFromName('Super Admin'),
