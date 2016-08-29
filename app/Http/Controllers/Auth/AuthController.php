@@ -4,6 +4,7 @@ namespace HNG\Http\Controllers\Auth;
 
 use HNG\User;
 use Exception;
+use GuzzleHttp\Client;
 use HNG\Events\UserWasCreated;
 use HNG\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
@@ -44,13 +45,63 @@ class AuthController extends Controller
                 throw new Exception("Invalid slack team.");
             }
         } catch (Exception $e) {
-            return redirect()->route('auth.slack');
+            return redirect()->home();
         }
 
         $authUser = $this->findOrCreateUser($user);
 
         auth()->login($authUser, true);
 
+        if (strpos(auth()->user()->slack_scopes, 'users:read') === false) {
+            $authUrl = 'https://slack.com/oauth/authorize?scope=users:read&'.
+                'client_id='.env('SLACK_CLIENT_ID').'&'.
+                'state='.$authUser->id.'&'.
+                'redirect_uri='.urlencode(route('auth.slack.callback.user'));
+
+            header('Location: '.$authUrl);
+            exit;
+        }
+
+        return redirect()->home();
+    }
+
+    /**
+     * Handle the callback when the users:* scope is being requested.
+     *
+     * @return Response
+     */
+    public function handleProviderCallbackUser()
+    {
+        // Required Validators!
+        ($code  = request()->get('code'))  OR abort(403);
+        ($state = request()->get('state')) OR abort(403);
+        ($user  = User::find($state))      OR abort(403);
+
+        // Get the access token...
+        $response = (new Client)->request('GET', 'https://slack.com/api/oauth.access', [
+            'query' => [
+                'code'          => $code,
+                'client_id'     => env('SLACK_CLIENT_ID'),
+                'client_secret' => env("SLACK_CLIENT_SECRET"),
+                'redirect_uri'  => route('auth.slack.callback.user')
+            ]
+        ])->getBody()->getContents();
+
+        $response = json_decode($response);
+
+        if ($response->ok == true) {
+            $userInfo = $this->getUserInfoFromSlack($response->user_id, $response->access_token);
+
+            // Update the user object based on these details...
+            $user->slack_scopes = $response->scope;
+            $user->name         = $userInfo->user->profile->real_name_normalized;
+            $user->username     = $userInfo->user->name;
+            $user->save();
+
+            auth()->login($user, true);
+        }
+
+        // Something probably went wrong somewhere...
         return redirect()->home();
     }
 
@@ -79,7 +130,6 @@ class AuthController extends Controller
         if ($authUser = User::where('slack_id', $user->id)->first()) {
             // Update the user stuff from slack...
             $authUser->name     = $user->name;
-            //$authUser->username = $user->username;
             $authUser->avatar   = $user->avatar;
             $authUser->save();
 
@@ -87,15 +137,32 @@ class AuthController extends Controller
         }
 
         $createdUser = User::create([
-            'slack_id' => $user->id,
-            //'username' => $user->username,
-            'name'     => $user->name,
-            'email'    => $user->email,
-            'avatar'   => $user->avatar,
+            'slack_id'     => $user->id,
+            'name'         => $user->name,
+            'email'        => $user->email,
+            'avatar'       => $user->avatar,
         ]);
 
         event(new UserWasCreated($createdUser));
 
         return $createdUser;
+    }
+
+    /**
+     * @param $slackUserId
+     * @param $accessToken
+     * @return mixed
+     */
+    protected function getUserInfoFromSlack($slackUserId, $accessToken)
+    {
+        // Get user details from the request...
+        $userInfo = (new Client)->request('GET', 'https://slack.com/api/users.info', [
+            'query' => [
+                'user'  => $slackUserId,
+                'token' => $accessToken,
+            ]
+        ])->getBody()->getContents();
+
+        return json_decode($userInfo);
     }
 }

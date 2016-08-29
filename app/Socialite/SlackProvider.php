@@ -13,7 +13,7 @@ class SlackProvider extends AbstractProvider implements ProviderInterface
         'identity.basic',
         'identity.team',
         'identity.email',
-        'identity.avatar'
+        'identity.avatar',
     ];
 
     /**
@@ -43,13 +43,7 @@ class SlackProvider extends AbstractProvider implements ProviderInterface
         $response = $this->getHttpClient()->get($endpoint, $options)->getBody()->getContents();
         $response = json_decode($response, true);
 
-        //$endpoint2 = 'https://slack.com/api/users.info?token='.$token.'&user='.$response['user']['id'];
-        //$response2 = $this->getHttpClient()->get($endpoint2, $options)->getBody()->getContents();
-
-        //$finalResponse = json_decode($response2, true);
-        //$finalResponse['team'] = $response['team'];
-
-        return json_decode($response, true);
+        return $response;
     }
 
     /**
@@ -59,10 +53,9 @@ class SlackProvider extends AbstractProvider implements ProviderInterface
     {
         return (new User)->setRaw($user)->map([
             'id'        => array_get($user, 'user.id'),
-            //'username'  => array_get($user, 'user.name'),
-            'name'      => array_get($user, 'user.profile.real_name_normalized'),
-            'email'     => array_get($user, 'user.profile.email'),
-            'avatar'    => array_get($user, 'user.profile.image_192'),
+            'name'      => array_get($user, 'user.name'),
+            'email'     => array_get($user, 'user.email'),
+            'avatar'    => array_get($user, 'user.image_192'),
         ]);
     }
 }

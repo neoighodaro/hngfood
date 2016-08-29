@@ -16,6 +16,7 @@
 // ------------------------------------------------------------------------
 
 $router->group(['prefix' => 'auth/slack', 'namespace' => 'Auth'], function ($router) {
+    $router->get('/callback/user', ['as' =>'auth.slack.callback.user', 'uses' => 'AuthController@handleProviderCallbackUser']);
     $router->get('/callback', 'AuthController@handleProviderCallback');
     $router->get('/', ['as' => 'auth.slack', 'uses' => 'AuthController@redirectToProvider']);
 });
