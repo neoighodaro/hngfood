@@ -7,14 +7,19 @@ use Laravel\Socialite\Two\ProviderInterface;
 class SlackProvider extends AbstractProvider implements ProviderInterface
 {
     /**
-     * {@inheritdoc}
+     * SlackProvider constructor.
+     *
+     * @param Request $request
+     * @param string  $clientId
+     * @param string  $clientSecret
+     * @param string  $redirectUrl
      */
-    protected $scopes = [
-        'identity.basic',
-        'identity.team',
-        'identity.email',
-        'identity.avatar',
-    ];
+    public function __construct(Request $request, $clientId, $clientSecret, $redirectUrl)
+    {
+        $this->scopes = explode(',', env('SLACK_DEFAULT_PERMISSIONS'));
+
+        parent::__construct($request, $clientId, $clientSecret, $redirectUrl);
+    }
 
     /**
      * {@inheritdoc}
