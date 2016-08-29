@@ -37,7 +37,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'slack_id', 'avatar', 'password',
+        'name', 'email', 'slack_id', 'avatar', 'password', 'slack_scopes'
     ];
 
     /**
