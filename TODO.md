@@ -11,3 +11,4 @@
 * How to place slack orders
 * /wallet show balance
 * [BUG] Free lunch
+* Redirecting to get the user details should not happen immediately after logging in
