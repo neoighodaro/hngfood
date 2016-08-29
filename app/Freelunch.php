@@ -36,7 +36,7 @@ class Freelunch extends Eloquent {
      */
     public function scopeActive($query, $user = null)
     {
-        $user = $user == null
+        $user = ($user === null)
             ? (auth()->user() ? auth()->user()->id : 0)
             : $user;
 

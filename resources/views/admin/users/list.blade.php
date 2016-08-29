@@ -40,10 +40,10 @@
                                 <span class="label label-{{ $user->walletStatus }}">&#8358;{{ $user->wallet }}</span>
                             </td>
                             <td class="text-center">
-                                <span>{{ $user->freelunches()->count() }}</span>
+                                <span>{{ $user->freelunches()->active()->count() }}</span>
                             </td>
                             <td style="width: 20%;">
-                                <a href="#" class="table-link" data-user="{{ collect($user)->only(['id', 'name', 'role', 'wallet'])->toJson() }}" data-freelunches="{{ $user->freelunches()->count() }}" data-roles="{{ json_encode($user::ROLES) }}" data-toggle="modal" data-target="#update-user">
+                                <a href="#" class="table-link" data-user="{{ collect($user)->only(['id', 'name', 'role', 'wallet'])->toJson() }}" data-freelunches="{{ $user->freelunches()->active()->count() }}" data-roles="{{ json_encode($user::ROLES) }}" data-toggle="modal" data-target="#update-user">
                                     <span class="fa-stack">
                                         <i class="fa fa-square fa-stack-2x"></i>
                                         <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
@@ -80,10 +80,10 @@
                 <div class="modal-body">
                     <div class="saving-changes">
                         <div class="center">
-                            <div class="showbox">
-                                <div class="loader">
-                                    <svg class="circular" viewBox="25 25 50 50">
-                                        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+                            <div class="le-showbox">
+                                <div class="le-loader">
+                                    <svg class="le-circular" viewBox="25 25 50 50">
+                                        <circle class="le-path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
                                     </svg>
                                 </div>
                             </div>

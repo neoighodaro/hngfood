@@ -659,7 +659,7 @@ span.days-ago {
     margin-top: -50px;
 }
 
-.showbox {
+.le-showbox {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -668,20 +668,20 @@ span.days-ago {
     padding: 5%;
 }
 
-.loader {
+.le-loader {
     position: relative;
     margin: 0 auto;
     width: 50px;
 }
-.loader:before {
+.le-loader:before {
     content: '';
     display: block;
     padding-top: 100%;
 }
 
-.circular {
-    -webkit-animation: rotate 2s linear infinite;
-    animation: rotate 2s linear infinite;
+.le-circular {
+    -webkit-animation: le-rotate 2s linear infinite;
+    animation: le-rotate 2s linear infinite;
     height: 100%;
     -webkit-transform-origin: center center;
     transform-origin: center center;
@@ -694,28 +694,28 @@ span.days-ago {
     margin: auto;
 }
 
-.path {
+.le-path {
     stroke-dasharray: 1, 200;
     stroke-dashoffset: 0;
-    -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
-    animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+    -webkit-animation: le-dash 1.5s ease-in-out infinite, le-color 6s ease-in-out infinite;
+    animation: le-dash 1.5s ease-in-out infinite, le-color 6s ease-in-out infinite;
     stroke-linecap: round;
 }
 
-@-webkit-keyframes rotate {
+@-webkit-keyframes le-rotate {
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
 }
 
-@keyframes rotate {
+@keyframes le-rotate {
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
 }
-@-webkit-keyframes dash {
+@-webkit-keyframes le-dash {
     0% {
         stroke-dasharray: 1, 200;
         stroke-dashoffset: 0;
@@ -729,7 +729,7 @@ span.days-ago {
         stroke-dashoffset: -124px;
     }
 }
-@keyframes dash {
+@keyframes le-dash {
     0% {
         stroke-dasharray: 1, 200;
         stroke-dashoffset: 0;
@@ -743,7 +743,7 @@ span.days-ago {
         stroke-dashoffset: -124px;
     }
 }
-@-webkit-keyframes color {
+@-webkit-keyframes le-color {
     100%,
     0% {
         stroke: #d62d20;
@@ -759,7 +759,7 @@ span.days-ago {
         stroke: #ffa700;
     }
 }
-@keyframes color {
+@keyframes le-color {
     100%,
     0% {
         stroke: #d62d20;

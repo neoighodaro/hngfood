@@ -26,10 +26,10 @@
                 <div class="modal-body">
                     <div class="saving-changes">
                         <div class="center">
-                            <div class="showbox">
-                                <div class="loader">
-                                    <svg class="circular" viewBox="25 25 50 50">
-                                        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+                            <div class="le-showbox">
+                                <div class="le-loader">
+                                    <svg class="le-circular" viewBox="25 25 50 50">
+                                        <circle class="le-path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
                                     </svg>
                                 </div>
                             </div>

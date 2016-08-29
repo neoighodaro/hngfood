@@ -34,10 +34,11 @@
                         <li><a href="{{route('auth.slack')}}">Sign in with Slack</a></li>
                     @else
                         <li>
-                            <a href="#" title="{{ $freelunches->count() > 0 ? 'You have '.$freelunches->count().' free lunches' : '' }}">
+                            <?php $freeLunches = auth()->user()->freelunches()->active(); ?>
+                            <a href="#" title="{{ $freeLunches->count() > 0 ? 'You have '.$freeLunches->count().' free lunches' : '' }}">
                                 &#8358;{{ auth()->user()->wallet }}
-                                @if ($freelunches->count() > 0)
-                                <span class="label label-danger freelunch">{{$freelunches->count()}}</span>
+                                @if ($freeLunches->count() > 0)
+                                <span class="label label-danger freelunch">{{$freeLunches->count()}}</span>
                                 @endif
                             </a>
                         </li>

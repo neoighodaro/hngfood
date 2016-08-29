@@ -18,8 +18,6 @@ class Controller extends BaseController {
      */
     public function __construct()
     {
-        app('view')->share([
-            'freelunches' => (new Freelunch)->active()
-        ]);
+        // Stub
     }
 }

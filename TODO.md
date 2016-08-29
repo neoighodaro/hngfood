@@ -9,3 +9,5 @@
 * [User list] filter by role
 * User can Cancel orders
 * How to place slack orders
+* /wallet show balance
+* [BUG] Free lunch
