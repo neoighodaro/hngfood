@@ -72,7 +72,7 @@ class ClassName extends AnotherClass
 			$message = "Free lunch alert!"
 
 			$attachments[]['text'] = "{$giver->username} just gave {$lunch_receiver} a free lunch for {$reason}";
-			return $this->slackResponse($message, $attachments);
+			return $this->slackResponse($message, $attachments, false);
 		}
 
 		return $this->slackResponse("Well this sucks!","The free lunch wasn't given");
