@@ -12,9 +12,8 @@ class WalletController extends Controller {
      */
     public function __construct()
     {
-        // @TODO Create Middlewares to verify the request...
-        // $this->middleware('userExists')->only('balance');
-        // $this->middleware('verifySlackRequest');
+         $this->middleware('SlackUserExists');
+         //$this->middleware('verifySlackRequest');
     }
 
     /**

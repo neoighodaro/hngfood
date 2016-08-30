@@ -58,5 +58,6 @@ class Kernel extends HttpKernel
         'timekeeper' => Middleware\VerifyValidOrderTime::class,
         'verifyAdmin' => Middleware\VerifyAdminUser::class,
         'verifyAdminSession' => Middleware\VerifyAdminSession::class,
+        'SlackUserExists' => Middleware\SlackCommandUserExists::class,
     ];
 }
