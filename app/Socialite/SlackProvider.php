@@ -1,5 +1,6 @@
 <?php namespace HNG\Socialite;
 
+use Illuminate\Http\Request;
 use Laravel\Socialite\Two\User;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
