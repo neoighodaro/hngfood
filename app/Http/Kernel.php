@@ -59,6 +59,6 @@ class Kernel extends HttpKernel
         'verifyAdmin' => Middleware\VerifyAdminUser::class,
         'verifyAdminSession' => Middleware\VerifyAdminSession::class,
         'SlackUserExists' => Middleware\SlackCommandUserExists::class,
-        'verifySlackRequest' => Middleware\SlackCommandVerifier::class,
+        'verifyFreeLunchRequest' => Middleware\FreeLunchCommandVerifier::class,
     ];
 }

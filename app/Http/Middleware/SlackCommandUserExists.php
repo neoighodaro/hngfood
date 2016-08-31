@@ -4,9 +4,12 @@ namespace HNG\Http\Middleware;
 
 use Closure;
 use HNG\User;
+use HNG\Traits\SlackResponse;
 
 class SlackCommandUserExists
 {
+    use SlackResponse;
+    
     /**
      * Handle an incoming request.
      *
@@ -17,10 +20,7 @@ class SlackCommandUserExists
     public function handle($request, Closure $next)
     {
         if ( ! $user = User::whereSlackId($request->get('user_id'))->first()) {
-            return [
-                'response_type' => 'ephemeral',
-                'text'          => 'Sorry! You are not a registered user.',
-            ];
+            return $this->slackResponse('Sorry! You are not a registered user.');
         }
 
         return $next($request);
