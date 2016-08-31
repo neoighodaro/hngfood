@@ -13,7 +13,9 @@ class SlackCommandRequest extends FormRequest
      */
     public function authorize()
     {
-        return strpos(env('SLACK_COMMAND_TOKENS'), $this->get('token')) !== false;
+        $validTokens = explode(',', env('SLACK_COMMAND_TOKENS'));
+
+        return in_array($this->get('token'), $validTokens);
     }
 
     /**
