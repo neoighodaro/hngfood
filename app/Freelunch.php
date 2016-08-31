@@ -220,4 +220,23 @@ class Freelunch extends Eloquent {
     {
         return $this->belongsTo(User::class, 'to_id');
     }
+
+    /**
+     * Give Free Lunch
+     *
+     * @param $giver_id
+     * @param $receiver_id
+     * @param $reason
+     * @param $expires_at
+     * @return bool
+     */
+    public function give($giver_id, $receiver_id, $reason = null, $expires_at = null)
+    {
+        return (bool) static::create([
+            'reason'        => ($reason)? $reason : "crush?",
+            'from_id'       => $giver_id,
+            'to_id'         => $receiver_id,
+            'expires_at'    => ($expires_at)? $expires_at :  date('Y-m-d H::i::s', strtotime('+ 3 days')),
+            ]);
+    }
 }

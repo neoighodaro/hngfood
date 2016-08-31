@@ -12,7 +12,7 @@ class WalletController extends Controller {
      */
     public function __construct()
     {
-         $this->middleware('SlackUserExists');
+         $this->middleware(['SlackUserExists', 'verifySlackRequest']);
          //$this->middleware('verifySlackRequest');
     }
 
