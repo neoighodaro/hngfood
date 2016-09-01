@@ -20,3 +20,5 @@ trait SlackResponse{
         ];
     }
 
+}
+
