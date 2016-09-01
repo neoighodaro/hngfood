@@ -17,5 +17,3 @@ class FreeLunchGiveoutRequest extends SlackCommandRequest
 		return array_get($receiver,0);
 	}
 }
-
-?>
