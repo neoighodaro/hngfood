@@ -4,7 +4,6 @@ machine:
 test:
   override:
     - phpunit
-    - ./vendor/bin/phpspec run
 deployment:
   production:
     branch: master
