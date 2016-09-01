@@ -8,4 +8,4 @@ deployment:
   production:
     branch: master
     commands:
-      - /var/www/food.hng.tech/deploy.sh
+      - ssh neo@prod-server "/var/www/food.hng.tech/deploy.sh"
