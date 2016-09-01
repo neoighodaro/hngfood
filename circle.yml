@@ -1,0 +1,12 @@
+machine:
+  php:
+    version: 5.6
+test:
+  override:
+    - phpunit
+    - ./vendor/bin/phpspec run
+deployment:
+  production:
+    branch: master
+    commands:
+      - /var/www/food.hng.tech/deploy.sh
