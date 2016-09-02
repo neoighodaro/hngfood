@@ -3,17 +3,19 @@
 namespace HNG\Http\Controllers\SlackCommands;
 
 use HNG\User;
+use HNG\Traits\SlackResponse;
 use HNG\Http\Requests\SlackCommandRequest as Request;
 
 class WalletController extends Controller {
+
+    use SlackResponse;
 
     /**
      * WalletController constructor.
      */
     public function __construct()
     {
-         $this->middleware(['SlackUserExists', 'verifySlackRequest']);
-         //$this->middleware('verifySlackRequest');
+         $this->middleware(['SlackUserExists']);
     }
 
     /**
