@@ -233,10 +233,10 @@ class Freelunch extends Eloquent {
     public function give($from, $to, $reason)
     {
         return (bool) static::create([
-            'reason'        => $reason,
-            'from_id'       => $from,
-            'to_id'         => $to,
-            'expires_at'    => Carbon::now()->addDays(static::VALID_DAYS)->format('Y-m-d H::i::s'),
-            ]);
+            'to_id'      => $to,
+            'from_id'    => $from,
+            'reason'     => $reason,
+            'expires_at' => Carbon::now()->addDays(static::VALID_DAYS),
+        ]);
     }
 }
