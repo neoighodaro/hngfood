@@ -14,14 +14,14 @@ trait SlackResponse{
     protected function slackResponse($text, array $attachments = [], $private = true)
     {
         if (is_array($text) AND (isset($text['text']) OR isset($text['attachments']))) {
-            return $text;
+            return response()->json($text);
         }
 
-        return [
+        return response()->json([
             'text'          => $text,
             'attachments'   => $attachments,
             'response_type' => $private ? 'ephemeral' : 'in_channel',
-        ];
+        ]);
     }
 
 }

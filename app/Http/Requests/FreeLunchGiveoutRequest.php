@@ -1,7 +1,7 @@
 <?php 
 namespace HNG\Http\Requests;
 
-class FreeLunchGiveoutRequest extends SlackCommandRequest
+class FreeLunchGiveOutRequest extends SlackCommandRequest
 {
 	public function getFreeLunchReason()
 	{

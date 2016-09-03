@@ -234,8 +234,8 @@ class Freelunch extends Eloquent {
     {
         return (bool) static::create([
             'to_id'      => $to,
-            'from_id'    => $from,
             'reason'     => $reason,
+            'from_id'    => $from,
             'expires_at' => Carbon::now()->addDays(static::VALID_DAYS),
         ]);
     }
