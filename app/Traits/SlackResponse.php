@@ -1,9 +1,9 @@
 <?php 
 namespace HNG\Traits;
 
-trait SlackResponse{
+trait SlackResponse {
 
-/**
+    /**
      * Return data in the slack response format.
      *
      * @param       $text
