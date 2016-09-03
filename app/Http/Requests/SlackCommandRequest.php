@@ -19,6 +19,16 @@ class SlackCommandRequest extends FormRequest
     }
 
     /**
+     * Get the text from slack.
+     *
+     * @return mixed
+     */
+    public function slack($key)
+    {
+        return $this->get($key);
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
