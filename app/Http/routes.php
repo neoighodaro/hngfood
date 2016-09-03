@@ -23,6 +23,17 @@ $router->group(['prefix' => 'auth/slack', 'namespace' => 'Auth'], function ($rou
 
 
 // ------------------------------------------------------------------------
+// SLACK COMMANDS
+// ------------------------------------------------------------------------
+
+$router->group(['prefix' => 'slack/commands', 'namespace' => 'SlackCommands'], function ($router) {
+    $router->group(['prefix' => 'wallet'], function ($router) {
+        $router->post('balance', ['as' => 'slack.cmd.wallet.balance', 'uses' => 'WalletController@balance']);
+    });
+});
+
+
+// ------------------------------------------------------------------------
 // ADMINISTRATION
 // ------------------------------------------------------------------------
 

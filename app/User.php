@@ -182,6 +182,18 @@ class User extends Authenticatable
     }
 
     /**
+     * Get user from slack ID.
+     *
+     * @param $query
+     * @param $slackId
+     * @return mixed
+     */
+    public function scopeFromSlackId($query, $slackId)
+    {
+        return $query->whereSlackId($slackId);
+    }
+
+    /**
      * Check if the user has a role.
      *
      * @param  string|int $name

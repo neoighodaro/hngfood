@@ -15,7 +15,20 @@ class WalletController extends Controller {
      */
     public function __construct()
     {
-         $this->middleware(['SlackUserExists']);
+         $this->middleware(['SlackUserExists', 'WalletSlackSubCommandExists']);
+    }
+
+    /**
+     * Route to the proper method.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function router(Request $request)
+    {
+        $method = $request->slack('text');
+
+        return $this->{$method}($request);
     }
 
     /**
@@ -33,8 +46,14 @@ class WalletController extends Controller {
 
         $attachments = [];
 
-        if ($freelunches = $user->freelunches()->active()->count()) {
-            $attachments[]['text'] = "You currently have {$freelunches} free ".str_plural('lunch', $freelunches);
+        if ($freelunches = $user->freelunches()->active($user->id)->count()) {
+            $msg = sprintf(
+                "You stud! You currently have %d free %s.",
+                $freelunches,
+                str_plural('lunch', $freelunches)
+            );
+
+            $attachments[]['text'] = $msg;
         }
 
         return $this->slackResponse($message, $attachments);
