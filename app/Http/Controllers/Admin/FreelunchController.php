@@ -7,7 +7,7 @@ use HNG\Http\Requests;
 use HNG\Http\Controllers\Controller;
 use HNG\Events\FreelunchQuotaUpdated;
 
-class FreelunchController extends Controller {
+class FreeLunchController extends Controller {
 
     /**
      * Display the free lunch overview.

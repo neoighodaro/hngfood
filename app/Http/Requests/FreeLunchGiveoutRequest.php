@@ -14,6 +14,6 @@ class FreeLunchGiveoutRequest extends SlackCommandRequest
 	{
 		preg_match('/\s*@\w+/', $this->get('text'), $receiver);
 
-		return array_get($receiver,0);
+		return array_get($receiver, 0);
 	}
 }
