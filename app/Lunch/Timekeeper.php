@@ -1,6 +1,7 @@
 <?php namespace HNG\Lunch;
 
 use Carbon\Carbon;
+use HNG\Option;
 
 class Timekeeper
 {
@@ -90,6 +91,8 @@ class Timekeeper
      */
     private function allowOrdersAtAnytime()
     {
-        return env('ALLOW_ANYTIME_FOOD_ORDERS', false);
+        $fallback = env('ALLOW_ANYTIME_FOOD_ORDERS');
+
+        return (bool) option('ALLOW_ANYTIME_FOOD_ORDERS', Option::READONLY, $fallback);
     }
 }
