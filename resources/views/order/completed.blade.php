@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Order Completed - '.env('APP_NAME'))
+@section('title', 'Order Completed - '.option('APP_NAME'))
 
 @section('content')
 <div class="enjoy-it">

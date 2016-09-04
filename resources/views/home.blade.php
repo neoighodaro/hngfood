@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard - '.env('APP_NAME'))
+@section('title', 'Dashboard - '.option('APP_NAME'))
 @section('content')
 
 @if ( ! $timekeeper->isWithinLunchOrderHours())

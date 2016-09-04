@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Order History - '.env('APP_NAME'))
+@section('title', 'Order History - '.option('APP_NAME'))
 
 @section('content')
 <script type="text/javascript">var HNGOrderHistory = {};</script>
