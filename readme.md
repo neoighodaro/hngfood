@@ -1,7 +1,7 @@
 # Food Order Management for Teams!
 
 [![Travis Status][badge_build]][link-travis]
-[![Codeship Status][badge_codeship]][link_codeship]
+[![Codeship Status][badge_codeship]][link-scodeship]
 
 HNGFood is a food order management app for teams.
 
