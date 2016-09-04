@@ -81,7 +81,7 @@
 
     <footer>
         <div class="container">
-            <p class="creators">Created by the HNG tech team.</p>
+            <p class="creators">{{ option('SITE_FOOTER_TEXT') }}</p>
         </div>
     </footer>
 

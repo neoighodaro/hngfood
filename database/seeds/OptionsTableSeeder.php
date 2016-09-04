@@ -14,6 +14,7 @@ class OptionsTableSeeder extends Seeder
         $options = [
             'APP_NAME'        => 'HNGFood',
             'SITE_LOGO'       => '/img/logo.svg',
+            'SITE_FOOTER_TEXT' => 'Created by the HNG.tech team',
             'LANGUAGE'        => 'en',
             'CURRENCY'        => '₦',
             'FREELUNCH_QUOTA' => 100,
