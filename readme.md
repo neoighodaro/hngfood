@@ -1,7 +1,7 @@
 # Food Order Management for Teams!
 
 [![Travis Status][badge_build]][link-travis]
-[![Codeship Status for neoighodaro/hngfood](https://codeship.com/projects/86128440-51ea-0134-1c4d-325cd45b0ee2/status?branch=master)](https://codeship.com/projects/171407)
+[![Codeship Status][badge_codeship]][link_codeship]
 
 HNGFood is a food order management app for teams.
 
@@ -22,8 +22,10 @@ Thanks to all those who were instrumental in the creation of this application.
 - [Neo Ighodaro][link-author]
 - [All Contributors][link-contributors]
 
-[badge_build]:   https://travis-ci.org/neoighodaro/hngfood.svg
+[badge_build]:    https://travis-ci.org/neoighodaro/hngfood.svg
+[badge_codeship]: https://codeship.com/projects/86128440-51ea-0134-1c4d-325cd45b0ee2/status
 
 [link-travis]:           https://travis-ci.org/neoighodaro/hngfood
 [link-author]:           http://neoighodaro.com
+[link-codehip]:          https://codeship.com/projects/171407
 [link-contributors]:     https://github.com/neoighodaro/hngfood/graphs/contributors
