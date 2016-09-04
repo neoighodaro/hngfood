@@ -39,6 +39,11 @@
                                     <i class="glyphicon glyphicon-flag"></i>
                                     Manage Inventory </a>
                             </li>
+                            <li>
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-cog"></i>
+                                    Site Settings </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

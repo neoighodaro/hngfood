@@ -1,10 +1,9 @@
 <?php namespace HNG\Lunch;
 
 use Carbon\Carbon;
-use HNG\Option;
 
-class Timekeeper
-{
+class Timekeeper {
+
     /**
      * @var Carbon
      */
@@ -61,7 +60,10 @@ class Timekeeper
      */
     public function duringWorkingHours()
     {
-        return $this->isWeekday() && $this->isHoursBetween(8, 6);
+        $sob = option('WORK_RESUMES');
+        $cob = option('WORK_CLOSES');
+
+        return $this->isWeekday() && $this->isHoursBetween($sob, $cob);
     }
 
     /**
@@ -71,7 +73,10 @@ class Timekeeper
      */
     public function isWithinLunchOrderHours()
     {
-        return $this->allowOrdersAtAnytime() OR ($this->isWeekday() && $this->isHoursBetween(8, 9));
+        $soo = option('ORDER_RESUMES');
+        $coo = option('ORDER_CLOSES');
+
+        return $this->allowOrdersAtAnytime() OR ($this->isWeekday() && $this->isHoursBetween($soo, $coo));
     }
 
     /**
@@ -91,8 +96,6 @@ class Timekeeper
      */
     private function allowOrdersAtAnytime()
     {
-        $fallback = env('ALLOW_ANYTIME_FOOD_ORDERS');
-
-        return (bool) option('ALLOW_ANYTIME_FOOD_ORDERS', Option::READONLY, $fallback);
+        return (bool) get_option('ALLOW_ANYTIME_FOOD_ORDERS');
     }
 }

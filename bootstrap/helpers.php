@@ -74,3 +74,23 @@ if ( ! function_exists('add_option'))
         return (new HNG\Option)->name($name, $value);
     }
 }
+
+if ( ! function_exists('option'))
+{
+    /**
+     * Get or set an option.
+     *
+     * @param        $name
+     * @param string $value
+     * @param bool   $default
+     * @return bool|mixed
+     */
+    function option($name, $value = HNG\Option::READONLY, $default = false)
+    {
+        if ($value === HNG\Option::READONLY) {
+            return get_option($name, $default);
+        }
+
+        return add_option($name, $value);
+    }
+}
