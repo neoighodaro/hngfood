@@ -41,9 +41,6 @@ class WalletController extends Controller {
     {
         $user = User::whereSlackId($request->get('user_id'))->first();
 
-        // @TODO Random text depending on how much...
-        $message = "You have NGN{$user->wallet} in your wallet!";
-
         $attachments = [];
 
         if ($freelunches = $user->freelunches()->active($user->id)->count()) {
@@ -56,6 +53,19 @@ class WalletController extends Controller {
             $attachments[]['text'] = $msg;
         }
 
+        $message = "You have NGN{$user->wallet} in your wallet!";
+
         return $this->slackResponse($message, $attachments);
+    }
+
+    /**
+     * Coming soon...
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function transfer(Request $request)
+    {
+        return $this->slackResponse("This feature is not available yet!");
     }
 }
