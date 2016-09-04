@@ -24,7 +24,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    @include('partials.logo')
+                    <img src="{{ asset(option('SITE_LOGO')) }}" alt="Logo">
                 </a>
             </div>
 

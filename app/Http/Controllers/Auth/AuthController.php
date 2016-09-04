@@ -54,7 +54,7 @@ class AuthController extends Controller
 
         if (strpos(auth()->user()->slack_scopes, 'users:read') === false) {
             $authUrl = 'https://slack.com/oauth/authorize?scope=users:read&'.
-                'client_id='.env('SLACK_CLIENT_ID').'&'.
+                'client_id='.option('SLACK_CREDENTIALS.client_id').'&'.
                 'state='.$authUser->id.'&'.
                 'redirect_uri='.urlencode(route('auth.slack.callback.user'));
 
@@ -81,8 +81,8 @@ class AuthController extends Controller
         $response = (new Client)->request('GET', 'https://slack.com/api/oauth.access', [
             'query' => [
                 'code'          => $code,
-                'client_id'     => env('SLACK_CLIENT_ID'),
-                'client_secret' => env("SLACK_CLIENT_SECRET"),
+                'client_id'     => option('SLACK_CREDENTIALS.client_id'),
+                'client_secret' => option('SLACK_CREDENTIALS.client_secret'),
                 'redirect_uri'  => route('auth.slack.callback.user')
             ]
         ])->getBody()->getContents();

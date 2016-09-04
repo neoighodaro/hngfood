@@ -17,7 +17,7 @@ class SlackProvider extends AbstractProvider implements ProviderInterface
      */
     public function __construct(Request $request, $clientId, $clientSecret, $redirectUrl)
     {
-        $this->scopes = explode(',', env('SLACK_DEFAULT_PERMISSIONS'));
+        $this->scopes =  (array) option('SLACK_DEFAULT_PERMISSIONS');
 
         parent::__construct($request, $clientId, $clientSecret, $redirectUrl);
     }

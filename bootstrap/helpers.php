@@ -56,7 +56,17 @@ if ( ! function_exists('get_option'))
      */
     function get_option($name, $default = false)
     {
-        return (new HNG\Option)->name($name, HNG\Option::READONLY, $default);
+        if (strpos($name, '.') !== false) {
+            $key = explode('.', $name)[0];
+
+            $option = (new HNG\Option)->name($key, HNG\Option::READONLY, $default);
+
+            $value = array_get($option, str_replace($key.'.', '', $name));
+        } else {
+            $value = (new HNG\Option)->name($name, HNG\Option::READONLY, $default);
+        }
+
+        return $value;
     }
 }
 

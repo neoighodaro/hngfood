@@ -13,6 +13,8 @@ class OptionsTableSeeder extends Seeder
     {
         $options = [
             'APP_NAME'        => 'HNGFood',
+            'SITE_LOGO'       => '/img/logo.svg',
+            'LANGUAGE'        => 'en',
             'CURRENCY'        => '₦',
             'FREELUNCH_QUOTA' => 100,
             'PERMISSIONS'     => \HNG\Providers\AuthServiceProvider::PERMISSIONS,
@@ -21,6 +23,14 @@ class OptionsTableSeeder extends Seeder
             'WORK_CLOSES'     => 6,
             'ORDER_RESUMES'   => 6,
             'ORDER_CLOSES'    => 9,
+            'SLACK_CREDENTIALS' => [
+                'client_id'     => env('SLACK_CLIENT_ID'),
+                'domain'        => env('SLACK_TEAM_DOMAIN'),
+                'client_secret' => env('SLACK_CLIENT_SECRET'),
+                'redirect'      => env('SLACK_REDIRECT_CALLBACK_URL'),
+            ],
+            'SLACK_COMMAND_TOKENS'      => explode(',', env('SLACK_COMMAND_TOKENS')),
+            'SLACK_DEFAULT_PERMISSIONS' => explode(',', env('SLACK_DEFAULT_PERMISSIONS')),
         ];
 
         foreach ($options as $name => $value) {

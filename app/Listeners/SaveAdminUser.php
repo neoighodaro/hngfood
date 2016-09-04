@@ -22,7 +22,6 @@ class SaveAdminUser {
         // change this value.
 
         if ($event->user->id === 1) {
-            $event->user->password = bcrypt(env('SLACK_CLIENT_SECRET'));
             $event->user->role     = $event->user->getRoleIdFromName(User::SUPERADMIN);
             $event->user->save();
         }
