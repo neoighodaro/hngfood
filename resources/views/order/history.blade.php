@@ -29,7 +29,7 @@
                                 <span class="days-ago">{{$lunchbox->created_at->diffForHumans()}}</span>
                             </p>
                         </td>
-                        <td>&#8358;{{ $lunchbox->totalCost() }}</td>
+                        <td>@cash($lunchbox->totalCost())</td>
                     </tr>
                 @endforeach
                 </tbody>

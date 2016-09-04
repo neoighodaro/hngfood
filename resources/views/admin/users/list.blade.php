@@ -37,7 +37,7 @@
                                 <span class="user-subhead">{{ $user->getNameFromRoleId($user->role) }}</span>
                             </td>
                             <td class="text-center">
-                                <span class="label label-{{ $user->walletStatus }}">&#8358;{{ $user->wallet }}</span>
+                                <span class="label label-{{ $user->walletStatus }}">@cash($user->wallet)</span>
                             </td>
                             <td class="text-center">
                                 <span>{{ $user->freelunches()->active()->count() }}</span>

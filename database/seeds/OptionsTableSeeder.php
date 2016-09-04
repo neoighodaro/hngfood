@@ -16,7 +16,7 @@ class OptionsTableSeeder extends Seeder
             'CURRENCY'        => '₦',
             'FREELUNCH_QUOTA' => 100,
             'PERMISSIONS'     => \HNG\Providers\AuthServiceProvider::PERMISSIONS,
-            'ALLOW_ANYTIME_FOOD_ORDERS' => 'false',
+            'ALLOW_ANYTIME_FOOD_ORDERS' => 'true',
             'WORK_RESUMES'    => 8,
             'WORK_CLOSES'     => 6,
             'ORDER_RESUMES'   => 6,

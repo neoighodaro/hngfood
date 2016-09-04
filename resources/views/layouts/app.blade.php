@@ -36,7 +36,7 @@
                         <li>
                             <?php $freeLunches = auth()->user()->freelunches()->active(); ?>
                             <a href="#" title="{{ $freeLunches->count() > 0 ? 'You have '.$freeLunches->count().' free lunches' : '' }}">
-                                &#8358;{{ auth()->user()->wallet }}
+                                @cash(auth()->user()->wallet)
                                 @if ($freeLunches->count() > 0)
                                 <span class="label label-danger freelunch">{{$freeLunches->count()}}</span>
                                 @endif
@@ -89,5 +89,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/FitText.js/1.2.0/jquery.fittext.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+    @stack('scripts')
 </body>
 </html>

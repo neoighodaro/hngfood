@@ -44,18 +44,18 @@
                                 @foreach ($order->ordersGrouped() as $food)
                                 <tr>
                                     <th scope="row">{{$food->name}}</th>
-                                    <td class="right">&#8358;{{$food->cost * $food->servings}}</td>
+                                    <td class="right">@cash($food->cost * $food->servings)</td>
                                 </tr>
                                 @endforeach
                                 @if ($order->buka->base_cost > 0)
                                 <tr>
                                     <th scope="row">Base Cost</th>
-                                    <td class="right">&#8358;{{$order->buka->base_cost}}</td>
+                                    <td class="right">@cash($order->buka->base_cost)</td>
                                 </tr>
                                 @endif
                                 <tr>
                                     <th scope="row">Total:</th>
-                                    <td class="right">&#8358;{{$order->totalCost()}}</td>
+                                    <td class="right">@cash($order->totalCost())</td>
                                 </tr>
                             </tbody>
                         </table>

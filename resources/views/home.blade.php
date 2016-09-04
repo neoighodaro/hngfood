@@ -86,7 +86,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="fixed-cost">
-                            <p><strong class="modal-title"></strong> will cost <strong>&#8358;<span class="modal-cost"></span></strong> per serving.
+                            <p><strong class="modal-title"></strong> will cost <strong>@curr('<span class="modal-cost"></span>')</strong> per serving.
                             How many servings/portions you would like to order.</p>
                             <select class="form-control" id="amount-servings" title="Servings Count">
                                 @foreach ([1,2,3,4,5] as $serving)
@@ -100,7 +100,7 @@
                             <form class="form-inline" id="single-order">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <div class="input-group-addon">&#8358;</div>
+                                        <div class="input-group-addon">@currency()</div>
                                         <input autocomplete="off" type="text" class="form-control" id="amount-input" placeholder="Amount" />
                                         <div class="input-group-addon">.00</div>
                                     </div>
@@ -143,7 +143,7 @@
                         <div class="alert alert-success">
                             <strong>Cool!</strong> Your order was placed.
                         </div>
-                        <p>Heres a quick summary of your order. Your current balance is <strong>&#8358;{{ auth()->user()->wallet }}</strong></p>
+                        <p>Heres a quick summary of your order. Your current balance is <strong>@wallet()</strong></p>
                         <p>&nbsp;</p>
                         <table class="table order order-overview-table"></table>
                         @if ($freelunch->count() > 0)
@@ -173,8 +173,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="pull-left">
-                    <h2>Total: &#8358;<span class="totalCost"></span></h2>
-                    <span>Base Cost: &#8358;<span class="baseCost"></span></span>
+                    <h2>Total: @cash('<span class="totalCost"></span>')</h2>
+                    <span>Base Cost: @cash('<span class="baseCost"></span>')</span>
                 </div>
                 <button class="btn btn-success pull-right complete-btn" data-toggle="modal" data-target="#order-overview">Complete Order</button>
             </div>
