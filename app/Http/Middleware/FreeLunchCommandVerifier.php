@@ -6,7 +6,6 @@ use Closure;
 use HNG\User;
 use HNG\Traits\SlackResponse;
 use Illuminate\Support\Facades\Gate;
-use HNG\Http\Requests\FreeLunchGiveOutRequest as FreeLunchRequest;
 
 class FreeLunchCommandVerifier {
 
@@ -19,7 +18,7 @@ class FreeLunchCommandVerifier {
      * @param  \Closure                                        $next
      * @return mixed
      */
-    public function handle(FreeLunchGiveOutRequest $request, Closure $next)
+    public function handle($request, Closure $next)
     {
         $from = User::fromSlackId($request->get('user_id'))->first();
 
@@ -33,10 +32,10 @@ class FreeLunchCommandVerifier {
             return $this->slackResponse("Oops! Can't find {$username} in your team!");
         }
 
-        if ( ! $reason = $request->getFreeLunchReason()) {
+        if ( ! $reason = $this->getFreeLunchReason($request)) {
             return $this->slackResponse("You have to tell what the free lunch is for!");
         }
-
+        
         return $next($from, $to, $reason);
     }
 
@@ -44,15 +43,25 @@ class FreeLunchCommandVerifier {
      * Get reciever username from text & remove the @ from the username.
      *
      * @param $request
-     * @return mixed
+     * @return string
      */
-    private function getUsernameFromRequest()
+    private function getUsernameFromRequest($request)
     {
-        return str_replace('@', '', (new FreeLunchRequest)->getFreeLunchReceiver());
+        preg_match('/\s*@\w+/', $request->get('text'), $receiver);
+
+        return str_replace('@', '', array_get($receiver, 0, ''));
     }
 
-    private function getFreeLunchReason()
+    /**
+     * Get freelunch reason from text.
+     *
+     * @param $request
+     * @return string
+     */
+    private function getFreeLunchReason($request)
     {
-        return (new FreeLunchRequest)->getFreeLunchReason();
+        $reason = preg_replace('/\s*@\w+/', '', $request->get('text'));
+
+        return trim($reason);
     }
 }
