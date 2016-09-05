@@ -17,7 +17,7 @@ class Option extends Model {
      */
     const CACHE_KEY    = 'HNG_FOOD_OPTIONS';
     const CACHE_EXPIRY = 5;
-    const USE_CACHE    = false;
+    const USE_CACHE    = true;
 
     /**
      * @var array
@@ -69,7 +69,7 @@ class Option extends Model {
     {
         $this->recacheOptions();
 
-        $option = static::whereOption($name)->first();
+        $option = static::select('value')->whereOption($name)->first();
 
         return $option ? $option->value : $default;
     }
@@ -84,7 +84,8 @@ class Option extends Model {
     protected function readOptionFromFileCache($option, $default)
     {
         if ($options = Cache::get(static::CACHE_KEY)) {
-            return array_get($options, $option, $default);
+            $optionValue = $options->where('option', $option)->first()->get('value');
+            dd($option, $optionValue);
         }
 
         return $default;
@@ -134,7 +135,7 @@ class Option extends Model {
     {
         if (static::USE_CACHE === true) {
             Cache::has(static::CACHE_KEY) AND Cache::forget(static::CACHE_KEY);
-            Cache::put(static::CACHE_KEY, static::all()->toArray(), static::CACHE_EXPIRY);
+            Cache::put(static::CACHE_KEY, static::all(), static::CACHE_EXPIRY);
         }
     }
 }

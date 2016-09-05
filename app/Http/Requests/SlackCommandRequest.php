@@ -19,6 +19,7 @@ class SlackCommandRequest extends FormRequest
     /**
      * Get the text from slack.
      *
+     * @param $key
      * @return mixed
      */
     public function slack($key)
