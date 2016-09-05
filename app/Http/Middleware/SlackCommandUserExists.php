@@ -18,7 +18,7 @@ class SlackCommandUserExists
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
+    {   
         if ( ! $user = User::whereSlackId($request->get('user_id'))->first()) {
             return $this->slackResponse('Sorry! You are not a registered user.');
         }

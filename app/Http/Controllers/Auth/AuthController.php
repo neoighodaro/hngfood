@@ -41,7 +41,7 @@ class AuthController extends Controller
         try {
             $user = Socialite::driver('slack')->user();
 
-            if (array_get($user->user, 'team.domain') !== config('services.slack.domain')) {
+            if (array_get($user->user, 'team.domain') !== option('slack_credentials.domain')) {
                 throw new Exception("Invalid slack team.");
             }
         } catch (Exception $e) {

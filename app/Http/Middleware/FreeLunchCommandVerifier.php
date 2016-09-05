@@ -6,7 +6,7 @@ use Closure;
 use HNG\User;
 use HNG\Traits\SlackResponse;
 use Illuminate\Support\Facades\Gate;
-use HNG\Http\Requests\FreeLunchGiveOutRequest;
+use HNG\Http\Requests\FreeLunchGiveOutRequest as FreeLunchRequest;
 
 class FreeLunchCommandVerifier {
 
@@ -41,13 +41,18 @@ class FreeLunchCommandVerifier {
     }
 
     /**
-     * Remove the @ from the username.
+     * Get reciever username from text & remove the @ from the username.
      *
      * @param $request
      * @return mixed
      */
-    protected function getUsernameFromRequest($request)
+    private function getUsernameFromRequest()
     {
-        return str_replace('@', '', $request->getFreeLunchReceiver());
+        return str_replace('@', '', (new FreeLunchRequest)->getFreeLunchReceiver());
+    }
+
+    private function getFreeLunchReason()
+    {
+        return (new FreeLunchRequest)->getFreeLunchReason();
     }
 }
