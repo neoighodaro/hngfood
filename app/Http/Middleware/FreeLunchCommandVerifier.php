@@ -36,7 +36,15 @@ class FreeLunchCommandVerifier {
             return $this->slackResponse("You have to tell what the free lunch is for!");
         }
         
-        return $next($from, $to, $reason);
+        if(!$freelunch_quota = option('freelunch_quota'))
+        {
+            return $this->slackResponse("Sorry your team's out of free lunches. Maybe next time.");
+        }
+
+        $request->attributes->add(['from' => $from, 'to' => $to, 'reason' => $reason, 'freelunch_quota' => 
+            $freelunch_quota]);
+        
+        return $next($request);
     }
 
     /**
