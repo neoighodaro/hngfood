@@ -84,8 +84,9 @@ class Option extends Model {
     protected function readOptionFromFileCache($option, $default)
     {
         if ($options = Cache::get(static::CACHE_KEY)) {
-            $optionValue = $options->where('option', $option)->first()->get('value');
-            dd($option, $optionValue);
+            $optionValue = $options->where('option', $option)->first()->toArray();
+
+            return $optionValue ? array_get($optionValue, 'value', $default) : $default;
         }
 
         return $default;
