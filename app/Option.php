@@ -45,13 +45,13 @@ class Option extends Model {
                 : $this->readOptionFromDatabase($name, $default);
         }
 
-        $option = $this->whereOption($name)->first();
+        $option = $this->whereOption($name);
 
-        $updatedOrCreatedAnOption = (bool) $option
-            ? $option->update(['value', $value])
+        $updatedOrCreatedAnOption = (bool) $option->first()
+            ? $option->update(['value' => $value])
             : static::create(['option' => $name, 'value' => $value]);
 
-        if ($updatedOrCreatedAnOption === true) {
+        if ($updatedOrCreatedAnOption == true) {
             $this->recacheOptions();
         }
 
