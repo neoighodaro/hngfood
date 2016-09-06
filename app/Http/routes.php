@@ -47,7 +47,7 @@ $router->group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router)
     });
 
     $router->group(['prefix' => 'users'], function ($router) {
-        $router->get('/manage', ['as' => 'admin.users.manage', 'uses' => 'UserController@list']);
+        $router->get('/manage', ['as' => 'admin.users.manage', 'uses' => 'UserController@userlist']);
         $router->post('/update', ['as' => 'admin.users.update', 'uses' => 'UserController@update']);
     });
 
