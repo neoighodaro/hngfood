@@ -30,6 +30,8 @@ $router->group(['prefix' => 'slack/commands', 'namespace' => 'SlackCommands'], f
     $router->group(['prefix' => 'wallet'], function ($router) {
         $router->post('balance', ['as' => 'slack.cmd.wallet.balance', 'uses' => 'WalletController@balance']);
     });
+    
+    $router->post('freelunch',['as' => 'slack.cmd.freelunch', 'uses' => 'FreeLunchController@give']);
 });
 
 
