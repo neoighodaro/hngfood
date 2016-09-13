@@ -3,7 +3,7 @@
 [![Travis Status][badge_build]][link-travis]
 [![Codeship Status][badge_codeship]][link-codeship]
 [![Codacy Badge][badge_codacy]][link-codacy]
-[![Software License][badge_license]](LICENSE.md)
+[![Software License][badge_license]](license.md)
 
 HNGFood is a food order management app for teams.
 
