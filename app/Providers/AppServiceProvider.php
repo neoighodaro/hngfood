@@ -17,7 +17,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->app->environment() === 'local') {
-            $this->app->register(IdeHelperServiceProvider::class);
             $this->app->register(GeneratorsServiceProvider::class);
         }
 
