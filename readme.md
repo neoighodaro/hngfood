@@ -1,7 +1,7 @@
 # Food Order Management for Teams!
 
 [![Travis Status][badge_build]][link-travis]
-[![Codeship Status][badge_codeship]][link-scodeship]
+[![Codeship Status][badge_codeship]][link-codeship]
 
 HNGFood is a food order management app for teams.
 
@@ -27,5 +27,5 @@ Thanks to all those who were instrumental in the creation of this application.
 
 [link-travis]:           https://travis-ci.org/neoighodaro/hngfood
 [link-author]:           http://neoighodaro.com
-[link-codehip]:          https://codeship.com/projects/171407
+[link-codeship]:          https://codeship.com/projects/171407
 [link-contributors]:     https://github.com/neoighodaro/hngfood/graphs/contributors

@@ -9,7 +9,6 @@
 * [User list] filter by role
 * User can Cancel orders
 * How to place slack orders help page
-* /wallet show balance
 * Redirecting to get the user details should not happen immediately after logging in
 * /food order last -> Reorder your last meal
 * /food order saved rice -> Order one of your saved dishes
