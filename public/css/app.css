@@ -366,7 +366,7 @@ span.days-ago {
 
 .modal {
   text-align: center;
-  padding: 0!important;
+  padding: 0;
 }
 
 .modal:before {
@@ -492,16 +492,6 @@ span.days-ago {
 .profile-sidebar {
     /*padding: 20px 0 10px 0;*/
     background: #fff;
-}
-
-.profile-userpic img {
-    float: none;
-    margin: 0 auto;
-    width: 30%;
-    height: 30%;
-    -webkit-border-radius: 50% !important;
-    -moz-border-radius: 50% !important;
-    border-radius: 50% !important;
 }
 
 .profile-usermenu {

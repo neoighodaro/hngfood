@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Order History - '.env('APP_NAME'))
+@section('title', 'Order History - '.option('APP_NAME'))
 
 @section('content')
 <script type="text/javascript">var HNGOrderHistory = {};</script>
@@ -29,7 +29,7 @@
                                 <span class="days-ago">{{$lunchbox->created_at->diffForHumans()}}</span>
                             </p>
                         </td>
-                        <td>&#8358;{{ $lunchbox->totalCost() }}</td>
+                        <td>@cash($lunchbox->totalCost())</td>
                     </tr>
                 @endforeach
                 </tbody>

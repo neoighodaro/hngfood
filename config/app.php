@@ -166,6 +166,8 @@ return [
          * Third-Party stuff...
          */
         Fideloper\Proxy\TrustedProxyServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
+
     ],
 
     /*
@@ -217,6 +219,7 @@ return [
          * Third-party
          */
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Debugbar'  => Barryvdh\Debugbar\Facade::class,
 
     ],
 

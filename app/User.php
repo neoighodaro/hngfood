@@ -76,7 +76,7 @@ class User extends Authenticatable
             }
 
             $currentCount = $this->freelunches()->count();
-
+            
             $isIncremental = $freelunch > $currentCount;
 
             if ($isIncremental === true) {
@@ -166,7 +166,7 @@ class User extends Authenticatable
      */
     public function freelunches()
     {
-        return $this->hasMany(Freelunch::class, 'to_id');
+        return $this->hasMany(Freelunch::class, 'to_id')->where('expires_at','>=', Carbon::now());
     }
 
     /**

@@ -20,7 +20,7 @@ class FreeLunchController extends Controller {
             'inPageTitle' => 'Free Lunch Overview',
             'freelunchOverview' => [
                 'unused'    => Freelunch::activeAll()->count(),
-                'remaining' => get_option('freelunch_quota', 0),
+                'remaining' => (int) option('FREELUNCH_QUOTA'),
             ]
         ]);
     }
@@ -34,9 +34,9 @@ class FreeLunchController extends Controller {
     public function update(Requests\FreelunchUpdateRequest $request)
     {
         $newQuota = $request->get('freelunch');
-        $oldQuota = (int) get_option('freelunch_quota');
+        $oldQuota = (int) option('FREELUNCH_QUOTA');
 
-        if ($saved = add_option('freelunch_quota', $newQuota)) {
+        if ($saved = add_option('FREELUNCH_QUOTA', $newQuota)) {
             event(new FreelunchQuotaUpdated($oldQuota, $newQuota));
         }
 

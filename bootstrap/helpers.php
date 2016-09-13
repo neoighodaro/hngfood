@@ -39,7 +39,7 @@ if ( ! function_exists('lunchbox_cost'))
     {
         $lunchbox = $lunchbox instanceof HNG\Lunchbox
             ? $lunchbox
-            : HNG\Lunchbox::find($lunchbox);
+            : (new HNG\Lunchbox)->find($lunchbox);
 
         return $lunchbox->totalCost();
     }
@@ -56,7 +56,17 @@ if ( ! function_exists('get_option'))
      */
     function get_option($name, $default = false)
     {
-        return (new HNG\Option)->name($name, HNG\Option::READONLY, $default);
+        if (strpos($name, '.') !== false) {
+            $key = explode('.', $name)[0];
+
+            $option = (new HNG\Option)->name($key, HNG\Option::READONLY, $default);
+
+            $value = array_get($option, str_replace($key.'.', '', $name));
+        } else {
+            $value = (new HNG\Option)->name($name, HNG\Option::READONLY, $default);
+        }
+
+        return $value;
     }
 }
 
@@ -72,5 +82,25 @@ if ( ! function_exists('add_option'))
     function add_option($name, $value)
     {
         return (new HNG\Option)->name($name, $value);
+    }
+}
+
+if ( ! function_exists('option'))
+{
+    /**
+     * Get or set an option.
+     *
+     * @param        $name
+     * @param string $value
+     * @param bool   $default
+     * @return bool|mixed
+     */
+    function option($name, $value = HNG\Option::READONLY, $default = false)
+    {
+        if ($value === HNG\Option::READONLY) {
+            return get_option($name, $default);
+        }
+
+        return add_option($name, $value);
     }
 }

@@ -231,7 +231,7 @@ class Freelunch extends Eloquent {
      * @return bool
      */
     public function give($from, $to, $reason)
-    {
+    {   
         return (bool) static::create([
             'to_id'      => $to,
             'reason'     => $reason,

@@ -4,7 +4,7 @@ namespace HNG\Http\Controllers\SlackCommands;
 
 use HNG\User;
 use HNG\Traits\SlackResponse;
-use HNG\Http\Requests\SlackCommandRequest as Request;
+use HNG\Http\Requests\WalletBalanceRequest as Request;
 
 class WalletController extends Controller {
 
@@ -26,7 +26,7 @@ class WalletController extends Controller {
      */
     public function router(Request $request)
     {
-        $method = $request->slack('text');
+        $method = $request->getSlackText();
 
         return $this->{$method}($request);
     }
@@ -61,10 +61,9 @@ class WalletController extends Controller {
     /**
      * Coming soon...
      *
-     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
-    public function transfer(Request $request)
+    public function transfer()
     {
         return $this->slackResponse("This feature is not available yet!");
     }

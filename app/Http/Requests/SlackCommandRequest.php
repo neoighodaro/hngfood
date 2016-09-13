@@ -4,8 +4,8 @@ namespace HNG\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SlackCommandRequest extends FormRequest
-{
+class SlackCommandRequest extends FormRequest {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,19 +13,7 @@ class SlackCommandRequest extends FormRequest
      */
     public function authorize()
     {
-        $validTokens = explode(',', env('SLACK_COMMAND_TOKENS'));
-
-        return in_array($this->get('token'), $validTokens);
-    }
-
-    /**
-     * Get the text from slack.
-     *
-     * @return mixed
-     */
-    public function slack($key)
-    {
-        return $this->get($key);
+        return in_array($this->get('token'), (array) option('SLACK_COMMAND_TOKENS'));
     }
 
     /**

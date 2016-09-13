@@ -22,7 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('avatar')->nullable();
             $table->float("wallet")->default(0.00);
-            $table->string('slack_scopes')->default(env('SLACK_DEFAULT_PERMISSIONS'));
+            $table->string('slack_scopes')
+                ->default("identity.basic,identity.team,identity.email,identity.avatar");
             $table->unsignedInteger('role')->default(1);
             $table->rememberToken();
             $table->softDeletes();

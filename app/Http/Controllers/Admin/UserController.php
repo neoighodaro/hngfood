@@ -15,7 +15,7 @@ class UserController extends Controller {
      * @param User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function list(User $user)
+    public function userlist(User $user)
     {
         return view('admin.users.list', [
             'inPageTitle' => 'User Management',

@@ -3,6 +3,7 @@
 namespace HNG;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Option extends Model {
 
@@ -10,6 +11,13 @@ class Option extends Model {
      * @var
      */
     const READONLY = '__NOTHINGNESS__';
+
+    /**
+     * Cache key and expiry in minutes.
+     */
+    const CACHE_KEY    = 'HNG_FOOD_OPTIONS';
+    const CACHE_EXPIRY = 5;
+    const USE_CACHE    = true;
 
     /**
      * @var array
@@ -22,7 +30,7 @@ class Option extends Model {
     public $timestamps = false;
 
     /**
-     * Get an option value.
+     * Get or Set an option value.
      *
      * @param         $name
      * @param  string $value
@@ -31,17 +39,57 @@ class Option extends Model {
      */
     public function name($name, $value = self::READONLY, $default = false)
     {
-        $option = $this->whereOption($name)->first();
-
-        if ($value === self::READONLY) {
-            return $option ? $option->value : $default;
+        if ($value === static::READONLY) {
+            return (static::USE_CACHE AND Cache::has(static::CACHE_KEY))
+                ? $this->readOptionFromFileCache($name, $default)
+                : $this->readOptionFromDatabase($name, $default);
         }
 
-        if ($option = $this->whereOption($name)->first()) {
-            return (bool) $option->update(['value' => $value]);
+        $option = $this->whereOption($name);
+
+        $updatedOrCreatedAnOption = (bool) $option->first()
+            ? $option->update(['value' => $value])
+            : static::create(['option' => $name, 'value' => $value]);
+
+        if ($updatedOrCreatedAnOption == true) {
+            $this->recacheOptions();
         }
 
-        return (bool) $this->create(['option' => $name, 'value' => $value]);
+        return $updatedOrCreatedAnOption;
+    }
+
+    /**
+     * Read this option from database.
+     *
+     * @param  $name
+     * @param  $default
+     * @return mixed
+     */
+    protected function readOptionFromDatabase($name, $default)
+    {
+        $this->recacheOptions();
+
+        $option = static::select('value')->whereOption($name)->first();
+
+        return $option ? $option->value : $default;
+    }
+
+    /**
+     * Read the option from the file cache.
+     *
+     * @param  $option
+     * @param  $default
+     * @return mixed
+     */
+    protected function readOptionFromFileCache($option, $default)
+    {
+        if ($options = Cache::get(static::CACHE_KEY)) {
+            $optionValue = $options->where('option', $option)->first()->toArray();
+
+            return $optionValue ? array_get($optionValue, 'value', $default) : $default;
+        }
+
+        return $default;
     }
 
     /**
@@ -79,5 +127,16 @@ class Option extends Model {
     {
         $string = json_decode($string);
         return json_last_error() === JSON_ERROR_NONE;
+    }
+
+    /**
+     * Cache the options table.
+     */
+    protected function recacheOptions()
+    {
+        if (static::USE_CACHE === true) {
+            Cache::has(static::CACHE_KEY) AND Cache::forget(static::CACHE_KEY);
+            Cache::put(static::CACHE_KEY, static::all(), static::CACHE_EXPIRY);
+        }
     }
 }
