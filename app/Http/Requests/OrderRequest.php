@@ -34,7 +34,7 @@ class OrderRequest extends Request
         $orders = (array) $this->get('orders');
 
         // Set validation rules for certain keys in each order in the array
-        foreach ($orders as $key => $order) {
+        foreach (array_keys($orders) as $key) {
             $rules["orders.{$key}.note"]     = "between:1,255";
             $rules["orders.{$key}.servings"] = "required|numeric|between:1,5";
             $rules["orders.{$key}.id"]       = "required|exists:lunches,id,buka_id,{$buka_id}";

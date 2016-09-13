@@ -59,7 +59,7 @@ class AuthController extends Controller
                 'redirect_uri='.urlencode(route('auth.slack.callback.user'));
 
             header('Location: '.$authUrl);
-            exit;
+            return;
         }
 
         return redirect()->home();

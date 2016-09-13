@@ -61,10 +61,9 @@ class WalletController extends Controller {
     /**
      * Coming soon...
      *
-     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
-    public function transfer(Request $request)
+    public function transfer()
     {
         return $this->slackResponse("This feature is not available yet!");
     }

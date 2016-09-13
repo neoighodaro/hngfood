@@ -19,13 +19,11 @@ class FreeLunchController extends Controller {
 	}
 
 	/**
-	* Give free lunch to a user
-	* 
-	* @param $from
-	* @param $to
-	* @param $reason
-    * @return \Illuminate\Http\Response
-	*/
+	 * Give free lunch to a user
+	 *
+	 * @param  Request $request
+	 * @return \Illuminate\Http\Response
+	 */
 	public function give(Request $request)
 	{	
 		$from 	= $request->slack('from');
@@ -36,7 +34,7 @@ class FreeLunchController extends Controller {
 
 		$freelunch_quota	= $request->slack('freelunch_quota');
 
-		if ($done = (new Freelunch)->give($from->id, $to->id, $reason))
+		if ((new Freelunch)->give($from->id, $to->id, $reason))
 		{
 			event(new FreelunchQuotaUpdated($freelunch_quota, $freelunch_quota - 1));
 

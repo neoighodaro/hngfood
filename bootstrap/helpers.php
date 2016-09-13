@@ -39,7 +39,7 @@ if ( ! function_exists('lunchbox_cost'))
     {
         $lunchbox = $lunchbox instanceof HNG\Lunchbox
             ? $lunchbox
-            : HNG\Lunchbox::find($lunchbox);
+            : (new HNG\Lunchbox)->find($lunchbox);
 
         return $lunchbox->totalCost();
     }
