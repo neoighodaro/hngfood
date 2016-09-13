@@ -1,6 +1,6 @@
 # TODO
 
-[ ] Handle wrong slack team error in a better way...
+[] Handle wrong slack team error in a better way...
 [ ] Specified role can manage bukas
 [ ] Specified role can manage bukas lunch
 [ ] Specified role can view single & collective user orders for day(s) ranges
