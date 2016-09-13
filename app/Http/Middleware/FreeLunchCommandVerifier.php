@@ -6,7 +6,6 @@ use Closure;
 use HNG\User;
 use HNG\Traits\SlackResponse;
 use Illuminate\Support\Facades\Gate;
-use HNG\Http\Requests\FreeLunchGiveOutRequest;
 
 class FreeLunchCommandVerifier {
 
@@ -19,7 +18,7 @@ class FreeLunchCommandVerifier {
      * @param  \Closure                                        $next
      * @return mixed
      */
-    public function handle(FreeLunchGiveOutRequest $request, Closure $next)
+    public function handle($request, Closure $next)
     {
         $from = User::fromSlackId($request->get('user_id'))->first();
 
@@ -33,21 +32,44 @@ class FreeLunchCommandVerifier {
             return $this->slackResponse("Oops! Can't find {$username} in your team!");
         }
 
-        if ( ! $reason = $request->getFreeLunchReason()) {
+        if ( ! $reason = $this->getFreeLunchReason($request)) {
             return $this->slackResponse("You have to tell what the free lunch is for!");
         }
+        
+        if(!$freelunch_quota = option('freelunch_quota'))
+        {
+            return $this->slackResponse("Sorry your team's out of free lunches. Maybe next time.");
+        }
 
-        return $next($from, $to, $reason);
+        $request->attributes->add(['from' => $from, 'to' => $to, 'reason' => $reason, 'freelunch_quota' => 
+            $freelunch_quota]);
+        
+        return $next($request);
     }
 
     /**
-     * Remove the @ from the username.
+     * Get reciever username from text & remove the @ from the username.
      *
      * @param $request
-     * @return mixed
+     * @return string
      */
-    protected function getUsernameFromRequest($request)
+    private function getUsernameFromRequest($request)
     {
-        return str_replace('@', '', $request->getFreeLunchReceiver());
+        preg_match('/\s*@\w+/', $request->get('text'), $receiver);
+
+        return str_replace('@', '', array_get($receiver, 0, ''));
+    }
+
+    /**
+     * Get freelunch reason from text.
+     *
+     * @param $request
+     * @return string
+     */
+    private function getFreeLunchReason($request)
+    {
+        $reason = preg_replace('/\s*@\w+/', '', $request->get('text'));
+
+        return trim($reason);
     }
 }

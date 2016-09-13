@@ -30,6 +30,8 @@ $router->group(['prefix' => 'slack/commands', 'namespace' => 'SlackCommands'], f
     $router->group(['prefix' => 'wallet'], function ($router) {
         $router->post('balance', ['as' => 'slack.cmd.wallet.balance', 'uses' => 'WalletController@balance']);
     });
+    
+    $router->post('freelunch',['as' => 'slack.cmd.freelunch', 'uses' => 'FreeLunchController@give']);
 });
 
 
@@ -47,7 +49,7 @@ $router->group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router)
     });
 
     $router->group(['prefix' => 'users'], function ($router) {
-        $router->get('/manage', ['as' => 'admin.users.manage', 'uses' => 'UserController@list']);
+        $router->get('/manage', ['as' => 'admin.users.manage', 'uses' => 'UserController@userlist']);
         $router->post('/update', ['as' => 'admin.users.update', 'uses' => 'UserController@update']);
     });
 
