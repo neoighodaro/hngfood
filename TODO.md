@@ -14,3 +14,7 @@ Things to be done
 - [ ] Redirecting to get the user details should not happen immediately after logging in
 - [ ] /food order last -> Reorder your last meal
 - [ ] /food order saved rice -> Order one of your saved dishes
+- [ ] 100% Code coverage + Maximum code quality.
+- [ ] Complete the documentation.
+- [ ] Add localization.
+- [ ] Add installer.
