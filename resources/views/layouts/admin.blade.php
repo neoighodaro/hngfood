@@ -32,7 +32,7 @@
                             @endif
 
                             <li>
-                                <a href="#">
+                                <a href="{{ route('admin.inventory.manage') }}">
                                     <i class="glyphicon glyphicon-flag"></i>
                                     Manage Inventory </a>
                             </li>
