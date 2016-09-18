@@ -55,6 +55,7 @@ $router->group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router)
 
     $router->group(['prefix' => 'inventory'], function ($router) {
         $router->get('/manage', ['as' => 'admin.inventory.manage', 'uses' => 'InventoryController@index']);
+        $router->post('/manage/add', ['as' => 'admin.inventory.manage.add', 'uses' => 'InventoryController@addBuka']);
     });
 
     $router->get('/dashboard', ['as' => 'admin.dashboard.overview', 'uses' => 'AdminController@index']);

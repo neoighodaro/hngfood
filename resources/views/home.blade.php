@@ -86,7 +86,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="fixed-cost">
-                            <p><strong class="modal-title"></strong> will cost <strong>@curr('<span class="modal-cost"></span>')</strong> per serving.
+                            <p><strong class="modal-title"></strong> will cost <strong>@cash('<span class="modal-cost"></span>')</strong> per serving.
                             How many servings/portions you would like to order.</p>
                             <select class="form-control" id="amount-servings" title="Servings Count">
                                 @foreach ([1,2,3,4,5] as $serving)

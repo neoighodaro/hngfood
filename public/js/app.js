@@ -363,7 +363,6 @@
 
                 // Display the offset...
                 $('.free-lunch-alert').fadeIn();
-
             }
         });
 
@@ -522,7 +521,6 @@
             url: self.data('url'),
             data: {freelunch:freelunch},
             success: function () {
-                completedRequest();
                 window.location.reload(true);
             },
             error: function () {
@@ -531,9 +529,11 @@
             }
         });
 
-        function completedRequest() {
-            self.removeAttr('disabled');
-            $('#update-freelunch .saving-changes').removeClass('active');
+        function completedRequest(leaveState) {
+            if (leaveState !== true) {
+                self.removeAttr('disabled');
+                $('#update-freelunch .saving-changes').removeClass('active');
+            }
         }
     });
 
@@ -587,7 +587,6 @@
                 url: self.data('url'),
                 data: userDetails,
                 success: function () {
-                    completedRequest();
                     window.location.reload(true);
                 },
                 error: function () {
@@ -604,6 +603,63 @@
     });
 
 
+    // --------------------------------------------------------------
+    // ADD NEW BUKA
+    // --------------------------------------------------------------
+
+    $('button.create-buka').off().on('click', function () {
+        var self     = $(this);
+        var inputBuka = $('#buka-name');
+        var inputCost = $('#buka-base-cost');
+        var buka     = inputBuka.val();
+        var baseCost = parseFloat(inputCost.val());
+        var btnText  = self.text();
+
+        if (isNaN(baseCost) || baseCost < 0.00) {
+            baseCost = 0.00;
+        }
+
+        if (buka == '' || buka.length <= 2) {
+            return completedRequest(false);
+        }
+
+        var btn      = self;
+        var alertErr = $('.create-buka-modal .alert-danger');
+        var alertOk  = $('.create-buka-modal .alert-success');
+
+        btn.attr('disabled', true).text(self.data('alt-text'));
+        inputBuka.attr('disabled', true);
+        inputCost.attr('disabled', true);
+
+        function completedRequest(hasNoErrors) {
+            if (hasNoErrors !== true) {
+                inputBuka.removeAttr('disabled');
+                inputCost.removeAttr('disabled');
+                btn.removeAttr('disabled').text(btnText);
+                alertErr.removeClass('hidden');
+                window.setTimeout(function(){ alertErr.addClass('hidden'); }, 5000);
+                return;
+            }
+
+            alertOk.removeClass('hidden');
+        }
+
+        // Send request...
+        $.ajax({
+            url: self.data('url'),
+            data: {name:buka, base_cost:baseCost},
+            dataType: 'JSON',
+            type: 'POST',
+            success: function (response) {
+                var succeeded = response.status == 'success';
+                completedRequest(succeeded);
+                if (succeeded) window.location.reload(true);
+            },
+            error: function () {
+                completedRequest(false);
+            }
+        });
+    });
 
     // --------------------------------------------------------------
     // NUMBER SELECT

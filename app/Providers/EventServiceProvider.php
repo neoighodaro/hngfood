@@ -18,6 +18,7 @@ class EventServiceProvider extends ServiceProvider
         Events\FreelunchQuotaUpdated::class => [Listeners\UpdateFreeLunchQuota::class],
         Events\UserWasCreated::class  => [Listeners\SaveAdminUser::class],
         Events\LunchWasOrdered::class => [Listeners\OrderPaymentProcessor::class],
+        Events\BukaWasCreated::class => [],
     ];
 
     /**

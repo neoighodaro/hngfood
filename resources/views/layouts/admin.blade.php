@@ -26,14 +26,14 @@
                             @if (Gate::allows('free_lunch.view'))
                             <li {!! Route::is('admin.freelunch.overview') ? 'class="active"' : '' !!}>
                                 <a href="{{ route('admin.freelunch.overview') }}">
-                                    <i class="glyphicon glyphicon-cutlery"></i>
+                                    <i class="glyphicon glyphicon-apple"></i>
                                     Free Lunch </a>
                             </li>
                             @endif
 
                             <li>
                                 <a href="{{ route('admin.inventory.manage') }}">
-                                    <i class="glyphicon glyphicon-flag"></i>
+                                    <i class="glyphicon glyphicon-cutlery"></i>
                                     Manage Inventory </a>
                             </li>
                             {{--<li>--}}

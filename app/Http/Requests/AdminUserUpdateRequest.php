@@ -4,7 +4,6 @@ namespace HNG\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\ValidationException;
 
 class AdminUserUpdateRequest extends FormRequest
 {

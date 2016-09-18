@@ -41,7 +41,7 @@ class UserController extends Controller {
         );
 
         event(new UserWasUpdated([
-            'oldUser'       => $oldUser,
+            'o ldUser'       => $oldUser,
             'updateRequest' => $request,
             'updatedUser'   => User::find($user->id),
         ]));
