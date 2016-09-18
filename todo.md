@@ -2,6 +2,7 @@
 
 Things to be done
 
+- [ ] Give free lunch to multiple users at once e.g /freelunch @toyosi @neo For some reason
 - [ ] Handle wrong slack team error in a better way...
 - [ ] Specified role can manage bukas
 - [ ] Specified role can manage bukas lunch
