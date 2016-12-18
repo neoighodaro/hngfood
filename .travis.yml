@@ -3,12 +3,11 @@ php:
   - 5.6
   - 7.0
 before_script:
-before_script:
   - cp .env.travis .env
+  - rm composer.json && mv .composer.json.travis composer.json
   - mysql -e 'create database foodtest;'
-  - curl -s http://getcomposer.org/installer | php
   - composer self-update
-  - composer install --no-interaction
+  - composer install --no-interaction --prefer-source --dev
 script:
   - vendor/bin/phpunit
   - vendor/bin/phpspec run
