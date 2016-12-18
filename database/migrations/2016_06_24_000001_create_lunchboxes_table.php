@@ -18,6 +18,7 @@ class CreateLunchboxesTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('buka_id');
             $table->boolean('free_lunch')->default(0);
+            $table->boolean('fulfilled')->default(0);
             $table->boolean('free_lunch_cost')->default(0.00);
             $table->unsignedInteger('plate_number')->default(0);
             $table->timestamps();

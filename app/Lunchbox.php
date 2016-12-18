@@ -79,6 +79,17 @@ class Lunchbox extends Eloquent
     }
 
     /**
+     * Show pending lunch orders.
+     *
+     * @param  $query
+     * @return object
+     */
+    public function scopeUnfulfilled($query)
+    {
+        return $query->whereFulfilled(0);
+    }
+
+    /**
      * Get the total cost of the entire order.
      *
      * @return bool|float

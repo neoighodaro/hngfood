@@ -6,6 +6,10 @@ body {
     margin-right: 6px;
 }
 
+.float-right {
+    float: right
+}
+
 strong.dim {
     color: #777;
 }

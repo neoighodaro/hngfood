@@ -30,7 +30,7 @@ $router->group(['prefix' => 'slack/commands', 'namespace' => 'SlackCommands'], f
     $router->group(['prefix' => 'wallet'], function ($router) {
         $router->post('balance', ['as' => 'slack.cmd.wallet.balance', 'uses' => 'WalletController@balance']);
     });
-    
+
     $router->post('freelunch',['as' => 'slack.cmd.freelunch', 'uses' => 'FreeLunchController@give']);
 });
 
@@ -57,6 +57,8 @@ $router->group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router)
         $router->get('/manage', ['as' => 'admin.inventory.manage', 'uses' => 'InventoryController@index']);
         $router->post('/manage/add', ['as' => 'admin.inventory.manage.add', 'uses' => 'InventoryController@addBuka']);
     });
+
+    $router->get('/orders/pending', ['as' => 'admin.orders.pending', 'uses' => 'AdminController@pendingOrders']);
 
     $router->get('/dashboard', ['as' => 'admin.dashboard.overview', 'uses' => 'AdminController@index']);
     $router->get('/', ['as' => 'admin.dashboard', function () { return redirect()->route('admin.dashboard.overview'); }]);

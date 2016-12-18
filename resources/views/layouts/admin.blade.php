@@ -15,12 +15,17 @@
                                 </a>
                             </li>
 
-                            <li {!! Route::is('admin.dashboard.pending') ? 'class="active"' : '' !!}>
-                                <a href="{{ route('admin.dashboard.pending') }}">
-                                    <i class="glyphicon glyphicon-info"></i>
-                                    Today's Pending Orders
+                            @if ($pendingOrders->count() > 0)
+                            <li {!! Route::is('admin.orders.pending') ? 'class="active"' : '' !!}>
+                                <a href="{{ route('admin.orders.pending') }}">
+                                    <i class="glyphicon glyphicon-alert"></i>
+                                    Pending Orders
+                                    <span class="label label-danger float-right">
+                                        {{$pendingOrders->count()}}
+                                    </span>
                                 </a>
                             </li>
+                            @endif
 
                             @if (Gate::allows('users.manage'))
                             <li {!! Route::is('admin.users.manage') ? 'class="active"' : '' !!}>

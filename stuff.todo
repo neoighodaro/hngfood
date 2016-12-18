@@ -1,5 +1,7 @@
 Things To DO:
   ☐ Add reason for wallet change on admin side
+  ☐ Cancel orders within timelimit
+  ☐ Event to slack user when order made and when order has been fulfilled
   ☐ Cancel restaurant selection after selecting in order page
   ☐ Make fully responsive.
   ☐ Handle wrong slack team error in a better way
