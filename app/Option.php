@@ -17,7 +17,7 @@ class Option extends Model {
      */
     const CACHE_KEY    = 'HNG_FOOD_OPTIONS';
     const CACHE_EXPIRY = 1;
-    const USE_CACHE    = true;
+    const USE_CACHE    = false;
 
     /**
      * @var array
