@@ -50,7 +50,7 @@
 
         var btn = $(this);
 
-        if (btn.attr('disabled') == "disabled") {
+        if (btn.attr('disabled') === "disabled") {
             return;
         }
 
@@ -120,7 +120,7 @@
         closeOrderBtn.removeAttr('disabled');
 
         // Update Mode...
-        if (orderIndex !== false && typeof matchedOrder == 'object') {
+        if (orderIndex !== false && typeof matchedOrder === 'object') {
             $('#amount-input').val(matchedOrder.cost);
             $('#amount-servings').val(matchedOrder.servings);
 
@@ -349,7 +349,7 @@
                 var totalFoodCost   = parseInt($('#complete-order .totalCost').text());
                 var showMessage     = actualCashValue > totalFoodCost ? '.totally' : '.partially';
 
-                if (showMessage == '.partially') {
+                if (showMessage === '.partially') {
                     $('.free-lunch-alert .partially strong').html("&#8358;"+actualCashValue);
                 }
 
@@ -619,7 +619,7 @@
             baseCost = 0.00;
         }
 
-        if (buka == '' || buka.length <= 2) {
+        if (buka === '' || buka.length <= 2) {
             return completedRequest(false);
         }
 
@@ -651,7 +651,7 @@
             dataType: 'JSON',
             type: 'POST',
             success: function (response) {
-                var succeeded = response.status == 'success';
+                var succeeded = response.status === 'success';
                 completedRequest(succeeded);
                 if (succeeded) window.location.reload(true);
             },
@@ -673,7 +673,7 @@
         var input = $("input[name='"+fieldName+"']");
         var currentVal = parseInt(input.val());
         if (!isNaN(currentVal)) {
-            if(type == 'minus') {
+            if(type === 'minus') {
 
                 if(currentVal > input.attr('min')) {
                     input.val(currentVal - 1).change();
@@ -682,7 +682,7 @@
                     $(this).attr('disabled', true);
                 }
 
-            } else if(type == 'plus') {
+            } else if(type === 'plus') {
 
                 if(currentVal < input.attr('max')) {
                     input.val(currentVal + 1).change();
