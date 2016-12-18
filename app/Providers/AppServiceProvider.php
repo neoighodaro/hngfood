@@ -21,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(GeneratorsServiceProvider::class);
         }
 
+        if ($this->app->environment() !== 'testing') {
+            $this->app->register(AuthServiceProvider::class);
+        }
+
         $this->registerBladeDirectives();
 
         view()->composer('layouts.admin', function ($view) {

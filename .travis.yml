@@ -4,8 +4,8 @@ php:
   - 7.0
 before_script:
   - cp .env.travis .env
-  - rm composer.json && mv .composer.json.travis composer.json
-  - mysql -e 'create database foodtest;'
+  # - rm composer.json && mv .composer.json.travis composer.json
+  # - mysql -e 'create database foodtest;'
   - composer self-update
   - composer install --no-interaction --prefer-source --dev
 script:
@@ -18,7 +18,6 @@ notifications:
   email:
     recipients:
       - neo@hng.tech
-      - lynda@hotels.ng
     on_success: change
     on_failure: always
 deploy:
