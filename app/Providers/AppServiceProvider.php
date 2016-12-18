@@ -3,6 +3,7 @@
 namespace HNG\Providers;
 
 use Blade;
+use HNG\Lunchbox;
 use Illuminate\Support\ServiceProvider;
 use Laracasts\Generators\GeneratorsServiceProvider;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
@@ -21,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->registerBladeDirectives();
+
+        view()->composer('layouts.admin', function ($view) {
+            $view->with('pendingOrders', Lunchbox::unfulfilled());
+        });
     }
 
     /**

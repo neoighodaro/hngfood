@@ -36,7 +36,6 @@ class AdminController extends Controller {
 
         return view('admin.overview', [
             'inPageTitle'    => 'Admin Dashboard',
-            'pendingOrders'  => Lunchbox::unfulfilled(),
             'ordersOverview' => $ordersOverview,
         ]);
     }
