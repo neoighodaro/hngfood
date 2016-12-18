@@ -38,23 +38,29 @@ class AppServiceProvider extends ServiceProvider
      */
     protected function registerBladeDirectives()
     {
-        Blade::directive('cash', function ($cash) {
-            $curr = option('CURRENCY');
+        view()->composer('*', function($view) {
+            Blade::directive('cash', function ($cash) {
+                $curr = option('CURRENCY');
 
-            return "<?php echo '$curr'.$cash; ?>";
-        });
+                return "<?php echo '$curr'.$cash; ?>";
+            });
 
-        Blade::directive('currency', function () {
-            $curr = option('CURRENCY');
+            Blade::directive('freelunchReadable', function ($noun) {
+                return '
+                    <?php
+                    $num = auth()->user()->freelunchCount();
+                    echo "<strong>".$num."</strong> ".str_plural("'.$noun.'", $num).".";
+                    ?>
+                ';
+            });
 
-            return "<?php echo '{$curr}'; ?>";
-        });
+            Blade::directive('currency', function () {
+                return "<?php echo option('CURRENCY'); ?>";
+            });
 
-        Blade::directive('wallet', function () {
-            $curr = option('CURRENCY');
-            $wallet = auth()->user() ? auth()->user()->wallet : 0;
-
-            return "<?php echo '{$curr}{$wallet}'; ?>";
+            Blade::directive('wallet', function () {
+                return '<?php echo auth()->user()->walletWithCurrency; ?>';
+            });
         });
     }
 }

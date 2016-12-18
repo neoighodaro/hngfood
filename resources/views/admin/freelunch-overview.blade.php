@@ -5,8 +5,12 @@
         <h3>Free Lunch Overview</h3>
         <div class="row actual-stats">
             <div class="col-sm-12 col-md-3">
-                <h4>Unused</h4>
+                <h4>Unused Active</h4>
                 <span>{{ $freelunchOverview['unused'] }}</span>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <h4>Used This Month</h4>
+                <span>{{ $freelunchOverview['usedThisMonth'] }}</span>
             </div>
             <div class="col-sm-12 col-md-3">
                 <h4>Available Quota [<a href="#" data-toggle="modal" data-target="#update-freelunch">Manage</a>]</h4>

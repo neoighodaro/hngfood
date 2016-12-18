@@ -16,7 +16,7 @@ class Option extends Model {
      * Cache key and expiry in minutes.
      */
     const CACHE_KEY    = 'HNG_FOOD_OPTIONS';
-    const CACHE_EXPIRY = 5;
+    const CACHE_EXPIRY = 1;
     const USE_CACHE    = true;
 
     /**
@@ -39,6 +39,8 @@ class Option extends Model {
      */
     public function name($name, $value = self::READONLY, $default = false)
     {
+        $name = strtoupper($name);
+
         if ($value === static::READONLY) {
             return (static::USE_CACHE AND Cache::has(static::CACHE_KEY))
                 ? $this->readOptionFromFileCache($name, $default)
@@ -84,9 +86,9 @@ class Option extends Model {
     protected function readOptionFromFileCache($option, $default)
     {
         if ($options = Cache::get(static::CACHE_KEY)) {
-            $optionValue = $options->where('option', $option)->first()->toArray();
+            $optionValue = $options->where('option', $option)->first();
 
-            return $optionValue ? array_get($optionValue, 'value', $default) : $default;
+            return $optionValue ? array_get($optionValue->toArray(), 'value', $default) : $default;
         }
 
         return $default;

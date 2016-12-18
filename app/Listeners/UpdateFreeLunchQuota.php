@@ -7,7 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class UpdateFreeLunchQuota
-{   
+{
 
     /**
      * Handle the event.
@@ -17,7 +17,6 @@ class UpdateFreeLunchQuota
      */
     public function handle(FreelunchQuotaUpdated $event)
     {
-        //update the free lunch quota
         option('freelunch_quota', $event->newQuota);
     }
 }

@@ -14,6 +14,14 @@
                                     Overview
                                 </a>
                             </li>
+
+                            <li {!! Route::is('admin.dashboard.pending') ? 'class="active"' : '' !!}>
+                                <a href="{{ route('admin.dashboard.pending') }}">
+                                    <i class="glyphicon glyphicon-info"></i>
+                                    Today's Pending Orders
+                                </a>
+                            </li>
+
                             @if (Gate::allows('users.manage'))
                             <li {!! Route::is('admin.users.manage') ? 'class="active"' : '' !!}>
                                 <a href="{{ route('admin.users.manage') }}">

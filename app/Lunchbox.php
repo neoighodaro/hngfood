@@ -1,6 +1,7 @@
 <?php namespace HNG;
 
 use Carbon\Carbon;
+use HNG\Freelunch;
 use HNG\Http\Requests\Request;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
@@ -36,10 +37,12 @@ class Lunchbox extends Eloquent
      */
     public function createWithOrders(Request $request)
     {
+        $freelunch = (int) $request->get('free_lunch');
+
         $lunchbox = static::create([
             'user_id'    => $request->user()->id,
             'buka_id'    => $request->get('buka_id'),
-            'free_lunch' => $request->get('free_lunch'),
+            'free_lunch' => $freelunch
         ]);
 
         $orders = [];
@@ -67,6 +70,10 @@ class Lunchbox extends Eloquent
         }
 
         $lunchbox->orders()->saveMany($orders);
+
+        $freelunch      = new Freelunch;
+        $freelunchCount = $freelunch->requiredToSettleOrder($lunchbox->totalCost());
+        $freelunchWorth = (float) $freelunchCount * $freelunch->cashValue();
 
         return $lunchbox;
     }

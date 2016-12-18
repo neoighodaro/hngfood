@@ -1,47 +1,17 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Be right back.</title>
+@extends('layouts.app')
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@section('title', 'Maintenance, Be Right Back - '.option('APP_NAME'))
 
-        <style>
-            html, body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                color: #B0BEC5;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 72px;
-                margin-bottom: 40px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">Be right back.</div>
+@section('content')
+<div class="enjoy-it huge-margins">
+    <div class="container">
+        <div class="col-12">
+            <div class="garri-photo">
+                <img src="{{asset('/img/sad-food.png')}}" alt="404">
             </div>
+            <h2>Be Right Back!</h2>
+            <p>The site is having its wires and engines oiled. We will be back anytime now. Try refreshing this screen in a few minutes.</p>
         </div>
-    </body>
-</html>
+    </div>
+</div>
+@endsection

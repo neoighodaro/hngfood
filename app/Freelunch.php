@@ -9,7 +9,7 @@ class Freelunch extends Eloquent {
     /**
      * Days free lunch is typically valid for.
      */
-    const VALID_DAYS = 7;
+    const VALID_DAYS = 14;
 
     /**
      * @var array
@@ -53,7 +53,20 @@ class Freelunch extends Eloquent {
      */
     public function scopeActiveAll($query)
     {
-        return $query->whereRedeemed(0)->where('expires_at', '>', carbon::now());
+        return $query->whereRedeemed(0)->where('expires_at', '>', Carbon::now());
+    }
+
+    /**
+     * Get freelunch used this month.
+     *
+     * @param  $query
+     * @return Object
+     */
+    public function scopeUsedThisMonth($query)
+    {
+        return $query->whereRedeemed(1)
+            ->where('created_at', '>=', Carbon::now()->startOfMonth())
+            ->where('expires_at', '<=', Carbon::now()->endOfMonth());
     }
 
     /**
@@ -149,25 +162,37 @@ class Freelunch extends Eloquent {
      */
     public function deductRequiredToSettle($orderCost)
     {
-        if (($value = $this->worth()) == 0) {
+        // It's not worth a dime!
+        if ($this->worth() == 0) {
             return $orderCost;
         }
 
-        if ($value >= $orderCost) {
-            $shouldRemain = floor(($value - $orderCost) / $this->cashValue());
+        $freelunchRequired = $this->requiredToSettleOrder($orderCost);
 
-            $totalCount = $this->active()->count() - $shouldRemain;
+        $this->redeemCount($freelunchRequired);
 
-            $remainder = 0;
-        } else {
-            $totalCount = $this->active()->count();
+        $freelunchAsCash = $freelunchRequired * $this->cashValue();
 
-            $remainder = $orderCost - $value;
-        }
+        // If the free lunch cash value covers it all then nothing left to pay...
+        return ($freelunchAsCash > $orderCost) ? 0 : $orderCost - $freelunchAsCash;
+    }
 
-        $this->redeemCount($totalCount);
+    /**
+     * Returns the amount of freelunches required to settle.
+     *
+     * @param  integer $orderCost
+     * @return integer
+     */
+    public function requiredToSettleOrder($orderCost)
+    {
+        $freelunchValue = $this->worth();
+        $activeCount    = $this->active()->count();
 
-        return $remainder;
+        $remainder = ($freelunchValue >= $orderCost)
+            ? floor(($freelunchValue - $orderCost) / $this->cashValue())
+            : 0;
+
+        return (int) ($activeCount - $remainder);
     }
 
     /**
@@ -231,7 +256,7 @@ class Freelunch extends Eloquent {
      * @return bool
      */
     public function give($from, $to, $reason)
-    {   
+    {
         return (bool) static::create([
             'to_id'      => $to,
             'reason'     => $reason,

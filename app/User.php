@@ -70,13 +70,15 @@ class User extends Authenticatable
      */
     public function setFreelunch($freelunch)
     {
+        $freelunch = (int) $freelunch;
+
         if ($this->exists) {
             if ($freelunch <= 0) {
                 return (bool) $this->freelunches()->delete();
             }
 
-            $currentCount = $this->freelunches()->count();
-            
+            $currentCount = $this->freelunches()->active()->count();
+
             $isIncremental = $freelunch > $currentCount;
 
             if ($isIncremental === true) {
@@ -114,7 +116,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's first name.
+     * Format wallet attribute
      *
      * @param  string  $value
      * @return string
@@ -125,7 +127,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's first name.
+     * Get the raw wallet value unformatted
      *
      * @param  string  $value
      * @return string
@@ -150,6 +152,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Get wallet with currency attached to it.
+     *
+     * @return string
+     */
+    public function getWalletWithCurrencyAttribute()
+    {
+        if ( ! $this->exists) {
+            return false;
+        }
+
+        $curr = option('CURRENCY');
+
+        return $curr.$this->wallet;
+    }
+
+    /**
      * Lunchboxes relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -160,13 +178,25 @@ class User extends Authenticatable
     }
 
     /**
+     * Free lunch count.
+     *
+     * @return integer
+     */
+    public function freelunchCount()
+    {
+        return $this->freelunches()->count();
+    }
+
+    /**
      * Free lunches received.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function freelunches()
     {
-        return $this->hasMany(Freelunch::class, 'to_id')->where('expires_at','>=', Carbon::now());
+        return $this->hasMany(Freelunch::class, 'to_id')
+            ->where('expires_at','>=', Carbon::now())
+            ->whereRedeemed(0);
     }
 
     /**

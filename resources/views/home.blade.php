@@ -143,7 +143,7 @@
                         <div class="alert alert-success">
                             <strong>Cool!</strong> Your order was placed.
                         </div>
-                        <p>Heres a quick summary of your order. Your current balance is <strong>@wallet()</strong></p>
+                        <p>Heres a quick summary of your order. Your current balance is <strong>@wallet()</strong>. You have @freelunchReadable(free lunch)</p>
                         <p>&nbsp;</p>
                         <table class="table order order-overview-table"></table>
                         @if ($freelunch->count() > 0)
@@ -158,7 +158,7 @@
             <div class="modal-footer">
                 @if ($freelunch->count() > 0)
                 <div class="pull-left">
-                    <button type="button" id="apply-freelunch" data-free-lunch-count="{{$freelunch->count()}}" data-free-lunch-value="{{$freelunch->first()->cashValue()}}" class="btn btn-default" data-alt-text="Use Only Wallet">Use Free Lunch</button>
+                    <button type="button" id="apply-freelunch" data-free-lunch-count="{{$freelunch->count()}}" data-free-lunch-value="{{$freelunch->first()->cashValue()}}" class="btn btn-primary" data-alt-text="Use Only Wallet">Use Free Lunch</button>
                 </div>
                 @endif
                 <button type="button" data-redirect="{{route('order.completed', ['id' => ':id'])}}" data-url="{{route('order')}}" id="finalize-order" class="btn btn-success" data-loading-text="One Sec...">Place Order</button>

@@ -45,6 +45,7 @@ class AuthController extends Controller
                 throw new Exception("Invalid slack team.");
             }
         } catch (Exception $e) {
+            throw $e;
             return redirect()->home();
         }
 
@@ -59,7 +60,7 @@ class AuthController extends Controller
                 'redirect_uri='.urlencode(route('auth.slack.callback.user'));
 
             header('Location: '.$authUrl);
-            return;
+            exit;
         }
 
         return redirect()->home();

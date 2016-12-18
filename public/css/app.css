@@ -101,6 +101,21 @@ footer .creators {
     padding: 50px 0;
 }
 
+.enjoy-it.huge-margins {
+    margin: 50px 0 0;
+}
+
+.enjoy-it.huge-margins p {
+    max-width: 700px;
+    margin: 30px auto 0;
+    line-height: 30px;
+    font-weight:300;
+    font-size: 20px;
+    font-font:'Source Sans Pro';
+    color: #999;
+    text-align: center;
+}
+
 .enjoy-it .garri-photo img {
     max-height: 300px;
     max-width:100%;
@@ -119,6 +134,10 @@ footer .creators {
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.enjoy-it.huge-margins h2 {
+    font-size: 40px;
 }
 
 .container.big-btn {

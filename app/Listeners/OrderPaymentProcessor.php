@@ -30,7 +30,7 @@ class OrderPaymentProcessor
      */
     public function handle(LunchWasOrdered $event)
     {
-        $orderCost = $event->order->totalCost();
+        $orderCost     = $event->order->totalCost();
         $availableCash = number_unformat($this->user->wallet);
 
         if ($event->request->wantsToRedeemFreelunch()) {
