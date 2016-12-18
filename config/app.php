@@ -155,7 +155,7 @@ return [
          * Application Service Providers...
          */
         HNG\Providers\AppServiceProvider::class,
-        HNG\Providers\AuthServiceProvider::class,
+        // HNG\Providers\AuthServiceProvider::class,
         HNG\Providers\BroadcastServiceProvider::class,
         HNG\Providers\EventServiceProvider::class,
         HNG\Providers\RouteServiceProvider::class,
