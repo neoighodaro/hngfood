@@ -5,28 +5,34 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.6.4",
-        "laravel/framework": "5.3.*",
-        "laravel/socialite": "~2.0",
-        "vluzrmos/slack-api": "^0.4.7",
-        "fideloper/proxy": "^3.1",
-        "barryvdh/laravel-debugbar": "^2.2"
+        "php": "^7.1.3",
+        "fideloper/proxy": "^4.0",
+        "laravel/framework": "5.7.*",
+        "laravel/socialite": "^4.0",
+        "laravel/tinker": "^1.0",
+        "symfony/contracts": "^1.0",
+        "symfony/css-selector": "^4.2",
+        "symfony/dom-crawler": "^4.2",
+        "vluzrmos/slack-api": "^0.4.7"
     },
     "require-dev": {
-        "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~4.0",
-        "symfony/css-selector": "2.8.*|3.0.*",
-        "symfony/dom-crawler": "2.8.*|3.0.*",
-        "phpspec/phpspec": "^2.5",
-        "laracasts/generators": "^1.1"
+        "barryvdh/laravel-debugbar": "^3.2",
+        "beyondcode/laravel-dump-server": "^1.0",
+        "filp/whoops": "^2.0",
+        "fzaninotto/faker": "^1.4",
+        "laracasts/generators": "^1.1",
+        "mockery/mockery": "^1.0",
+        "nunomaduro/collision": "^2.0",
+        "phpspec/phpspec": "^5.1",
+        "phpunit/phpunit": "^7.0"
     },
     "autoload": {
         "files": [
             "bootstrap/helpers.php"
         ],
         "classmap": [
-            "database"
+            "database/seeds",
+            "database/factories"
         ],
         "psr-4": {
             "HNG\\": "app/"
@@ -39,10 +45,14 @@
     },
     "scripts": {
         "post-root-package-install": [
-            "php -r \"copy('.env.example', '.env');\""
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "php artisan key:generate"
+            "@php artisan key:generate --ansi"
+        ],
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
         ],
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
@@ -54,6 +64,8 @@
         ]
     },
     "config": {
-        "preferred-install": "dist"
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
     }
 }
