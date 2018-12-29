@@ -6,9 +6,6 @@
         <div class="row profile">
             <div class="col-sm-12 col-md-3 col-lg-3">
                 <div class="profile-sidebar">
-                    {{--<div class="profile-userpic">--}}
-                        {{--<img src="{{ auth()->user()->avatar }}" class="img-responsive" alt="">--}}
-                    {{--</div>--}}
                     <div class="profile-usermenu">
                         <ul class="nav">
                             <li {!! Route::is('admin.dashboard.overview') ? 'class="active"' : '' !!}>
@@ -35,15 +32,15 @@
                             @endif
 
                             <li>
-                                <a href="#">
+                                <a href="{{ route('admin.inventory.manage') }}">
                                     <i class="glyphicon glyphicon-flag"></i>
                                     Manage Inventory </a>
                             </li>
-                            <li>
-                                <a href="#">
-                                    <i class="glyphicon glyphicon-cog"></i>
-                                    Site Settings </a>
-                            </li>
+                            {{--<li>--}}
+                                {{--<a href="#">--}}
+                                    {{--<i class="glyphicon glyphicon-cog"></i>--}}
+                                    {{--Site Settings </a>--}}
+                            {{--</li>--}}
                         </ul>
                     </div>
                 </div>
