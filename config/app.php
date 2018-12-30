@@ -165,7 +165,7 @@ return [
         /*
          * Third-Party stuff...
          */
-        Fideloper\Proxy\TrustedProxyServiceProvider::class,
+
         Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
