@@ -39,35 +39,35 @@ $router->group(['prefix' => 'slack/commands', 'namespace' => 'SlackCommands'], f
 // ADMINISTRATION
 // ------------------------------------------------------------------------
 
-// $router->group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router) {
-//     $router->get('/login', ['as' => 'admin.login', 'uses' => 'AuthController@authForm']);
-//     $router->post('/login', ['uses' => 'AuthController@authProcess']);
+$router->group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router) {
+    $router->get('/login', ['as' => 'admin.login', 'uses' => 'AuthController@authForm']);
+    $router->post('/login', ['uses' => 'AuthController@authProcess']);
 
-//     $router->group(['prefix' => 'freelunch'], function ($router) {
-//         $router->post('/update', ['as' => 'admin.freelunch.update', 'uses' => 'FreelunchController@update']);
-//         $router->get('/overview', ['as' => 'admin.freelunch.overview', 'uses' => 'FreelunchController@overview']);
-//     });
+    $router->group(['prefix' => 'freelunch'], function ($router) {
+        $router->post('/update', ['as' => 'admin.freelunch.update', 'uses' => 'FreelunchController@update']);
+        $router->get('/overview', ['as' => 'admin.freelunch.overview', 'uses' => 'FreelunchController@overview']);
+    });
 
-//     $router->group(['prefix' => 'users'], function ($router) {
-//         $router->get('/manage', ['as' => 'admin.users.manage', 'uses' => 'UserController@userlist']);
-//         $router->post('/update', ['as' => 'admin.users.update', 'uses' => 'UserController@update']);
-//     });
+    $router->group(['prefix' => 'users'], function ($router) {
+        $router->get('/manage', ['as' => 'admin.users.manage', 'uses' => 'UserController@userlist']);
+        $router->post('/update', ['as' => 'admin.users.update', 'uses' => 'UserController@update']);
+    });
 
-//     $router->get('/dashboard', ['as' => 'admin.dashboard.overview', 'uses' => 'AdminController@index']);
-//     $router->get('/', ['as' => 'admin.dashboard', function () { return redirect()->route('admin.dashboard.overview'); }]);
-// });
+    $router->get('/dashboard', ['as' => 'admin.dashboard.overview', 'uses' => 'AdminController@index']);
+    $router->get('/', ['as' => 'admin.dashboard', function () { return redirect()->route('admin.dashboard.overview'); }]);
+});
 
 
 // ------------------------------------------------------------------------
 // OTHER ROUTES
 // ------------------------------------------------------------------------
 
-// $router->get('/login', function () { return redirect('/'); });
-// $router->get('/logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@logout',]);
-// $router->get('/home', ['as' => 'home', 'uses' => 'HomeController@index',]);
-// $router->get('/order/completed/{id}', ['as' => 'order.completed', 'uses' => 'HomeController@orderCompleted']);
-// $router->get('/order/history', ['as' => 'order.history', 'uses' => 'HomeController@orderHistory']);
-// $router->post('/order/complete', ['as' => 'order', 'uses' => 'HomeController@order']);
+$router->get('/login', function () { return redirect('/'); });
+$router->get('/logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@logout',]);
+$router->get('/home', ['as' => 'home', 'uses' => 'HomeController@index',]);
+$router->get('/order/completed/{id}', ['as' => 'order.completed', 'uses' => 'HomeController@orderCompleted']);
+$router->get('/order/history', ['as' => 'order.history', 'uses' => 'HomeController@orderHistory']);
+$router->post('/order/complete', ['as' => 'order', 'uses' => 'HomeController@order']);
 
 // ------------------------------------------------------------------------
 // HOME PAGE
