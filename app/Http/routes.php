@@ -53,6 +53,10 @@ $router->group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router)
         $router->post('/update', ['as' => 'admin.users.update', 'uses' => 'UserController@update']);
     });
 
+    $router->group(['prefix' => 'inventory'], function ($router) {
+        $router->get('/manage', ['as' => 'admin.inventory.manage', 'uses' => 'InventoryController@index']);
+    });
+
     $router->get('/dashboard', ['as' => 'admin.dashboard.overview', 'uses' => 'AdminController@index']);
     $router->get('/', ['as' => 'admin.dashboard', function () { return redirect()->route('admin.dashboard.overview'); }]);
 });
