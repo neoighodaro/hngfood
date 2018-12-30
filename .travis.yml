@@ -1,7 +1,6 @@
 language: php
 php:
-  - 5.6
-  - 7.0
+  - 7.2
 before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --dev
@@ -26,4 +25,4 @@ deploy:
   on:
     tags: true
     branch: master
-    php: 5.6
+    php: 7.2
